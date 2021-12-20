@@ -92,6 +92,8 @@ class LoginController extends AbstractLoginController
 
         $token = Str::random(64);
 
+        // Create a user session containing:
+        // User ID, Token and an Expiry Date
         $request->session()->put('auth_confirmation_token', [
             'user_id' => $user->id,
             'token_value' => $token,
