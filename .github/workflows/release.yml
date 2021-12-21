@@ -25,7 +25,11 @@ jobs:
           git add config/app.php
           git commit -m "bump version for release"
           git push
-
+          
+      - name: Copy settings.json
+        run: |
+          mv settings.json.example settings.json
+          
       - name: Build assets
         run: |
           yarn install
