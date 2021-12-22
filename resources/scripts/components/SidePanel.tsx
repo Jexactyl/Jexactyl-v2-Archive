@@ -18,11 +18,11 @@ export function Category (props: { children: React.ReactNode }) {
 
 export function SidePanelLink (props: { icon: IconProp, react?: boolean, link: string, exact?: boolean, title: string }) {
     return props.react ?? false ? (
-        <NavLink to={props.link} exact={props.exact ?? false} css={tw`flex flex-row mx-auto`} className={'navigation-link'}>
+        <NavLink to={props.link} exact={props.exact ?? false} css={tw`flex flex-row mx-auto`} title={props.title} className={'navigation-link'}>
             <FontAwesomeIcon icon={props.icon} size={'lg'} css={tw`mx-auto`}/>
         </NavLink>
     ) : (
-        <a href={props.link} rel={'noreferrer'} css={tw`flex flex-row mx-auto`} className={'navigation-link'}>
+        <a href={props.link} rel={'noreferrer'} css={tw`flex flex-row mx-auto`} title={props.title} className={'navigation-link'}>
             <FontAwesomeIcon icon={props.icon} size={'lg'} css={tw`mx-auto`}/>
         </a>
     );
