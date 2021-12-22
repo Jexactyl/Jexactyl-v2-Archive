@@ -10,6 +10,7 @@ import styled from 'styled-components/macro';
 import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
 import UpdateUsernameForm from './forms/UpdateUsernameForm';
+import { useStoreState } from 'easy-peasy';
 
 const Container = styled.div`
     ${tw`flex flex-wrap`};
@@ -29,6 +30,7 @@ const Container = styled.div`
 
 export default () => {
     const { state } = useLocation<{ twoFactorRedirect?: boolean } | undefined>();
+    const usernameEdit = useStoreState(state => state.settings.data!.usernameEdit);
 
     return (
         <PageContentBlock title={'Account Overview'}>
@@ -52,15 +54,17 @@ export default () => {
                     <ConfigureTwoFactorForm/>
                 </ContentBox>
             </Container>
+            {usernameEdit === '1' &&
             <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
                 <ContentBox
                     css={tw`mt-8 md:mt-0 md:ml-8`}
-                    title={'Update Email Address'}
-                    showFlashes={'account:email'}
+                    title={'Update Username'}
+                    showFlashes={'account:username'}
                 >
                     <UpdateUsernameForm/>
                 </ContentBox>
             </Container>
+            }
         </PageContentBlock>
     );
 };

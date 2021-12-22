@@ -9,6 +9,7 @@ export interface SiteSettings {
     };
     analytics: string;
     userRegistration: string;
+    usernameEdit: string;
 }
 
 export interface SettingsStore {
