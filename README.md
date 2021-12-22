@@ -6,7 +6,6 @@
 Jexactyl is an all-in-one server management panel
 built with [Pterodactyl](https://pterodactyl.io) and includes
 better security, advanced features and blazing fast performance.
-!WARNING! The panel has issues with debain currently, we suggest to use Ubuntu 20.04LTS.
 
 Stop settling for less. Make game servers a first class citizen on your platform.
 
@@ -20,9 +19,6 @@ Stop settling for less. Make game servers a first class citizen on your platform
 Some Javascript and CSS used within the panel are licensed under a `MIT` or `Apache 2.0` license. Please check their
 respective header files for more information.
 
-## Review
-
-Hi, im LiquidInteract a friend of JexUK, i've tried this panel out and aside a few hickups in the installer phase it has 0 issues, the documentation is adequate, the theme is very nice and overall i like the idea i think it will take off.
 
 ## Screenshots  
 
