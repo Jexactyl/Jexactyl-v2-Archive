@@ -10,6 +10,7 @@ import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
 import UpdateUsernameForm from './forms/UpdateUsernameForm';
 import { useStoreState } from 'easy-peasy';
+import ConfigureTwoFactorForm from '@/components/dashboard/forms/ConfigureTwoFactorForm';
 
 const Container = styled.div`
     ${tw`flex flex-wrap`};
@@ -58,6 +59,11 @@ export default () => {
                         <UpdateUsernameForm/>
                     </ContentBox>
                 }
+            </Container>
+            <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
+                <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
+                    <ConfigureTwoFactorForm/>
+                </ContentBox>
             </Container>
         </PageContentBlock>
     );
