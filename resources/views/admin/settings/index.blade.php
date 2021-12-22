@@ -83,8 +83,8 @@
                                 <label class="control-label">Username Editing</label>
                                 <div>
                                     <select name="app:username_edit" class="form-control">
-                                        <option value="{{ 1 }}" @if($usernameEdit) selected @endif>Enabled</option>
-                                        <option value="{{ 0 }}" @if(!$usernameEdit) selected @endif>Disabled</option>
+                                        <option value="{{ 1 }}" @if($username_edit) selected @endif>Enabled</option>
+                                        <option value="{{ 0 }}" @if(!$username_edit) selected @endif>Disabled</option>
                                     </select>
                                     <p class="text-muted"><small>If enabled, users will be able to edit their username from the frontend.</small></p>
                                 </div>
