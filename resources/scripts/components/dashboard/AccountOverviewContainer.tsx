@@ -2,7 +2,6 @@ import * as React from 'react';
 import ContentBox from '@/components/elements/ContentBox';
 import UpdatePasswordForm from '@/components/dashboard/forms/UpdatePasswordForm';
 import UpdateEmailAddressForm from '@/components/dashboard/forms/UpdateEmailAddressForm';
-import ConfigureTwoFactorForm from '@/components/dashboard/forms/ConfigureTwoFactorForm';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import tw from 'twin.macro';
 import { breakpoint } from '@/theme';
@@ -50,21 +49,16 @@ export default () => {
                 >
                     <UpdateEmailAddressForm/>
                 </ContentBox>
-                <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
-                    <ConfigureTwoFactorForm/>
-                </ContentBox>
+                {usernameEdit === '1' &&
+                    <ContentBox
+                        css={tw`mt-8 md:mt-0 md:ml-8`}
+                        title={'Update Username'}
+                        showFlashes={'account:username'}
+                    >
+                        <UpdateUsernameForm/>
+                    </ContentBox>
+                }
             </Container>
-            {usernameEdit === '1' &&
-            <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
-                <ContentBox
-                    css={tw`mt-8 md:mt-0 md:ml-8`}
-                    title={'Update Username'}
-                    showFlashes={'account:username'}
-                >
-                    <UpdateUsernameForm/>
-                </ContentBox>
-            </Container>
-            }
         </PageContentBlock>
     );
 };

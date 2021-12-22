@@ -17,6 +17,7 @@ import PageContentBlock from '@/components/elements/PageContentBlock';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import useFlash from '@/plugins/useFlash';
 import ConfirmationModal from '@/components/elements/ConfirmationModal';
+import ConfigureTwoFactorForm from './forms/ConfigureTwoFactorForm';
 
 interface Values {
     name: string;
@@ -151,6 +152,9 @@ export default () => {
                             </GreyRowBox>
                         ))
                     }
+                </ContentBox>
+                <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
+                    <ConfigureTwoFactorForm/>
                 </ContentBox>
             </div>
         </PageContentBlock>
