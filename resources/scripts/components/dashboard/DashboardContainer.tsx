@@ -7,8 +7,6 @@ import PageContentBlock from '@/components/elements/PageContentBlock';
 import useFlash from '@/plugins/useFlash';
 import { useStoreState } from 'easy-peasy';
 import { usePersistedState } from '@/plugins/usePersistedState';
-import Switch from '@/components/elements/Switch';
-import tw from 'twin.macro';
 import useSWR from 'swr';
 import { PaginatedResult } from '@/api/http';
 import Pagination from '@/components/elements/Pagination';
@@ -22,7 +20,7 @@ export default () => {
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const uuid = useStoreState(state => state.user.data!.uuid);
     const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
-    const [ showOnlyAdmin, setShowOnlyAdmin ] = usePersistedState(`${uuid}:show_all_servers`, false);
+    const [ showOnlyAdmin ] = usePersistedState(`${uuid}:show_all_servers`, false);
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
         [ '/api/client/servers', (showOnlyAdmin && rootAdmin), page ],
@@ -50,15 +48,6 @@ export default () => {
 
     return (
         <PageContentBlock title={'Dashboard'} showFlashKey={'dashboard'}>
-            {rootAdmin &&
-            <div css={tw`mb-2 flex justify-end items-center`}>
-                <Switch
-                    name={'show_all_servers'}
-                    defaultChecked={showOnlyAdmin}
-                    onChange={() => setShowOnlyAdmin(s => !s)}
-                />
-            </div>
-            }
             <div className={'row'}>
                 {!servers ?
                     <Spinner centered size={'large'}/>
