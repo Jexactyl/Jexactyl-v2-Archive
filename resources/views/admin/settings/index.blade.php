@@ -82,7 +82,7 @@
                             <div class="form-group col-md-4">
                                 <label class="control-label">Username Editing</label>
                                 <div>
-                                    <select name="app:username_editing" class="form-control">
+                                    <select name="app:username_edit" class="form-control">
                                         <option value="{{ 1 }}" @if($usernameEdit) selected @endif>Enabled</option>
                                         <option value="{{ 0 }}" @if(!$usernameEdit) selected @endif>Disabled</option>
                                     </select>
