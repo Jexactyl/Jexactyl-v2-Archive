@@ -65,21 +65,13 @@ export default () => {
                     :
                     <Pagination data={servers} onPageSelect={setPage}>
                         {({ items }) => (
-                            items.length > 0 ?
+                            items.length > 0 &&
                                 items.map((server) => (
                                     <ServerRow
                                         key={server.uuid}
                                         server={server}
                                     />
                                 ))
-                                :
-                                <p css={tw`text-center text-sm text-neutral-400`}>
-                                    {showOnlyAdmin ?
-                                        'There are no other servers to display.'
-                                        :
-                                        'There are no servers associated with your account.'
-                                    }
-                                </p>
                         )}
                     </Pagination>
                 }
