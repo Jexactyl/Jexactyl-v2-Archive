@@ -43,16 +43,21 @@
                             <th>UUID</th>
                             <th>Owner</th>
                             <th>Node</th>
+                            <th>Memory</th>
+                            <th>CPU</th>
+                            <th>Disk</th>
                             <th>Connection</th>
-                            <th></th>
                             <th></th>
                         </tr>
                         @foreach ($servers as $server)
                             <tr data-server="{{ $server->uuidShort }}">
                                 <td><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></td>
-                                <td><code title="{{ $server->uuid }}">{{ $server->uuid }}</code></td>
+                                <td><code title="{{ $server->uuidShort }}">{{ $server->uuidShort }}</code></td>
                                 <td><a href="{{ route('admin.users.view', $server->user->id) }}">{{ $server->user->username }}</a></td>
                                 <td><a href="{{ route('admin.nodes.view', $server->node->id) }}">{{ $server->node->name }}</a></td>
+                                <td><code title="{{ $server->memory }}">{{ $server->memory }}MB</code></td>
+                                <td><code title="{{ $server->cpu }}">{{ $server->cpu }}%</code></td>
+                                <td><code title="{{ $server->disk }}">{{ round($server->disk/1024, 2, PHP_ROUND_HALF_DOWN) }}GB</code></td>
                                 <td>
                                     <code>{{ $server->allocation->alias }}:{{ $server->allocation->port }}</code>
                                 </td>
@@ -64,10 +69,6 @@
                                     @else
                                         <span class="label label-success">Active</span>
                                     @endif
-                                </td>
-                                <td class="text-center">
-                                    <a class="btn btn-xs btn-default" href="/server/{{ $server->uuidShort }}"><i class="fa fa-wrench"></i></a>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

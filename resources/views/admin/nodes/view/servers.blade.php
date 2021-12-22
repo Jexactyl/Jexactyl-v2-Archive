@@ -40,14 +40,20 @@
                         <th>ID</th>
                         <th>Server Name</th>
                         <th>Owner</th>
-                        <th>Service</th>
+                        <th>Memory</th>
+                        <th>CPU</th>
+                        <th>Disk</th>
+                        <th>Egg</th>
                     </tr>
                     @foreach($servers as $server)
                         <tr data-server="{{ $server->uuid }}">
                             <td><code>{{ $server->uuidShort }}</code></td>
                             <td><a href="{{ route('admin.servers.view', $server->id) }}">{{ $server->name }}</a></td>
                             <td><a href="{{ route('admin.users.view', $server->owner_id) }}">{{ $server->user->username }}</a></td>
-                            <td>{{ $server->nest->name }} ({{ $server->egg->name }})</td>
+                            <td><code title="{{ $server->memory }}">{{ $server->memory }}MB</code></td>
+                            <td><code title="{{ $server->cpu }}">{{ $server->cpu }}%</code></td>
+                            <td><code title="{{ $server->disk }}">{{ round($server->disk/1024, 2, PHP_ROUND_HALF_DOWN) }}GB</code></td>
+                            <td>{{ $server->egg->name }}</td>
                         </tr>
                     @endforeach
                 </table>
