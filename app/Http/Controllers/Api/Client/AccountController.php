@@ -10,6 +10,7 @@ use Pterodactyl\Services\Users\UserUpdateService;
 use Pterodactyl\Transformers\Api\Client\AccountTransformer;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdateEmailRequest;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdatePasswordRequest;
+use Pterodactyl\Http\Requests\Api\Client\Account\UpdateUsernameRequest;
 
 class AccountController extends ClientApiController
 {
@@ -74,4 +75,18 @@ class AccountController extends ClientApiController
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }
+
+    /**
+     * Update the authenticated user's username.
+     *
+     * @throws \Pterodactyl\Exceptions\Model\DataValidationException
+     * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
+     */
+    public function updateUsername(UpdateUsernameRequest $request): JsonResponse
+    {
+        $this->updateService->handle($request->user(), $request->validated());
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+    }
+
 }

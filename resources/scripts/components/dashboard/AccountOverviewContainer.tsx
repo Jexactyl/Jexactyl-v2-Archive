@@ -9,6 +9,7 @@ import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
+import UpdateUsernameForm from './forms/UpdateUsernameForm';
 
 const Container = styled.div`
     ${tw`flex flex-wrap`};
@@ -49,6 +50,15 @@ export default () => {
                 </ContentBox>
                 <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
                     <ConfigureTwoFactorForm/>
+                </ContentBox>
+            </Container>
+            <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
+                <ContentBox
+                    css={tw`mt-8 md:mt-0 md:ml-8`}
+                    title={'Update Email Address'}
+                    showFlashes={'account:email'}
+                >
+                    <UpdateUsernameForm/>
                 </ContentBox>
             </Container>
         </PageContentBlock>

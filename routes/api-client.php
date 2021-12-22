@@ -24,6 +24,7 @@ Route::group(['prefix' => '/account'], function () {
 
     Route::put('/email', 'AccountController@updateEmail')->name('api:client.account.update-email');
     Route::put('/password', 'AccountController@updatePassword')->name('api:client.account.update-password');
+    Route::put('/username', 'AccountController@updateUsername')->name('api:client.account.update-username');
 
     Route::get('/api-keys', 'ApiKeyController@index');
     Route::post('/api-keys', 'ApiKeyController@store');
