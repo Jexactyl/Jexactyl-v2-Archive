@@ -20,7 +20,8 @@ export default () => {
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const uuid = useStoreState(state => state.user.data!.uuid);
     const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
-    const [ showOnlyAdmin ] = usePersistedState(`${uuid}:show_all_servers`, false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [ showOnlyAdmin, setShowOnlyAdmin ] = usePersistedState(`${uuid}:show_all_servers`, false);
 
     const { data: servers, error } = useSWR<PaginatedResult<Server>>(
         [ '/api/client/servers', (showOnlyAdmin && rootAdmin), page ],
