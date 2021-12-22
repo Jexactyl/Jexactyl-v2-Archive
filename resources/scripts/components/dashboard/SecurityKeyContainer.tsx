@@ -17,7 +17,6 @@ import PageContentBlock from '@/components/elements/PageContentBlock';
 import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 import useFlash from '@/plugins/useFlash';
 import ConfirmationModal from '@/components/elements/ConfirmationModal';
-import ConfigureTwoFactorForm from './forms/ConfigureTwoFactorForm';
 
 interface Values {
     name: string;
@@ -111,52 +110,49 @@ export default () => {
                 <ContentBox title={'Add Security Key'} css={tw`flex-1 md:mr-8`}>
                     <AddSecurityKeyForm onKeyAdded={key => setKeys(s => ([ ...s!, key ]))}/>
                 </ContentBox>
-                <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
-                    <ConfigureTwoFactorForm/>
-                </ContentBox>
-            </div>
-            <ContentBox title={'Security Keys'} css={tw`flex-none w-full mt-8 md:mt-0 md:w-1/2`}>
-                <SpinnerOverlay visible={loading}/>
-                <ConfirmationModal
-                    visible={!!deleteId}
-                    title={'Confirm key deletion'}
-                    buttonText={'Yes, delete key'}
-                    onConfirmed={() => {
-                        doDeletion(deleteId);
-                        setDeleteId(null);
-                    }}
-                    onModalDismissed={() => setDeleteId(null)}
-                >
+                <ContentBox title={'Security Keys'} css={tw`flex-none w-full mt-8 md:mt-0 md:w-1/2`}>
+                    <SpinnerOverlay visible={loading}/>
+                    <ConfirmationModal
+                        visible={!!deleteId}
+                        title={'Confirm key deletion'}
+                        buttonText={'Yes, delete key'}
+                        onConfirmed={() => {
+                            doDeletion(deleteId);
+                            setDeleteId(null);
+                        }}
+                        onModalDismissed={() => setDeleteId(null)}
+                    >
                         Are you sure you wish to delete this security key?
                         You will no longer be able to authenticate using this key.
-                </ConfirmationModal>
-                {keys.length === 0 ?
-                    !loading ?
-                        <p css={tw`text-center text-sm`}>
+                    </ConfirmationModal>
+                    {keys.length === 0 ?
+                        !loading ?
+                            <p css={tw`text-center text-sm`}>
                                 No security keys have been configured for this account.
-                        </p>
-                        : null
-                    :
-                    keys.map((key, index) => (
-                        <GreyRowBox key={index} css={[ tw`bg-neutral-900 flex items-center`, index > 0 && tw`mt-2` ]}>
-                            <FontAwesomeIcon icon={faKey} css={tw`text-neutral-300`}/>
-                            <div css={tw`ml-4 flex-1 overflow-hidden`}>
-                                <p css={tw`text-sm break-words`}>{key.name}</p>
-                                <p css={tw`text-2xs text-neutral-300 uppercase`}>
+                            </p>
+                            : null
+                        :
+                        keys.map((key, index) => (
+                            <GreyRowBox key={index} css={[ tw`bg-neutral-900 flex items-center`, index > 0 && tw`mt-2` ]}>
+                                <FontAwesomeIcon icon={faKey} css={tw`text-neutral-300`}/>
+                                <div css={tw`ml-4 flex-1 overflow-hidden`}>
+                                    <p css={tw`text-sm break-words`}>{key.name}</p>
+                                    <p css={tw`text-2xs text-neutral-300 uppercase`}>
                                         Last used:&nbsp;
-                                    {key.lastUsedAt ? format(key.lastUsedAt, 'MMM do, yyyy HH:mm') : 'Never'}
-                                </p>
-                            </div>
-                            <button css={tw`ml-4 p-2 text-sm`} onClick={() => setDeleteId(key.id)}>
-                                <FontAwesomeIcon
-                                    icon={faTrashAlt}
-                                    css={tw`text-neutral-400 hover:text-red-400 transition-colors duration-150`}
-                                />
-                            </button>
-                        </GreyRowBox>
-                    ))
-                }
-            </ContentBox>
+                                        {key.lastUsedAt ? format(key.lastUsedAt, 'MMM do, yyyy HH:mm') : 'Never'}
+                                    </p>
+                                </div>
+                                <button css={tw`ml-4 p-2 text-sm`} onClick={() => setDeleteId(key.id)}>
+                                    <FontAwesomeIcon
+                                        icon={faTrashAlt}
+                                        css={tw`text-neutral-400 hover:text-red-400 transition-colors duration-150`}
+                                    />
+                                </button>
+                            </GreyRowBox>
+                        ))
+                    }
+                </ContentBox>
+            </div>
         </PageContentBlock>
     );
 };
