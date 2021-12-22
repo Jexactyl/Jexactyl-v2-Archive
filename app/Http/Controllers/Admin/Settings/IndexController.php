@@ -59,6 +59,7 @@ class IndexController extends Controller
         return view('admin.settings.index', [
             'version' => $this->versionService,
             'languages' => $this->getAvailableLanguages(true),
+            'registration' => $this->settings->get('settings::app:user_registration', true),
         ]);
     }
 

@@ -4,6 +4,7 @@ namespace Pterodactyl\Http\ViewComposers;
 
 use Illuminate\View\View;
 use Pterodactyl\Services\Helpers\AssetHashService;
+use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
 class AssetComposer
 {
@@ -12,12 +13,15 @@ class AssetComposer
      */
     private $assetHashService;
 
+    private SettingsRepositoryInterface $settings;
+
     /**
      * AssetComposer constructor.
      */
-    public function __construct(AssetHashService $assetHashService)
+    public function __construct(AssetHashService $assetHashService, SettingsRepositoryInterface $settings)
     {
         $this->assetHashService = $assetHashService;
+        $this->settings = $settings;
     }
 
     /**
@@ -34,6 +38,7 @@ class AssetComposer
                 'siteKey' => config('recaptcha.website_key') ?? '',
             ],
             'analytics' => config('app.analytics') ?? '',
+            'userRegistration' => $this->settings->get('settings::app:user_registration'),
         ]);
     }
 }

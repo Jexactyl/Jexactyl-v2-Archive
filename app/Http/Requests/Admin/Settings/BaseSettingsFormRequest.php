@@ -20,9 +20,9 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'pterodactyl:auth:2fa_required' => 'required|integer|in:0,1,2',
             'app:locale' => ['required', 'string', Rule::in(array_keys($this->getAvailableLanguages()))],
             'app:analytics' => 'nullable|string',
+            'app:user_registration' => 'nullable|integer|in:0,1',
         ];
     }
-
     /**
      * @return array
      */
@@ -33,6 +33,7 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'pterodactyl:auth:2fa_required' => 'Require 2-Factor Authentication',
             'app:locale' => 'Default Language',
             'app:analytics' => 'Google Analytics',
+            'app:user_registration' => 'User Registration',
         ];
     }
 }

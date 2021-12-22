@@ -40,3 +40,5 @@ resources/assets/scripts/helpers/ziggy.js
 .phpunit.result.cache
 
 settings.json
+yarn.lock
+composer.lock

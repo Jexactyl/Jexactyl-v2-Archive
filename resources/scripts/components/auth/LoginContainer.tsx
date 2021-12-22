@@ -8,7 +8,6 @@ import { object, string } from 'yup';
 import Field from '@/components/elements/Field';
 import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
-import settings from '@/../../settings.json';
 import Reaptcha from 'reaptcha';
 import useFlash from '@/plugins/useFlash';
 import Label from '@/components/elements/Label';
@@ -24,6 +23,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { enabled: recaptchaEnabled, siteKey } = useStoreState(state => state.settings.data!.recaptcha);
+    const userRegistration = useStoreState(state => state.settings.data!.userRegistration);
 
     useEffect(() => {
         clearFlashes();
@@ -129,7 +129,7 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                         }}
                     />
                     }
-                    {settings.userRegistration.enabled === true &&
+                    {userRegistration === '1' &&
                     <div css={tw`mt-6 text-center`}>
                         <Link
                             to={'/auth/register'}
