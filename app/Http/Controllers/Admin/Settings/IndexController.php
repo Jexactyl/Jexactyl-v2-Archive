@@ -60,6 +60,7 @@ class IndexController extends Controller
             'version' => $this->versionService,
             'languages' => $this->getAvailableLanguages(true),
             'registration' => $this->settings->get('settings::app:user_registration', true),
+            'username_edit' => $this->settings->get('settings::app:username_edit', true),
         ]);
     }
 

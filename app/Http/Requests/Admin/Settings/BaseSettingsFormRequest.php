@@ -21,6 +21,7 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'app:locale' => ['required', 'string', Rule::in(array_keys($this->getAvailableLanguages()))],
             'app:analytics' => 'nullable|string',
             'app:user_registration' => 'nullable|integer|in:0,1',
+            'app:username_edit' => 'nullable|integer|in:0,1',
         ];
     }
     /**
@@ -34,6 +35,7 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'app:locale' => 'Default Language',
             'app:analytics' => 'Google Analytics',
             'app:user_registration' => 'User Registration',
+            'app:username_edit' => 'Username Editing',
         ];
     }
 }

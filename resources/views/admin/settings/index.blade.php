@@ -79,6 +79,16 @@
                                     <p class="text-muted"><small>If enabled, users will be able to register accounts.</small></p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Username Editing</label>
+                                <div>
+                                    <select name="app:username_editing" class="form-control">
+                                        <option value="{{ 1 }}" @if($usernameEdit) selected @endif>Enabled</option>
+                                        <option value="{{ 0 }}" @if(!$usernameEdit) selected @endif>Disabled</option>
+                                    </select>
+                                    <p class="text-muted"><small>If enabled, users will be able to edit their username from the frontend.</small></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">
