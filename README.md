@@ -22,9 +22,6 @@ respective header files for more information.
 
 ## Screenshots  
 
-These were all taken from panel version 1.6.6-c (hotfix)
-
-
 Login Page:
 
 ![SS1](https://i.imgur.com/ZQPdxS7.png)
