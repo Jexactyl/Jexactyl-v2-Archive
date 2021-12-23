@@ -8,7 +8,6 @@ import tw from 'twin.macro';
 const BarFill = styled.div`
     ${tw`h-full`};
     transition: 250ms ease-in-out;
-    box-shadow: 0 -2px 10px 2px hsl(178, 78%, 57%);
 `;
 
 export default () => {
@@ -69,12 +68,12 @@ export default () => {
             >
                 <>
                     <BarFill
-                        key={''}
+                        key={'bar1'}
                         css={'bg-green-400'}
                         style={{ height: '2px', width: progress === undefined ? '100%' : `${progress}%` }}
                     />
                     <BarFill
-                        key={''}
+                        key={'bar2'}
                         css={'bg-yellow-400'}
                         style={{ height: '4px', width: progress === undefined ? '100%' : `${progress}%` }}
                     />
