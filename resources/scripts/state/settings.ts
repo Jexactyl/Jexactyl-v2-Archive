@@ -11,6 +11,7 @@ export interface SiteSettings {
     userRegistration: string;
     usernameEdit: string;
     particles: string;
+    rainbowBar: string;
 }
 
 export interface SettingsStore {

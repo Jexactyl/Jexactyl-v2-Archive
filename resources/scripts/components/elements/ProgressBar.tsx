@@ -7,7 +7,6 @@ import tw from 'twin.macro';
 
 const BarFill = styled.div`
     ${tw`h-full`};
-    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
     transition: 250ms ease-in-out;
 `;
 
@@ -15,6 +14,7 @@ export default () => {
     const interval = useRef<number>(null);
     const timeout = useRef<number>(null);
     const [ visible, setVisible ] = useState(false);
+    const rainbowBar = useStoreState(state => state.settings.data!.rainbowBar);
     const progress = useStoreState(state => state.progress.progress);
     const continuous = useStoreState(state => state.progress.continuous);
     const setProgress = useStoreActions(actions => actions.progress.setProgress);
@@ -67,7 +67,10 @@ export default () => {
                 unmountOnExit
                 classNames={'fade'}
             >
-                <BarFill style={{ width: progress === undefined ? '100%' : `${progress}%` }}/>
+                <BarFill
+                    css={'background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);'}
+                    style={{ width: progress === undefined ? '100%' : `${progress}%` }}
+                />
             </CSSTransition>
         </div>
     );
