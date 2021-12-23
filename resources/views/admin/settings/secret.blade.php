@@ -21,7 +21,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Panel Settings</h3>
                 </div>
-                <form action="{{ route('admin.settings') }}" method="POST">
+                <form action="" method="POST">
                     <div class="box-body">
                         <div class="row">
                             <div class="form-group col-md-4">
