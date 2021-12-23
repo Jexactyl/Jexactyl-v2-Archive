@@ -10,7 +10,7 @@ use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Traits\Helpers\AvailableLanguages;
 use Pterodactyl\Services\Helpers\SoftwareVersionService;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
-use Pterodactyl\Http\Requests\Admin\Settings\BaseSettingsFormRequest;
+use Pterodactyl\Http\Requests\Admin\Settings\SecretSettingsFormRequest;
 
 class SecretController extends Controller
 {
@@ -67,7 +67,7 @@ class SecretController extends Controller
      * @throws \Pterodactyl\Exceptions\Model\DataValidationException
      * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
      */
-    public function update(BaseSettingsFormRequest $request): RedirectResponse
+    public function update(SecretSettingsFormRequest $request): RedirectResponse
     {
         foreach ($request->normalize() as $key => $value) {
             $this->settings->set('settings::' . $key, $value);
