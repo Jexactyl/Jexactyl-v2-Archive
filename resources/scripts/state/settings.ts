@@ -10,6 +10,7 @@ export interface SiteSettings {
     analytics: string;
     userRegistration: string;
     usernameEdit: string;
+    particles: string;
 }
 
 export interface SettingsStore {

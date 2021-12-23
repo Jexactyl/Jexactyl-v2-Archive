@@ -22,6 +22,7 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'app:analytics' => 'nullable|string',
             'app:user_registration' => 'nullable|integer|in:0,1',
             'app:username_edit' => 'nullable|integer|in:0,1',
+            'app:particles' => 'nullable|integer|in:0,1',
         ];
     }
     /**
@@ -36,6 +37,7 @@ class BaseSettingsFormRequest extends AdminFormRequest
             'app:analytics' => 'Google Analytics',
             'app:user_registration' => 'User Registration',
             'app:username_edit' => 'Username Editing',
+            'app:particles' => 'Particles',
         ];
     }
 }

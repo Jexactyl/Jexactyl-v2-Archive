@@ -61,6 +61,7 @@ class IndexController extends Controller
             'languages' => $this->getAvailableLanguages(true),
             'registration' => $this->settings->get('settings::app:user_registration', true),
             'username_edit' => $this->settings->get('settings::app:username_edit', true),
+            'particles' => $this->settings->get('settings::app:particles', true),
         ]);
     }
 

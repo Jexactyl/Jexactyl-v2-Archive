@@ -89,6 +89,16 @@
                                     <p class="text-muted"><small>If enabled, users will be able to edit their username from the frontend.</small></p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Particles</label>
+                                <div>
+                                    <select name="app:particles" class="form-control">
+                                    <option value="{{ 0 }}" @if(!$username_edit) selected @endif>Disabled</option>
+                                        <option value="{{ 1 }}" @if($username_edit) selected @endif>Enabled</option>
+                                    </select>
+                                    <p class="text-muted"><small>If enabled, particle effects will be displayed in the login menus.</small></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">
