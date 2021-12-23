@@ -67,6 +67,12 @@ export default () => {
                 unmountOnExit
                 classNames={'fade'}
             >
+                {(progress || 0) === undefined &&
+                    <BarFill
+                        css={'bg-red-400'}
+                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                }
                 {(progress || 0) >= 0 &&
                     <BarFill
                         css={'bg-red-400'}
