@@ -6,7 +6,7 @@ import { CSSTransition } from 'react-transition-group';
 import tw from 'twin.macro';
 
 const BarFill = styled.div`
-    ${tw`h-full`};
+    ${tw`h-full bg-cyan-400`};
     transition: 250ms ease-in-out;
     box-shadow: 0 -2px 10px 2px hsl(178, 78%, 57%);
 `;
@@ -67,30 +67,7 @@ export default () => {
                 unmountOnExit
                 classNames={'fade'}
             >
-                {(progress || 0) === undefined &&
-                    <BarFill
-                        css={'bg-red-400'}
-                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                    />
-                }
-                {(progress || 0) >= 0 &&
-                    <BarFill
-                        css={'bg-red-400'}
-                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                    />
-                }
-                {(progress || 0) >= 33 &&
-                    <BarFill
-                        css={'bg-yellow-400'}
-                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                    />
-                }
-                {(progress || 0) >= 66 &&
-                    <BarFill
-                        css={'bg-green-400'}
-                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                    />
-                }
+                <BarFill style={{ width: progress === undefined ? '100%' : `${progress}%` }}/>
             </CSSTransition>
         </div>
     );
