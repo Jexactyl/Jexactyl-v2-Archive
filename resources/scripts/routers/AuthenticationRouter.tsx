@@ -20,7 +20,7 @@ export default ({ location, history, match }: RouteComponentProps) => {
                 params={{
                     particles: {
                         number: {
-                            value: 80,
+                            value: 40,
                             density: {
                                 enable: true,
                                 value_area: 800,
@@ -73,7 +73,7 @@ export default ({ location, history, match }: RouteComponentProps) => {
                         },
                         move: {
                             enable: true,
-                            speed: 5,
+                            speed: 10,
                             direction: 'none',
                             random: false,
                             straight: false,
