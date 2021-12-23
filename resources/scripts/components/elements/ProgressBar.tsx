@@ -59,28 +59,39 @@ export default () => {
     }, [ progress, continuous ]);
 
     return (
-        <div css={tw`w-full fixed`} style={{ height: '2px' }}>
-            <CSSTransition
-                timeout={150}
-                appear
-                in={visible}
-                unmountOnExit
-                classNames={'fade'}
-            >
-                <>
-                    {rainbowBar === '1' ?
+        <div>
+            {rainbowBar === '1' ?
+                <div css={tw`w-full fixed`} style={{ height: '2px' }}>
+                    <CSSTransition
+                        timeout={150}
+                        appear
+                        in={visible}
+                        unmountOnExit
+                        classNames={'fade'}
+                    >
                         <BarFill
                             css={'background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);'}
                             style={{ width: progress === undefined ? '100%' : `${progress}%` }}
                         />
-                        :
+                    </CSSTransition>
+                </div>
+                :
+                <div css={tw`w-full fixed`} style={{ height: '2px' }}>
+                    <CSSTransition
+                        timeout={150}
+                        appear
+                        in={visible}
+                        unmountOnExit
+                        classNames={'fade'}
+                    >
                         <BarFill
                             css={'bg-cyan-400'}
                             style={{ width: progress === undefined ? '100%' : `${progress}%` }}
                         />
-                    }
-                </>
-            </CSSTransition>
+
+                    </CSSTransition>
+                </div>
+            }
         </div>
     );
 };
