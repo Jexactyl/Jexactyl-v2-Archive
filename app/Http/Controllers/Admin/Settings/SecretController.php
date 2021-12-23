@@ -12,7 +12,7 @@ use Pterodactyl\Services\Helpers\SoftwareVersionService;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 use Pterodactyl\Http\Requests\Admin\Settings\BaseSettingsFormRequest;
 
-class IndexController extends Controller
+class SecretController extends Controller
 {
     use AvailableLanguages;
 
@@ -56,12 +56,7 @@ class IndexController extends Controller
      */
     public function index(): View
     {
-        return view('admin.settings.index', [
-            'version' => $this->versionService,
-            'languages' => $this->getAvailableLanguages(true),
-            'registration' => $this->settings->get('settings::app:user_registration', true),
-            'username_edit' => $this->settings->get('settings::app:username_edit', true),
-            'particles' => $this->settings->get('settings::app:particles', true),
+        return view('admin.settings.secret', [
             'rainbow_bar' => $this->settings->get('settings::app:particles', true),
         ]);
     }

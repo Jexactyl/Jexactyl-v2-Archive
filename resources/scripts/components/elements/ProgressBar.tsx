@@ -67,10 +67,17 @@ export default () => {
                 unmountOnExit
                 classNames={'fade'}
             >
-                <BarFill
-                    css={'background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);'}
-                    style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                />
+                {rainbowBar === '1' ?
+                    <BarFill
+                        css={'background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);'}
+                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    :
+                    <BarFill
+                        css={'bg-cyan-400'}
+                        style={{ width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                }
             </CSSTransition>
         </div>
     );

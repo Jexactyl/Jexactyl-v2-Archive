@@ -99,6 +99,16 @@
                                     <p class="text-muted"><small>If enabled, particle effects will be displayed in the login menus.</small></p>
                                 </div>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label">Rainbow Progress Bar</label>
+                                <div>
+                                    <select name="app:particles" class="form-control">
+                                    <option value="{{ 0 }}" @if(!$particles) selected @endif>Disabled</option>
+                                        <option value="{{ 1 }}" @if($particles) selected @endif>Enabled</option>
+                                    </select>
+                                    <p class="text-muted"><small>If enabled, the loading bar will be rainbow!</small></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">

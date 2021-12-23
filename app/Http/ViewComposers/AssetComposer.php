@@ -41,6 +41,7 @@ class AssetComposer
             'userRegistration' => $this->settings->get('settings::app:user_registration'),
             'usernameEdit' => $this->settings->get('settings::app:username_edit'),
             'particles' => $this->settings->get('settings::app:particles'),
+            'rainbowBar' => $this->settings->get('settings::app:rainbow_bar'),
         ]);
     }
 }
