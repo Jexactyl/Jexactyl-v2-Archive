@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 use Pterodactyl\Traits\Helpers\AvailableLanguages;
 use Pterodactyl\Http\Requests\Admin\AdminFormRequest;
 
-class BaseSettingsFormRequest extends AdminFormRequest
+class SecretSettingsFormRequest extends AdminFormRequest
 {
     use AvailableLanguages;
 
