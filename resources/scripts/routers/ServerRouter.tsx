@@ -120,7 +120,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                         </NavLink>
                                         <Can action={'file.*'}>
                                             <NavLink to={`${match.url}/files`}>
-                                                <FontAwesomeIcon icon={faFolder}/> File Manager
+                                                <FontAwesomeIcon icon={faFolder}/> Files
                                             </NavLink>
                                         </Can>
                                         <Can action={'database.*'}>
@@ -130,7 +130,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                         </Can>
                                         <Can action={'schedule.*'}>
                                             <NavLink to={`${match.url}/schedules`}>
-                                                <FontAwesomeIcon icon={faClock}/> Schedules
+                                                <FontAwesomeIcon icon={faClock}/> Tasks
                                             </NavLink>
                                         </Can>
                                         <Can action={'user.*'}>
