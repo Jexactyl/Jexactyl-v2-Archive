@@ -58,7 +58,7 @@ export default () => {
     }, [ progress, continuous ]);
 
     return (
-        <div css={tw`w-full fixed`} style={{ height: '4px' }}>
+        <div css={tw`w-full fixed`} style={{ height: '7px' }}>
             <CSSTransition
                 timeout={150}
                 appear
@@ -69,13 +69,38 @@ export default () => {
                 <>
                     <BarFill
                         key={'bar1'}
-                        css={'bg-green-400'}
-                        style={{ height: '2px', width: progress === undefined ? '100%' : `${progress}%` }}
+                        css={'bg-rainbow-50'}
+                        style={{ height: '1px', width: progress === undefined ? '100%' : `${progress}%` }}
                     />
                     <BarFill
                         key={'bar2'}
-                        css={'bg-yellow-400'}
+                        css={'bg-rainbow-100'}
+                        style={{ height: '2px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={'bar3'}
+                        css={'bg-rainbow-150'}
+                        style={{ height: '3px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={'bar4'}
+                        css={'bg-rainbow-200'}
                         style={{ height: '4px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={'bar5'}
+                        css={'bg-rainbow-250'}
+                        style={{ height: '5px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={'bar6'}
+                        css={'bg-rainbow-300'}
+                        style={{ height: '6px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={'bar7'}
+                        css={'bg-rainbow-350'}
+                        style={{ height: '7px', width: progress === undefined ? '100%' : `${progress}%` }}
                     />
                 </>
             </CSSTransition>

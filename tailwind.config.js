@@ -81,6 +81,15 @@ module.exports = {
                 800: 'hsl(125, 86%, 20%)',
                 900: 'hsl(125, 97%, 14%)',
             },
+            rainbow: {
+                50: '#FF0000', // Red
+                100: '#FF7F00', // Orange
+                150: '#FFFF00', // Yellow
+                200: '#00FF00', // Green
+                250: '#0000FF', // Blue
+                300: '#2E2B5F', // Indigo
+                350: '#8B00FF' // Violet
+            }
         },
         extend: {
             fontSize: {
