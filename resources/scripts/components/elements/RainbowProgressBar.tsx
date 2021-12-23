@@ -67,10 +67,9 @@ export default () => {
                 classNames={'fade'}
             >
                 <BarFill
-                    css={'bg-cyan-400'}
+                    css={'background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);'}
                     style={{ width: progress === undefined ? '100%' : `${progress}%` }}
                 />
-
             </CSSTransition>
         </div>
     );
