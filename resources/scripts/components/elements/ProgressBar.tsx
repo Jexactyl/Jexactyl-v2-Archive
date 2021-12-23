@@ -67,16 +67,18 @@ export default () => {
                 unmountOnExit
                 classNames={'fade'}
             >
-                <BarFill
-                    key={''}
-                    css={'bg-green-400'}
-                    style={{ height: '2px', width: progress === undefined ? '100%' : `${progress}%` }}
-                />
-                <BarFill
-                    key={''}
-                    css={'bg-yellow-400'}
-                    style={{ height: '4px', width: progress === undefined ? '100%' : `${progress}%` }}
-                />
+                <>
+                    <BarFill
+                        key={''}
+                        css={'bg-green-400'}
+                        style={{ height: '2px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                    <BarFill
+                        key={''}
+                        css={'bg-yellow-400'}
+                        style={{ height: '4px', width: progress === undefined ? '100%' : `${progress}%` }}
+                    />
+                </>
             </CSSTransition>
         </div>
     );
