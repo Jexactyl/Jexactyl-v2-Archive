@@ -76,11 +76,13 @@ const App = () => {
             <GlobalStylesheet/>
             <TailwindGlobalStyles/>
             <StoreProvider store={store}>
-                {rainbowBar === '1' ?
-                    <RainbowProgressBar/>
-                    :
-                    <ProgressBar/>
-                }
+                {/*
+                    {rainbowBar === '1' ?
+                        <RainbowProgressBar/>
+                        :
+                        <ProgressBar/>
+                    }
+                */}
                 <ProgressBar/>
                 <div css={tw`mx-auto w-auto`}>
                     <Router history={history}>
