@@ -9,7 +9,7 @@ import ServerRouter from '@/routers/ServerRouter';
 import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import { SiteSettings } from '@/state/settings';
 import ProgressBar from '@/components/elements/ProgressBar';
-import RainbowProgressBar from '@/components/elements/RainbowProgressbar';
+import RainbowProgressBar from '@/components/elements/RainbowProgressBar';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import tw, { GlobalStyles as TailwindGlobalStyles } from 'twin.macro';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
