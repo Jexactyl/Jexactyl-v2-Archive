@@ -93,8 +93,8 @@
                                 <label class="control-label">Particles</label>
                                 <div>
                                     <select name="app:particles" class="form-control">
-                                    <option value="{{ 0 }}" @if(!$username_edit) selected @endif>Disabled</option>
-                                        <option value="{{ 1 }}" @if($username_edit) selected @endif>Enabled</option>
+                                    <option value="{{ 0 }}" @if(!$particles) selected @endif>Disabled</option>
+                                        <option value="{{ 1 }}" @if($particles) selected @endif>Enabled</option>
                                     </select>
                                     <p class="text-muted"><small>If enabled, particle effects will be displayed in the login menus.</small></p>
                                 </div>
