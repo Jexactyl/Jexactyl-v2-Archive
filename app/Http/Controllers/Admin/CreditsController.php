@@ -17,7 +17,7 @@ class CreditsController extends Controller
     private Kernel $kernel;
     private AlertsMessageBag $alert;
 
-    public function __construct(CreditsRepositoryInterface $credits, Kernel $kernel, AlertsMessageBag, $alert) 
+    public function __construct(CreditsRepositoryInterface $credits, Kernel $kernel, AlertsMessageBag $alert) 
     {
         $this->credits = $credits;
         $this->kernel = $kernel;
