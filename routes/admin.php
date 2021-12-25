@@ -226,3 +226,15 @@ Route::group(['prefix' => 'nests'], function () {
     Route::delete('/egg/{egg}', 'Nests\EggController@destroy');
     Route::delete('/egg/{egg}/variables/{variable}', 'Nests\EggVariableController@destroy');
 });
+/*
+|--------------------------------------------------------------------------
+| Credits Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/credits
+|
+*/
+Route::group(['prefix' => 'credits'], function () {
+    Route::get('/', 'CreditsController@index')->name('admin.credits');
+    Route::patch('/', 'CreditsController@update');
+});

@@ -90,6 +90,11 @@
                                 <i class="fa fa-gamepad"></i> <span>Application API</span>
                             </a>
                         </li>
+                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.credits') ?: 'active' }}">
+                            <a href="{{ route('admin.credits')}}">
+                                <i class="fa fa-coin"></i> <span>Credits System</span>
+                            </a>
+                        </li>
                         <li class="header">MANAGEMENT</li>
                         <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}">
                             <a href="{{ route('admin.databases') }}">
