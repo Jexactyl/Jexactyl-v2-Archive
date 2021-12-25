@@ -10,6 +10,7 @@ use Pterodactyl\Http\Requests\Admin\CreditsFormRequest;
 use Pterodactyl\Exceptions\Model\DataValidationException;
 use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
+use Pterodactyl\Http\Controllers\Controller;
 
 class CreditsController extends Controller
 {
