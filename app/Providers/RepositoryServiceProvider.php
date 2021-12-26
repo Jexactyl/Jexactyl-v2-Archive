@@ -40,7 +40,6 @@ use Pterodactyl\Contracts\Repository\EggVariableRepositoryInterface;
 use Pterodactyl\Contracts\Repository\DatabaseHostRepositoryInterface;
 use Pterodactyl\Contracts\Repository\ServerVariableRepositoryInterface;
 use Pterodactyl\Contracts\Repository\CreditsRespositoryInterface;
-use Pterodactyl\Repositories\Eloquent\CreditsRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -68,6 +67,5 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubuserRepositoryInterface::class, SubuserRepository::class);
         $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(CreditsRepositoryInterface::class, CreditsRepository::class);
     }
 }
