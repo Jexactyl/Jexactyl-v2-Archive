@@ -27,7 +27,7 @@ class CreditsController extends Controller
 
     public function index(): View
     {
-        return view('admin.credits.index', [
+        return view('admin.credits', [
             'credits' => $this->credits,
             'enabled' => $this->credits->get('enabled'),
         ]);
