@@ -8,6 +8,6 @@ class CreditsFormRequest extends AdminFormRequest
     {
         return [
             'enabled' => 'required|bool'
-        ]
+        ];
     }
 }

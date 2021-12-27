@@ -39,6 +39,7 @@ use Pterodactyl\Contracts\Repository\AllocationRepositoryInterface;
 use Pterodactyl\Contracts\Repository\EggVariableRepositoryInterface;
 use Pterodactyl\Contracts\Repository\DatabaseHostRepositoryInterface;
 use Pterodactyl\Contracts\Repository\ServerVariableRepositoryInterface;
+use Pterodactyl\Contracts\Repository\CreditsRespositoryInterface;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -50,6 +51,7 @@ class RepositoryServiceProvider extends ServiceProvider
         // Eloquent Repositories
         $this->app->bind(AllocationRepositoryInterface::class, AllocationRepository::class);
         $this->app->bind(ApiKeyRepositoryInterface::class, ApiKeyRepository::class);
+        $this->app->bind(CreditsRepositoryInterface::class, CreditsRepository::class);
         $this->app->bind(DatabaseRepositoryInterface::class, DatabaseRepository::class);
         $this->app->bind(DatabaseHostRepositoryInterface::class, DatabaseHostRepository::class);
         $this->app->bind(EggRepositoryInterface::class, EggRepository::class);
@@ -65,6 +67,5 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubuserRepositoryInterface::class, SubuserRepository::class);
         $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-        $this->app->bind(CreditsRepositoryInterface::class, CreditsRepository::class);
     }
 }
