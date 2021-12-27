@@ -235,6 +235,6 @@ Route::group(['prefix' => 'nests'], function () {
 |
 */
 Route::group(['prefix' => 'credits'], function () {
-    Route::get('/', 'CreditsController@index')->name('admin.credits');
+    Route::get('/', 'CreditsController@index')->name('admin.credits.index');
     Route::patch('/', 'CreditsController@update');
 });
