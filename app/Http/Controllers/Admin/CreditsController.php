@@ -29,7 +29,7 @@ class CreditsController extends Controller
     {
         return view('admin.credits.index', [
             'credits' => $this->credits,
-            'enabled' => $this->credits->get('enabled'),
+            'enabled' => $this->credits->get('enabled', true),
         ]);
     }
 
