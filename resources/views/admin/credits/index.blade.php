@@ -6,7 +6,7 @@
 
 @section('content-header')
     <h1>Credits System<small>Configure the credits system.</small></h1>
-    <ol class="breadcrum">
+    <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">Admin</a></li>
         <li class="active">Credits</li>
     </ol>
@@ -25,7 +25,7 @@
                             <label class="control-label">Active</label>
                             <div>
                                 <select name="config:enabled" class="form-control">
-                                    
+
                                 </select>
                                 <p class="text-muted"><small>Cam edit this lol.</small></p>
                             </div>
