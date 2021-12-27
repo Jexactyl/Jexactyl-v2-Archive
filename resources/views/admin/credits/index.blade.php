@@ -26,8 +26,8 @@
                             <div>
                                 <select name="config:enabled" class="form-control">
                                     <!-- 
-                                        <option value="{{ 0 }}" @if(!enabled) selected @endif>No</option>
-                                        <option value="{{ 1 }}" @if(enabled) selected @endif>Yes</option>
+                                        <option value="{{ 0 }}" /@if(!enabled) selected @endif>No</option>
+                                        <option value="{{ 1 }}" /@if(enabled) selected @endif>Yes</option>
                                     -->
                                 </select>
                                 <p class="text-muted"><small>Cam edit this lol.</small></p>
@@ -42,3 +42,5 @@
             </div>
         </div>
     </div>
+@endsection
+
