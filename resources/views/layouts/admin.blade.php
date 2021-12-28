@@ -96,9 +96,9 @@
                             </a>
                         </li>
                         <li class="header">MANAGEMENT</li>
-                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.logs') ?: 'active' }}">
-                            <a href="{{ route('admin.logs') }}">
-                                <i class="fa fa-scroll"></i> <span>Audit Log</span>
+                        <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.auditlogs') ?: 'active' }}">
+                            <a href="{{ route('admin.auditlogs') }}">
+                                <i class="fa fa-id-card-o"></i> <span>Audit Logs</span>
                             </a>
                         </li>
                         <li class="{{ ! starts_with(Route::currentRouteName(), 'admin.databases') ?: 'active' }}">
