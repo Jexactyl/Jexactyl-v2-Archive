@@ -10,6 +10,18 @@ Route::get('/', 'BaseController@index')->name('admin.index');
 | Location Controller Routes
 |--------------------------------------------------------------------------
 |
+| Endpoint: /admin/logs
+|
+*/
+Route::group(['prefix' => 'logs'], function () {
+    Route::get('/', 'logs@index')->name('admin.logs.index');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Location Controller Routes
+|--------------------------------------------------------------------------
+|
 | Endpoint: /admin/api
 |
 */

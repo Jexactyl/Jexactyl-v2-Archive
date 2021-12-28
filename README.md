@@ -46,3 +46,7 @@ Demo of Security Keys On IOS:
 
 https://i.imgur.com/wru06gk.mp4
 
+## Credits
+Here's some links to useful repos which have been used to make this project.
+[Tdash2/PterodactylAuditLogs](https://github.com/Tdash2/Pterodactyl_audit_logs) - Admin-side activity logging
+
