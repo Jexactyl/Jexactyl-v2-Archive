@@ -119,7 +119,6 @@ class AuditLog extends Model
             'user_id' => ($request && $request->user()) ? $request->user()->id : null,
             'server_id' => null,
             'action' => $action,
-            'ip' => $request->getClientIp() ?? 'Unavailable',
             'device' => $request ? [
                 'ip_address' => $request->getClientIp() ?? '127.0.0.1',
                 'user_agent' => $request->userAgent() ?? '',

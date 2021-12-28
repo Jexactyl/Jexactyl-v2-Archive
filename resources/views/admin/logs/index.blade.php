@@ -38,7 +38,7 @@
                                 <td>{{$logs['created_at']}}</td>
                                 <td>{{$logs['server_id']}}</td>
                                 <td>{{$logs['action']}}</td>
-                                <td>{{$logs['ip']}}</td>
+                                <td>{{$logs['device.ip_address']}}</td>
                             </tr>
                         @endforeach
                         </tbody>
