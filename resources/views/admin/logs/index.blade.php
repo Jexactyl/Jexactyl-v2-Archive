@@ -14,22 +14,19 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-8 col-xs-12">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Logs</h3>
-                    <div class="box-tools">
-
-                    </div>
-                </div>
-                <div class="box-body table-responsive no-padding">
-                    <table class="table table-hover">
-                        <tbody>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Logs</h3>
+            </div>
+            <div class="box-body table-responsive no-padding">
+                 <table class="table table-hover">
+                    <tbody>
                         <tr>
                             <th>User ID</th>
 			                <th>Date</th>
                             <th>Server</th>
                             <th>Actions</th>
+                            <th>Files</th>
                         </tr>
                         @foreach ($logs as $logs)
                             <tr>
@@ -37,11 +34,12 @@
                                 <td>{{$logs['created_at']}}</td>
                                 <td>{{$logs['server_id']}}</td>
                                 <td>{{$logs['action']}}</td>
+                                <td>{{$logs['metadata']}}</td>
                             </tr>
                         @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
             </div>
-
+        </div>
+    </div>
 @endsection
