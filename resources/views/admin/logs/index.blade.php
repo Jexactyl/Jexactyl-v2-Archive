@@ -30,7 +30,6 @@
 			                <th>Date</th>
                             <th>Server</th>
                             <th>Actions</th>
-                            <th>IP address</th>
                         </tr>
                         @foreach ($logs as $logs)
                             <tr>
@@ -38,7 +37,6 @@
                                 <td>{{$logs['created_at']}}</td>
                                 <td>{{$logs['server_id']}}</td>
                                 <td>{{$logs['action']}}</td>
-                                <td>{{$logs['device.ip_address']}}</td>
                             </tr>
                         @endforeach
                         </tbody>
