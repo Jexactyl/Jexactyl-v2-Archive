@@ -14,7 +14,7 @@ Route::get('/', 'BaseController@index')->name('admin.index');
 |
 */
 Route::group(['prefix' => 'logs'], function () {
-    Route::get('/', 'logs@index')->name('admin.logs.index');
+    Route::get('/', 'AuditLogsController@index')->name('admin.logs.index');
 });
 
 /*
