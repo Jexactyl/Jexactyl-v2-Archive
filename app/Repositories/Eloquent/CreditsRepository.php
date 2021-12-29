@@ -2,7 +2,9 @@
 
 namespace Pterodactyl\Repositories\Eloquent;
 
-use Pterodactyl\Models\Setting;
+use Pterodactyl\Exceptions\Model\DataValidationException;
+use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Models\Credits;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 
 class CreditsRepository extends EloquentRepository implements CreditsRepositoryInterface
@@ -24,14 +26,14 @@ class CreditsRepository extends EloquentRepository implements CreditsRepositoryI
      */
     public function model()
     {
-        return Setting::class;
+        return Credits::class;
     }
 
     /**
      * Store a new persistent setting in the database.
      *
-     * @throws \Pterodactyl\Exceptions\Model\DataValidationException
-     * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
+     * @throws DataValidationException
+     * @throws RecordNotFoundException
      */
     public function set(string $key, string $value = null)
     {

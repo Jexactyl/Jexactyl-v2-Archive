@@ -6,11 +6,11 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Illuminate\Contracts\Console\Kernel;
+use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Http\Requests\Admin\CreditsFormRequest;
 use Pterodactyl\Exceptions\Model\DataValidationException;
 use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
-use Pterodactyl\Http\Controllers\Controller;
 
 class CreditsController extends Controller
 {
@@ -18,7 +18,7 @@ class CreditsController extends Controller
     private Kernel $kernel;
     private AlertsMessageBag $alert;
 
-    public function __construct(CreditsRepositoryInterface $credits, Kernel $kernel, AlertsMessageBag $alert) 
+    public function __construct(CreditsRepositoryInterface $credits, Kernel $kernel, AlertsMessageBag $alert)
     {
         $this->credits = $credits;
         $this->kernel = $kernel;
@@ -29,7 +29,7 @@ class CreditsController extends Controller
     {
         return view('admin.credits.index', [
             'credits' => $this->credits,
-            #'enabled' => $this->credits->get('enabled', true),
+            'enabled' => $this->credits->get('config:enabled', true),
         ]);
     }
 
@@ -37,14 +37,14 @@ class CreditsController extends Controller
      * @throws DataValidationException
      * @throws RecordNotFoundException
      */
-    public function update(CreditsFormRequest $request): RedirectResponce
+    public function update(CreditsFormRequest $request): RedirectResponse
     {
         foreach ($request->normalize() as $key => $value) {
-            $this->credits->set('config:'.$key, $value);
+            $this->credits->set($key, $value);
         }
 
         $this->kernel->call('queue:restart');
-        $this->alert->success('The credits system has been updated and the queue worker has been restarted.');
+        $this->alert->success('The credits system has been updated and the queue worker has been restarted.')->flash();
 
         return redirect()->route('admin.credits');
     }

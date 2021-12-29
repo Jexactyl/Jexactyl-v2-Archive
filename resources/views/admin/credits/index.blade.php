@@ -22,12 +22,13 @@
                 <form action="{{ route('admin.credits') }}" method="POST">
                     <div class="box-body">
                         <div class="form-group col-md-4">
-                            <label class="control-label">Active</label>
+                            <label class="control-label">Status</label>
                             <div>
                                 <select name="config:enabled" class="form-control">
-
+                                    <option value="{{ 0 }}" @if(!$enabled) selected @endif>Disabled</option>
+                                    <option value="{{ 1 }}" @if($enabled) selected @endif>Enabled</option>
                                 </select>
-                                <p class="text-muted"><small>Cam edit this lol.</small></p>
+                                <p class="text-muted"><small>When enabled, users will have access to the credits system.</small></p>
                             </div>
                         </div>
                     </div>

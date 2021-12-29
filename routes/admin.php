@@ -10,18 +10,6 @@ Route::get('/', 'BaseController@index')->name('admin.index');
 | Location Controller Routes
 |--------------------------------------------------------------------------
 |
-| Endpoint: /admin/logs
-|
-*/
-Route::group(['prefix' => 'logs'], function () {
-    Route::get('/', 'AuditLogsController@index')->name('admin.logs.index');
-});
-
-/*
-|--------------------------------------------------------------------------
-| Location Controller Routes
-|--------------------------------------------------------------------------
-|
 | Endpoint: /admin/api
 |
 */
@@ -238,6 +226,7 @@ Route::group(['prefix' => 'nests'], function () {
     Route::delete('/egg/{egg}', 'Nests\EggController@destroy');
     Route::delete('/egg/{egg}/variables/{variable}', 'Nests\EggVariableController@destroy');
 });
+
 /*
 |--------------------------------------------------------------------------
 | Credits Controller Routes
@@ -249,4 +238,16 @@ Route::group(['prefix' => 'nests'], function () {
 Route::group(['prefix' => 'credits'], function () {
     Route::get('/', 'CreditsController@index')->name('admin.credits');
     Route::patch('/', 'CreditsController@update');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Audit Logs Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/logs
+|
+*/
+Route::group(['prefix' => 'auditlogs'], function () {
+    Route::get('/', 'AuditLogsController@index')->name('admin.auditlogs');
 });

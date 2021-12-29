@@ -7,7 +7,7 @@ class CreditsFormRequest extends AdminFormRequest
     public function rules()
     {
         return [
-            'enabled' => 'required|bool'
+            'config:enabled' => 'required|bool',
         ];
     }
 }
