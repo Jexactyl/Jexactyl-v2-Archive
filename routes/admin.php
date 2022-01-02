@@ -226,3 +226,15 @@ Route::group(['prefix' => 'nests'], function () {
     Route::delete('/egg/{egg}', 'Nests\EggController@destroy');
     Route::delete('/egg/{egg}/variables/{variable}', 'Nests\EggVariableController@destroy');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Audit Logs Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/logs
+|
+*/
+Route::group(['prefix' => 'logs'], function () {
+    Route::get('/', 'LogsController@index')->name('admin.logs');
+});
