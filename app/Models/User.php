@@ -28,6 +28,7 @@ use Pterodactyl\Notifications\SendPasswordReset as ResetPasswordNotification;
  * @property string|null $remeber_token
  * @property string $language
  * @property bool $root_admin
+ * @property int $cr_balance
  * @property bool $use_totp
  * @property string|null $totp_secret
  * @property \Carbon\Carbon|null $totp_authenticated_at
@@ -91,6 +92,7 @@ class User extends Model implements
         'totp_authenticated_at',
         'gravatar',
         'root_admin',
+        'cr_balance'
     ];
 
     /**
@@ -143,6 +145,7 @@ class User extends Model implements
         'name_last' => 'required|string|between:1,191',
         'password' => 'sometimes|nullable|string',
         'root_admin' => 'boolean',
+        'cr_balance' => 'int',
         'language' => 'string',
         'use_totp' => 'boolean',
         'totp_secret' => 'nullable|string',

@@ -18,6 +18,7 @@ class AddUsers extends Migration
             $table->string('remember_token')->nullable();
             $table->char('language', 5)->default('en');
             $table->tinyInteger('root_admin')->unsigned()->default(0);
+            $table->integer('cr_balance');
             $table->tinyInteger('use_totp')->unsigned();
             $table->char('totp_secret', 16)->nullable();
             $table->timestamps();

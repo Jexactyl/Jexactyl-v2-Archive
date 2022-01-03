@@ -28,6 +28,7 @@ class AccountTransformer extends BaseClientTransformer
             'email' => $model->email,
             'first_name' => $model->name_first,
             'last_name' => $model->name_last,
+            'cr_balance' => $model->cr_balance,
             'language' => $model->language,
         ];
     }

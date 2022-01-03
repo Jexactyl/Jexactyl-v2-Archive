@@ -23,6 +23,7 @@ class UserFormRequest extends AdminFormRequest
             'password',
             'language',
             'root_admin',
+            'cr_balance',
         ])->toArray();
     }
 }
