@@ -4,11 +4,10 @@ namespace Pterodactyl\Http\Controllers\Admin;
 
 use Illuminate\Support\Facades\DB;
 use Pterodactyl\Http\Controllers\Controller;
-use Pterodactyl\Models\Server;
 
-class AuditLogsController extends Controller
+class LogsController extends Controller
 {
-    public function index(Server $server)
+    public function index()
     {
         $logs = DB::table('audit_logs')->orderBy('id', 'DESC')->get();
         $logs = json_decode(json_encode($logs), true);
