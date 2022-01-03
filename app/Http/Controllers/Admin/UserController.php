@@ -14,6 +14,7 @@ use Pterodactyl\Traits\Helpers\AvailableLanguages;
 use Pterodactyl\Services\Users\UserCreationService;
 use Pterodactyl\Services\Users\UserDeletionService;
 use Pterodactyl\Http\Requests\Admin\UserFormRequest;
+use Pterodactyl\Http\Requests\Admin\UserStoreFormRequest;
 use Pterodactyl\Contracts\Repository\UserRepositoryInterface;
 
 class UserController extends Controller
@@ -117,9 +118,21 @@ class UserController extends Controller
     }
 
     /**
+     * Display user view page.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function viewStore(User $user)
+    {
+        return view('admin.users.store', [
+            'user' => $user,
+        ]);
+    }
+
+    /**
      * Delete a user from the system.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedzirectResponse
      *
      * @throws \Exception
      * @throws \Pterodactyl\Exceptions\DisplayException
@@ -168,6 +181,25 @@ class UserController extends Controller
         $this->alert->success(trans('admin/user.notices.account_updated'))->flash();
 
         return redirect()->route('admin.users.view', $user->id);
+    }
+
+    /**
+     * Update a user on the system.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     *
+     * @throws \Pterodactyl\Exceptions\Model\DataValidationException
+     * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
+     */
+    public function updateStore(UserStoreFormRequest $request, User $user)
+    {
+        $this->updateService
+            ->setUserLevel(User::USER_LEVEL_ADMIN)
+            ->handle($user, $request->normalize());
+
+        $this->alert->success(trans('admin/user.notices.account_updated'))->flash();
+
+        return redirect()->route('admin.users.store', $user->id);
     }
 
     /**

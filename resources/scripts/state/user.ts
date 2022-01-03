@@ -10,6 +10,9 @@ export interface UserData {
     rootAdmin: boolean;
     useTotp: boolean;
     crBalance: number;
+    crCpu: number;
+    crRam: number;
+    crStorage: number;
     createdAt: Date;
     updatedAt: Date;
 }
