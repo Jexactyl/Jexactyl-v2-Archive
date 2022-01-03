@@ -13,7 +13,6 @@ use Illuminate\Container\Container;
  * @property int|null $user_id
  * @property int|null $server_id
  * @property string $action
- * @property string $ipaddr
  * @property string|null $subaction
  * @property array $device
  * @property array $metadata
@@ -50,7 +49,6 @@ class AuditLog extends Model
         'uuid' => 'required|uuid',
         'action' => 'required|string|max:191',
         'subaction' => 'nullable|string|max:191',
-        'ipaddr' => 'ip',
         'device' => 'array',
         'device.ip_address' => 'ip',
         'device.user_agent' => 'string',
@@ -121,7 +119,6 @@ class AuditLog extends Model
             'user_id' => ($request && $request->user()) ? $request->user()->id : null,
             'server_id' => null,
             'action' => $action,
-            'ipaddr' => $request->getClientIp(),
             'device' => $request ? [
                 'ip_address' => $request->getClientIp() ?? '127.0.0.1',
                 'user_agent' => $request->userAgent() ?? '',

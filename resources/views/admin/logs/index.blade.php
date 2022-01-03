@@ -36,7 +36,6 @@
                                 <td>{{$logs['created_at']}}</td>
                                 <td>{{$logs['server_id']}}</td>
                                 <td>{{$logs['action']}}</td>
-                                <td>{{$logs['ipaddr']}}</td>
                                 <td>{{$logs['metadata']}}</td>
                             </tr>
                         @endforeach
