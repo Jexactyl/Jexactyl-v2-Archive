@@ -19,6 +19,9 @@ class AddUsers extends Migration
             $table->char('language', 5)->default('en');
             $table->tinyInteger('root_admin')->unsigned()->default(0);
             $table->integer('cr_balance');
+            $table->integer('cr_cpu');
+            $table->integer('cr_ram');
+            $table->integer('cr_storage');
             $table->tinyInteger('use_totp')->unsigned();
             $table->char('totp_secret', 16)->nullable();
             $table->timestamps();

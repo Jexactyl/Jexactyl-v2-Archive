@@ -119,7 +119,7 @@ class UserController extends Controller
     /**
      * Delete a user from the system.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Illuminate\Http\RedzirectResponse
      *
      * @throws \Exception
      * @throws \Pterodactyl\Exceptions\DisplayException
