@@ -106,6 +106,19 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Credits System</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="cr_balance" class="control-label">Credits Balance</label>
+                        <input type="text" id="cr_balance" value="{{ $user->cr_balance }}" name="cr_balance" class="form-control form-autocomplete-stop">
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
     <div class="col-xs-12">
         <div class="box box-danger">
