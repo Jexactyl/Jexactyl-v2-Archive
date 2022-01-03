@@ -17,6 +17,9 @@ class UserStoreFormRequest extends AdminFormRequest
             User::getRulesForUpdate($this->route()->parameter('user'))
         )->only([
             'cr_balance',
+            'cr_cpu',
+            'cr_ram',
+            'cr_storage',
         ])->toArray();
     }
 }
