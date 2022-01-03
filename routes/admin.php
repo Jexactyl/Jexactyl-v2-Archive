@@ -90,7 +90,7 @@ Route::group(['prefix' => 'users'], function () {
     Route::get('/accounts.json', 'UserController@json')->name('admin.users.json');
     Route::get('/new', 'UserController@create')->name('admin.users.new');
     Route::get('/view/{user}', 'UserController@view')->name('admin.users.view');
-    Route::get('/view/{user}/store', 'UserController@view')->name('admin.users.store');
+    Route::get('/view/{user}/store', 'UserController@viewStore')->name('admin.users.store');
 
     Route::post('/new', 'UserController@store');
     Route::patch('/view/{user}', 'UserController@update');
