@@ -6,8 +6,10 @@ import getCrBalance, { CrBalanceData } from '@/api/account/getCrBalance';
 import { httpErrorToHuman } from '@/api/http';
 import { ApplicationStore } from '@/state';
 import { useStoreActions, Actions } from 'easy-peasy';
+import { useStoreState } from '@/state/hooks';
 
 const UserInformationRow = () => {
+    const crBalance = useStoreState(state => state.user.data!.crBalance);
     const [ data, setData ] = useState<CrBalanceData>();
     const { addError, clearFlashes } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
 
@@ -30,7 +32,7 @@ const UserInformationRow = () => {
             icon={faInfoCircle}
             css={tw`flex-1`}
         >
-            You have <h3 css={tw`text-2xl`}>{data?.cr_balance}</h3> credits available.
+            You have <h3 css={tw`text-2xl`}>API: {data?.cr_balance} State: {crBalance}</h3> credits available.
         </TitledGreyBox>
     );
 };
