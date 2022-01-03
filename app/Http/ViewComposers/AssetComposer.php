@@ -42,6 +42,9 @@ class AssetComposer
             'usernameEdit' => $this->settings->get('settings::app:username_edit'),
             'particles' => $this->settings->get('settings::app:particles'),
             'rainbowBar' => $this->settings->get('settings::app:rainbow_bar'),
+            'store' => [
+                'enabled' => true,
+            ],
         ]);
     }
 }

@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import ReactGA from 'react-ga';
 import { hot } from 'react-hot-loader/root';
 import { Route, Router, Switch, useLocation } from 'react-router-dom';
-import { StoreProvider /* useStoreState */ } from 'easy-peasy';
+import { StoreProvider } from 'easy-peasy';
 import { store } from '@/state';
 import DashboardRouter from '@/routers/DashboardRouter';
 import ServerRouter from '@/routers/ServerRouter';
 import AuthenticationRouter from '@/routers/AuthenticationRouter';
+import StoreRouter from '@/routers/StoreRouter';
 import { SiteSettings } from '@/state/settings';
 import ProgressBar from '@/components/elements/ProgressBar';
-// import RainbowProgressBar from '@/components/elements/RainbowProgressBar';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import tw, { GlobalStyles as TailwindGlobalStyles } from 'twin.macro';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
@@ -76,13 +76,6 @@ const App = () => {
             <GlobalStylesheet/>
             <TailwindGlobalStyles/>
             <StoreProvider store={store}>
-                {/*
-                    {rainbowBar === '1' ?
-                        <RainbowProgressBar/>
-                        :
-                        <ProgressBar/>
-                    }
-                */}
                 <ProgressBar/>
                 <div css={tw`mx-auto w-auto`}>
                     <Router history={history}>
@@ -90,6 +83,9 @@ const App = () => {
                         <Switch>
                             <Route path="/server/:id" component={ServerRouter}/>
                             <Route path="/auth" component={AuthenticationRouter}/>
+                            {SiteConfiguration?.store.enabled === '1' &&
+                                <Route path="/store" component={StoreRouter}/>
+                            }
                             <Route path="/" component={DashboardRouter}/>
                             <Route path={'*'} component={NotFound}/>
                         </Switch>

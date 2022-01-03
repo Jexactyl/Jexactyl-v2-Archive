@@ -12,6 +12,9 @@ export interface SiteSettings {
     usernameEdit: string;
     particles: string;
     rainbowBar: string;
+    store: {
+        enabled: string;
+    }
 }
 
 export interface SettingsStore {
