@@ -21,6 +21,9 @@ const UserInformationRow = () => {
             });
     }, []);
 
+    // Debug log to make sure API works!
+    console.log(data);
+
     return (
         <TitledGreyBox
             title={'User Information'}
