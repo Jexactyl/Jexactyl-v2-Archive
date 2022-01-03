@@ -94,7 +94,7 @@ Route::group(['prefix' => 'users'], function () {
 
     Route::post('/new', 'UserController@store');
     Route::patch('/view/{user}', 'UserController@update');
-    Route::patch('/view/{user}/store', 'UserController@update');
+    Route::patch('/view/{user}/store', 'UserController@updateStore');
 
     Route::delete('/view/{user}', 'UserController@delete');
 });

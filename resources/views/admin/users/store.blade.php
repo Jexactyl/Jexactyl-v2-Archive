@@ -20,18 +20,27 @@
 
 @section('content')
 <div class="row">
-    <form action="{{ route('admin.users.store', $user->id) }}" method="post">
-    <div class="box-body">
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label for="cr_balance" class="control-label">Credits Balance</label>
-                <input type="text" id="cr_balance" value="{{ $user->cr_balance }}" name="cr_balance" class="form-control form-autocomplete-stop">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">User Credits Settings</h3>
+                </div>
+                <form action="{{ route('admin.users.store', $user->id) }}" method="POST">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="cr_balance" class="control-label">Credits Balance</label>
+                                <input type="text" id="cr_balance" value="{{ $user->cr_balance }}" name="cr_balance" class="form-control form-autocomplete-stop">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        {!! csrf_field() !!}
+                        <button type="submit" name="_method" value="PATCH" class="btn btn-sm btn-primary pull-right">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="box-footer">
-        {!! csrf_field() !!}
-        <button type="submit" name="_method" value="PATCH" class="btn btn-sm btn-primary pull-right">Save</button>
     </div>
 </div>
 @endsection
