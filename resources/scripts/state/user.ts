@@ -9,6 +9,7 @@ export interface UserData {
     language: string;
     rootAdmin: boolean;
     useTotp: boolean;
+    crBalance: number;
     createdAt: Date;
     updatedAt: Date;
 }
