@@ -8,6 +8,7 @@ import React from 'react';
 import tw from 'twin.macro';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { useStoreState } from '@/state/hooks';
+import { megabytesToHuman } from '@/helpers';
 
 const ResourceRow = () => {
     const user = useStoreState(state => state.user.data);
@@ -30,7 +31,7 @@ const ResourceRow = () => {
                         title={'CPU available'}
                         icon={faMicrochip}
                     >
-                        <h3 css={tw`text-2xl`}>{user?.crCpu}%</h3>
+                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crCpu)}</h3>
                     </TitledGreyBox>
                 </div>
             </div>
@@ -40,7 +41,7 @@ const ResourceRow = () => {
                         title={'RAM available'}
                         icon={faMemory}
                     >
-                        <h3 css={tw`text-2xl`}>{user?.crRam}MB</h3>
+                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crRam)}</h3>
                     </TitledGreyBox>
                 </div>
             </div>
@@ -50,7 +51,7 @@ const ResourceRow = () => {
                         title={'Storage available'}
                         icon={faHdd}
                     >
-                        <h3 css={tw`text-2xl`}>{user?.crStorage}MB</h3>
+                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crStorage)}</h3>
                     </TitledGreyBox>
                 </div>
             </div>
