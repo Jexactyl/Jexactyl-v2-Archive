@@ -7,7 +7,7 @@ export interface CrBalanceData {
 
 export default (): Promise<CrBalanceData> => {
     return new Promise((resolve, reject) => {
-        http.get('/api/client/account/')
+        http.get('/api/client/account')
             .then(({ data }) => resolve(data.data))
             .catch(reject);
     });

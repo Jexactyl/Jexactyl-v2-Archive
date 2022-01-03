@@ -83,9 +83,7 @@ const App = () => {
                         <Switch>
                             <Route path="/server/:id" component={ServerRouter}/>
                             <Route path="/auth" component={AuthenticationRouter}/>
-                            {SiteConfiguration?.store.enabled === '1' &&
-                                <Route path="/store" component={StoreRouter}/>
-                            }
+                            <Route path="/store" component={StoreRouter}/>
                             <Route path="/" component={DashboardRouter}/>
                             <Route path={'*'} component={NotFound}/>
                         </Switch>
