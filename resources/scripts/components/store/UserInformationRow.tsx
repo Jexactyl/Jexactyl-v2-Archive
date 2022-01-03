@@ -13,7 +13,7 @@ const UserInformationRow = () => {
             icon={faInfoCircle}
             css={tw`flex-1`}
         >
-            <div>You have <h3 css={tw`text-2xl`}>{crBalance}</h3> credits available.</div>
+            <div>You have {crBalance} credits available.</div>
         </TitledGreyBox>
     );
 };
