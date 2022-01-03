@@ -27,7 +27,6 @@
 			                <th>Date</th>
                             <th>Server</th>
                             <th>Actions</th>
-                            <th>IP address</th>
                             <th>Files</th>
                         </tr>
                         @foreach ($logs as $logs)
