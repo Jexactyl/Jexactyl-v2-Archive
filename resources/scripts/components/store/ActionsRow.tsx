@@ -15,34 +15,6 @@ const ActionsRow = () => {
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
-                <Field
-                    id={'buySlots'}
-                    name={'buySlots'}
-                    label={'Server Slots'}
-                    type={'number'}
-                    description={'Enter an amount of server slots you wish to buy.'}
-                />
-                <Field
-                    id={'buyCpu'}
-                    name={'buyCpu'}
-                    label={'CPU'}
-                    type={'number'}
-                    description={'Enter an amount of CPU in % you wish to buy.'}
-                />
-                <Field
-                    id={'buyRam'}
-                    name={'buyRam'}
-                    label={'RAM'}
-                    type={'number'}
-                    description={'Enter an amount of RAM in GB you wish to buy.'}
-                />
-                <Field
-                    id={'buyStorage'}
-                    name={'buyStorage'}
-                    label={'Storage'}
-                    type={'number'}
-                    description={'Enter an amount of storage in GB you wish to buy.'}
-                />
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
