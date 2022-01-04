@@ -44,6 +44,7 @@ export default () => {
 
     return (
         <PageContentBlock title={'Create a Server'} css={tw`flex flex-wrap`}>
+            <h3 css={tw`mt-8 mb-2 text-2xl`}>New Server</h3>
             <div css={tw`w-full`}>
                 <Formik
                     onSubmit={submit}
