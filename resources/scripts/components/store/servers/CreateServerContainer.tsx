@@ -80,6 +80,7 @@ export default () => {
                                             name={'cpu'}
                                             placeholder={'Server CPU'}
                                         />
+                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{user!.crCpu}% available</p>
                                         <p css={tw`mt-1 text-xs text-neutral-400`}>Assign CPU cores and threads to your server. (100% = 1 thread)</p>
                                     </div>
                                 </TitledGreyBox>

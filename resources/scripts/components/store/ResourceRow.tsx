@@ -31,7 +31,7 @@ const ResourceRow = () => {
                         title={'CPU available'}
                         icon={faMicrochip}
                     >
-                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crCpu)}</h3>
+                        <h3 css={tw`text-2xl`}>{user!.crCpu}%</h3>
                     </TitledGreyBox>
                 </div>
             </div>
