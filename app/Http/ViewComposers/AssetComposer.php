@@ -3,6 +3,7 @@
 namespace Pterodactyl\Http\ViewComposers;
 
 use Illuminate\View\View;
+use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 use Pterodactyl\Services\Helpers\AssetHashService;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
 
@@ -14,12 +15,14 @@ class AssetComposer
     private $assetHashService;
 
     private SettingsRepositoryInterface $settings;
+    private CreditsRepositoryInterface $credits;
 
     /**
      * AssetComposer constructor.
      */
-    public function __construct(AssetHashService $assetHashService, SettingsRepositoryInterface $settings)
+    public function __construct(AssetHashService $assetHashService, SettingsRepositoryInterface $settings, CreditsRepositoryInterface $credits)
     {
+        $this->credits = $credits;
         $this->assetHashService = $assetHashService;
         $this->settings = $settings;
     }
@@ -43,7 +46,7 @@ class AssetComposer
             'particles' => $this->settings->get('settings::app:particles'),
             'rainbowBar' => $this->settings->get('settings::app:rainbow_bar'),
             'store' => [
-                'enabled' => true,
+                'enabled' => $this->credits->get('store:enabled', false),
             ],
         ]);
     }

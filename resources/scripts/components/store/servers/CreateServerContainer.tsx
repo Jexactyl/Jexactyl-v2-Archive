@@ -93,7 +93,7 @@ export default () => {
                                             name={'ram'}
                                             placeholder={'4'}
                                         />
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crRam)}</p>
+                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crRam)} available</p>
                                         <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of memory allowed for this server in GB.</p>
                                     </div>
                                 </TitledGreyBox>

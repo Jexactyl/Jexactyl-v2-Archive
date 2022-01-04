@@ -4,7 +4,7 @@ import { useStoreState } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import { NavLink, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCogs, faKey, faLayerGroup, faSignOutAlt, faSitemap, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCogs, faKey, faLayerGroup, faSignOutAlt, faSitemap, faStore, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import styled from 'styled-components/macro';
 import http from '@/api/http';
@@ -29,6 +29,7 @@ export function SidePanelLink (props: { icon: IconProp, react?: boolean, link: s
 }
 
 export default (props: { children?: React.ReactNode }) => {
+    const storeEnabled = useStoreState(state => state.settings!.data?.store.enabled);
     const rootAdmin = useStoreState((state: ApplicationStore) => state.user.data!.rootAdmin);
 
     const onTriggerLogout = () => {
@@ -54,6 +55,12 @@ export default (props: { children?: React.ReactNode }) => {
             <Category>
                 <SidePanelLink title={'Servers'} icon={faLayerGroup} react link={'/'} exact/>
                 <br />
+                {storeEnabled &&
+                    <>
+                        <SidePanelLink title={'Store'} icon={faStore} react link={'/store'}/>
+                        <br />
+                    </>
+                }
                 <SidePanelLink title={'Account'} icon={faUserCircle} react link={'/account'}/>
                 <br />
                 <SidePanelLink title={'Account API'} icon={faSitemap} react link={'/account/api'}/>
