@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Pterodactyl\Services\Servers\ServerCreationService;
 use Pterodactyl\Exceptions\DisplayException;
 
-class CloudServersController extends ClientApiController
+class StoreController extends ClientApiController
 {
 
     public function __construct(ServerCreationService $creationService)
