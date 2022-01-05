@@ -68,7 +68,7 @@ class StoreController extends ClientApiController
             'swap' => 0,
             'io' => 500,
             'image' => 'ghcr.io/pterodactyl/yolks:nodejs_14',
-            'startup' => 'node index.js',
+            'startup' => $egg->startup,
             'start_on_completion' => true,
         ];
 

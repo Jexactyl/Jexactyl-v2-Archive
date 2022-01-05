@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { Form, Formik, FormikHelpers } from 'formik';
 import Button from '@/components/elements/Button';
-import { number, object } from 'yup';
+import { number, object, string } from 'yup';
 import Field from '@/components/elements/Field';
 import createServer from '@/api/store/createServer';
 import getConfig from '@/api/store/getConfig';
@@ -96,7 +96,7 @@ export default ({ match }: RouteComponentProps<Props>) => {
                                 egg: 0,
                             }}
                             validationSchema={object().shape({
-                                name: number().required(),
+                                name: string().required(),
                                 cpu: number().required(),
                                 ram: number().required(),
                                 storage: number().required(),
