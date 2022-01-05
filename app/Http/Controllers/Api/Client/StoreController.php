@@ -17,6 +17,20 @@ class StoreController extends ClientApiController
         $this->creationService = $creationService;
     }
 
+    public function getConfig(StoreRequest $request, $id): array
+    {
+        $id = (int) $id;
+        $user = DB::table('users')->select('cr_ram', 'cr_storage')->where('id', '=', $request->user()->id)->get();
+
+        return [
+            'success' => true,
+            'data' => [
+                'user' => $user,
+            ],
+        ];
+
+    }
+
     public function newServer(StoreRequest $request): array
     {   
         $allocation = $this->getAllocationId();
