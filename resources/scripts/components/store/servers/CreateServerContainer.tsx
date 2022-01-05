@@ -5,7 +5,7 @@ import tw from 'twin.macro';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { Form, Formik, FormikHelpers } from 'formik';
 import Button from '@/components/elements/Button';
-import { number, object, string } from 'yup';
+import { object, string } from 'yup';
 import Field from '@/components/elements/Field';
 import createServer from '@/api/store/createServer';
 import getConfig from '@/api/store/getConfig';
@@ -27,9 +27,9 @@ type Props = {
 
 interface CreateValues {
     name: string;
-    cpu: number;
-    ram: number;
-    storage: number;
+    cpu: string;
+    ram: string;
+    storage: string;
 }
 
 export default ({ match }: RouteComponentProps<Props>) => {
@@ -93,15 +93,15 @@ export default ({ match }: RouteComponentProps<Props>) => {
                             onSubmit={submit}
                             initialValues={{
                                 name: 'My Server',
-                                cpu: 50,
-                                ram: 1,
-                                storage: 1,
+                                cpu: '',
+                                ram: '',
+                                storage: '',
                             }}
                             validationSchema={object().shape({
                                 name: string().required(),
-                                cpu: number().required(),
-                                ram: number().required(),
-                                storage: number().required(),
+                                cpu: string().required(),
+                                ram: string().required(),
+                                storage: string().required(),
                             })}
                         >
                             <Form>
