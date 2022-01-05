@@ -16,6 +16,10 @@ use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 Route::get('/', 'ClientController@index')->name('api:client.index');
 Route::get('/permissions', 'ClientController@permissions');
 
+Route::group(['prefix' => '/store'], function () {
+    Route::post('/servers/new', 'StoreController@newServer');
+});
+
 Route::group(['prefix' => '/account'], function () {
     Route::get('/', 'AccountController@index')->name('api:client.account')->withoutMiddleware(RequireTwoFactorAuthentication::class);
     Route::get('/two-factor', 'TwoFactorController@index')->withoutMiddleware(RequireTwoFactorAuthentication::class);
