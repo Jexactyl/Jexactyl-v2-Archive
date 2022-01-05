@@ -17,7 +17,7 @@ Route::get('/', 'ClientController@index')->name('api:client.index');
 Route::get('/permissions', 'ClientController@permissions');
 
 Route::group(['prefix' => '/store'], function () {
-    Route::post('/servers/new', 'StoreController@newServer');
+    Route::post('/create', 'StoreController@newServer');
 });
 
 Route::group(['prefix' => '/account'], function () {
