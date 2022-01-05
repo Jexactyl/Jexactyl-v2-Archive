@@ -5,11 +5,11 @@ import tw from 'twin.macro';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { Form, Formik, FormikHelpers } from 'formik';
 import Button from '@/components/elements/Button';
-import { object, string } from 'yup';
+import { number, object } from 'yup';
 import Field from '@/components/elements/Field';
 import createServer from '@/api/store/createServer';
 import getConfig from '@/api/store/getConfig';
-import { faHdd, faLayerGroup, faMemory } from '@fortawesome/free-solid-svg-icons';
+import { faHdd, faLayerGroup, faMemory, faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
 import { useStoreState } from '@/state/hooks';
 import { RouteComponentProps } from 'react-router-dom';
@@ -27,9 +27,10 @@ type Props = {
 
 interface CreateValues {
     name: string;
-    cpu: string;
-    ram: string;
-    storage: string;
+    cpu: number;
+    ram: number;
+    storage: number;
+    egg: number;
 }
 
 export default ({ match }: RouteComponentProps<Props>) => {
@@ -39,17 +40,13 @@ export default ({ match }: RouteComponentProps<Props>) => {
     const user = useStoreState(state => state.user.data);
     const { data, error, mutate } = useSWR<ConfigResponse>([ id, '/store' ], (id) => getConfig(id));
 
-    const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+    const submit = ({ name, cpu, ram, storage, egg }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
         clearFlashes('account:store');
-        console.log('Submit function has been triggered, attempting API POST now...');
         setSubmitting(false);
         setSubmit(true);
 
-        createServer(name, cpu, ram, storage).then(() => {
+        createServer(name, cpu, ram, storage, egg).then(() => {
             mutate();
-            console.info('Jexactyl Debug\nSubmitting the following data to API...\n');
-            console.info('Name: ' + name + ', CPU: ' + cpu + ', RAM: ' + ram + ', Storage:' + storage);
-            console.warn('POST data submitted to /api/client/store');
             setSubmit(false);
         })
             .then(() => addFlash({
@@ -93,15 +90,17 @@ export default ({ match }: RouteComponentProps<Props>) => {
                             onSubmit={submit}
                             initialValues={{
                                 name: 'My Server',
-                                cpu: '',
-                                ram: '',
-                                storage: '',
+                                cpu: 0,
+                                ram: 0,
+                                storage: 0,
+                                egg: 0,
                             }}
                             validationSchema={object().shape({
-                                name: string().required(),
-                                cpu: string().required(),
-                                ram: string().required(),
-                                storage: string().required(),
+                                name: number().required(),
+                                cpu: number().required(),
+                                ram: number().required(),
+                                storage: number().required(),
+                                egg: number().required(),
                             })}
                         >
                             <Form>
@@ -154,7 +153,17 @@ export default ({ match }: RouteComponentProps<Props>) => {
                                             </div>
                                         </TitledGreyBox>
                                     </div>
-
+                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
+                                        <TitledGreyBox title={'Server Egg ID'} icon={faPuzzlePiece}>
+                                            <div css={tw`px-1 py-2`}>
+                                                <Field
+                                                    name={'egg'}
+                                                    placeholder={'3'}
+                                                />
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>The egg ID to use for this server.</p>
+                                            </div>
+                                        </TitledGreyBox>
+                                    </div>
                                 </div>
                                 <br></br>
                                 <div css={tw`flex justify-end text-right`}>
