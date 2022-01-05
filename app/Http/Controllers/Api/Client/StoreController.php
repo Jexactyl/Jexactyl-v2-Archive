@@ -2,20 +2,20 @@
 
 namespace Pterodactyl\Http\Controllers\Api\Client;
 
-
-use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
+use Throwable;
 use Pterodactyl\Models\Node;
 use Illuminate\Support\Facades\DB;
-use Pterodactyl\Services\Servers\ServerCreationService;
 use Pterodactyl\Exceptions\DisplayException;
+use Illuminate\Validation\ValidationException;
+use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
+use Pterodactyl\Services\Servers\ServerCreationService;
+use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException;
+use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
 
 class StoreController extends ClientApiController
 {
-
-    public function __construct(ServerCreationService $creationService)
-    {
-        $this->creationService = $creationService;
-    }
+    public ServerCreationService $creationService;
 
     public function getConfig(StoreRequest $request, $id): array
     {
@@ -31,8 +31,16 @@ class StoreController extends ClientApiController
 
     }
 
+    /**
+     * @throws DisplayException
+     * @throws NoViableNodeException
+     * @throws NoViableAllocationException
+     * @throws RecordNotFoundException
+     * @throws Throwable
+     * @throws ValidationException
+     */
     public function newServer(StoreRequest $request): array
-    {   
+    {
         $allocation = $this->getAllocationId();
         if (!$allocation) throw new DisplayException('No allocations could be found on the requested node.');
 
@@ -41,13 +49,13 @@ class StoreController extends ClientApiController
             'cpu' => 'required',
             'ram' => 'required',
             'storage' => 'required',
+            'egg' => 'required|integer'
         ]);
-   
+
         $data = [
             'name' => $request->input('name'),
             'owner_id' => $request->user()->id,
-            'egg_id' => 3,
-            'nest_id' => 1,
+            'egg' => $request->input('egg'),
             'allocation_id' => $allocation,
             'environment' => [],
             'memory' => $request->input('ram'),
@@ -55,10 +63,18 @@ class StoreController extends ClientApiController
             'cpu' => $request->input('cpu'),
             'swap' => 0,
             'io' => 500,
-            'image' => 'ghcr.io/pterodactyl/yolks:java_17',
-            'startup' => 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}',
+            'image' => 'ghcr.io/pterodactyl/yolks:nodejs_14',
+            'startup' => 'node index.js',
             'start_on_completion' => true,
         ];
+
+        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
+        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
+        foreach (DB::table('egg_variables')->where('egg_id', '=', $egg->id)->get() as $var) {
+            $key = "v{$nest->id}-{$egg->id}-{$var->env_variable}";
+            $data['environment'][$var->env_variable] = $request->get($key, $var->default_value);
+        }
+
 
         if($request->user()->cr_cpu < $request->input('cpu')) {
             throw new DisplayException('Nicetry - looks like you don\'t have that much CPU available.');
@@ -72,7 +88,7 @@ class StoreController extends ClientApiController
 
         $server = $this->creationService->handle($data);
         $server->save();
-    
+
 
         DB::table('users')->where('id', '=', $request->user()->id)->update([
             'cr_cpu' => $request->user()->cr_cpu - $request->input('cpu'),
@@ -87,11 +103,11 @@ class StoreController extends ClientApiController
         ];
     }
 
-    private function getAllocationId($memory = 0, $attempt = 0)
+    private function getAllocationId($memory = 0, $attempt = 0): ?bool
     {
-        
+
         if ($attempt > 5) return null;
-        
+
         $node = Node::where('nodes.public', true)->where('nodes.maintenance_mode', false)->first();
 
         if (!$node) return false;

@@ -16,11 +16,6 @@ use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 Route::get('/', 'ClientController@index')->name('api:client.index');
 Route::get('/permissions', 'ClientController@permissions');
 
-Route::group(['prefix' => '/store'], function () {
-    Route::get('/config/{id}', 'StoreController@getConfig');
-    Route::post('/create', 'StoreController@newServer');
-});
-
 Route::group(['prefix' => '/account'], function () {
     Route::get('/', 'AccountController@index')->name('api:client.account')->withoutMiddleware(RequireTwoFactorAuthentication::class);
     Route::get('/two-factor', 'TwoFactorController@index')->withoutMiddleware(RequireTwoFactorAuthentication::class);
@@ -129,4 +124,17 @@ Route::group(['prefix' => '/servers/{server}', 'middleware' => [AuthenticateServ
         Route::post('/reinstall', 'Servers\SettingsController@reinstall');
         Route::put('/docker-image', 'Servers\SettingsController@dockerImage');
     });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Client Control API
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/client/store
+|
+*/
+Route::group(['prefix' => '/store'], function () {
+    Route::get('/config/{id}', 'StoreController@getConfig');
+    Route::post('/create', 'StoreController@newServer');
 });
