@@ -34,25 +34,15 @@ class StoreController extends ClientApiController
     public function newServer(StoreRequest $request): array
     {   
         $allocation = $this->getAllocationId();
+        if (!$allocation) throw new DisplayException('No allocations could be found on the requested node.');
 
         $this->validate($request, [
             'name' => 'required',
-            'cpu' => 'required|numeric|min:50',
-            'ram' => 'required|numeric|min:1024',
-            'storage' => 'required|numeric|min:1024',
+            'cpu' => 'required',
+            'ram' => 'required',
+            'storage' => 'required',
         ]);
-
-        if($request->user()->cr_cpu < $request->input('cpu')) {
-            throw new DisplayException('Nicetry - looks like you don\'t have that much CPU available.');
-        }
-        if($request->user()->cr_ram < $request->input('ram')) {
-            throw new DisplayException('Nicetry - looks like you don\'t have that much RAM available.');
-        }
-        if($request->user()->cr_storage < $request->input('storage')) {
-            throw new DisplayException('Nice try - looks like you don\'t have that much storage available.');
-        }
-        if (!$allocation) throw new DisplayException('No allocations could be found on the requested node.');
-    
+   
         $data = [
             'name' => $request->input('name'),
             'owner_id' => $request->user()->id,
@@ -69,6 +59,16 @@ class StoreController extends ClientApiController
             'startup' => 'java -Xms128M -Xmx{{SERVER_MEMORY}}M -Dterminal.jline=false -Dterminal.ansi=true -jar {{SERVER_JARFILE}}',
             'start_on_completion' => true,
         ];
+
+        if($request->user()->cr_cpu < $request->input('cpu')) {
+            throw new DisplayException('Nicetry - looks like you don\'t have that much CPU available.');
+        }
+        if($request->user()->cr_ram < $request->input('ram')) {
+            throw new DisplayException('Nicetry - looks like you don\'t have that much RAM available.');
+        }
+        if($request->user()->cr_storage < $request->input('storage')) {
+            throw new DisplayException('Nice try - looks like you don\'t have that much storage available.');
+        }
 
         $server = $this->creationService->handle($data);
         $server->save();
