@@ -44,6 +44,9 @@ class StoreController extends ClientApiController
         $allocation = $this->getAllocationId();
         if (!$allocation) throw new DisplayException('No allocations could be found on the requested node.');
 
+        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
+        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
+
         $this->validate($request, [
             'name' => 'required',
             'cpu' => 'required',
@@ -55,7 +58,8 @@ class StoreController extends ClientApiController
         $data = [
             'name' => $request->input('name'),
             'owner_id' => $request->user()->id,
-            'egg' => $request->input('egg'),
+            'egg_id' => $egg->id,
+            'nest_id' => $nest->id,
             'allocation_id' => $allocation,
             'environment' => [],
             'memory' => $request->input('ram'),
@@ -68,14 +72,6 @@ class StoreController extends ClientApiController
             'start_on_completion' => true,
         ];
 
-        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
-        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
-        foreach (DB::table('egg_variables')->where('egg_id', '=', $egg->id)->get() as $var) {
-            $key = "v{$nest->id}-{$egg->id}-{$var->env_variable}";
-            $data['environment'][$var->env_variable] = $request->get($key, $var->default_value);
-        }
-
-
         if($request->user()->cr_cpu < $request->input('cpu')) {
             throw new DisplayException('Nicetry - looks like you don\'t have that much CPU available.');
         }
@@ -84,6 +80,11 @@ class StoreController extends ClientApiController
         }
         if($request->user()->cr_storage < $request->input('storage')) {
             throw new DisplayException('Nice try - looks like you don\'t have that much storage available.');
+        }
+
+        foreach (DB::table('egg_variables')->where('egg_id', '=', $egg->id)->get() as $var) {
+            $key = "v{$nest->id}-{$egg->id}-{$var->env_variable}";
+            $data['environment'][$var->env_variable] = $request->get($key, $var->default_value);
         }
 
         $server = $this->creationService->handle($data);
