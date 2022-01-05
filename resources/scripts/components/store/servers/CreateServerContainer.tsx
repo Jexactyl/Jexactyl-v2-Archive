@@ -25,10 +25,14 @@ export default () => {
     const user = useStoreState(state => state.user.data);
 
     const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+        console.log('Submit function has been triggered, attempting API POST now...');
         setSubmitting(false);
         setSubmit(true);
 
         createServer(name, cpu, ram, storage).then(() => {
+            console.info('Jexactyl Debug\nSubmitting the following data to API...\n');
+            console.info('Name: ' + name + ', CPU: ' + cpu + ', RAM: ' + ram + ', Storage:' + storage);
+            console.warn('POST data submitted to /api/client/store');
             setSubmit(false);
         })
             .then(() => {
