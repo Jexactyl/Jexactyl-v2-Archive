@@ -15,7 +15,16 @@ use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
 
 class StoreController extends ClientApiController
 {
-    public ServerCreationService $creationService;
+    /**
+     * StoreController constructor.
+     */
+    public function __construct(ServerCreationService $creationService)
+    {
+        parent::__construct();
+
+        $this->creationService = $creationService;
+    }
+
 
     public function getConfig(StoreRequest $request, $id): array
     {
@@ -107,7 +116,7 @@ class StoreController extends ClientApiController
     private function getAllocationId($memory = 0, $attempt = 0): ?bool
     {
 
-        if ($attempt > 5) return null;
+        if ($attempt > 6) return new DisplayException('No allocations could be found on the node.');
 
         $node = Node::where('nodes.public', true)->where('nodes.maintenance_mode', false)->first();
 
