@@ -62,7 +62,7 @@ class StoreController extends ClientApiController
             'nodeId' => 'required|integer'
         ]);
 
-        $allocation = $this->getAllocationId($request['nodeId']);
+        $allocation = $this->getAllocationId(1);
         if ($allocation == -1) throw new DisplayException('No allocations could be found on the requested node.');
 
         $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
@@ -85,13 +85,13 @@ class StoreController extends ClientApiController
             'start_on_completion' => true,
         ];
 
-        if($request->user()->cr_cpu < $request->input('cpu')) {
+        if ($request->user()->cr_cpu < $request->input('cpu')) {
             throw new DisplayException('Nicetry - looks like you don\'t have that much CPU available.');
         }
-        if($request->user()->cr_ram < $request->input('ram')) {
+        if ($request->user()->cr_ram < $request->input('ram')) {
             throw new DisplayException('Nicetry - looks like you don\'t have that much RAM available.');
         }
-        if($request->user()->cr_storage < $request->input('storage')) {
+        if ($request->user()->cr_storage < $request->input('storage')) {
             throw new DisplayException('Nice try - looks like you don\'t have that much storage available.');
         }
 
@@ -102,7 +102,6 @@ class StoreController extends ClientApiController
 
         $server = $this->creationService->handle($data);
         $server->save();
-
 
         DB::table('users')->where('id', '=', $request->user()->id)->update([
             'cr_cpu' => $request->user()->cr_cpu - $request->input('cpu'),
