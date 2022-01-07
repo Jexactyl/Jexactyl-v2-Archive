@@ -15,14 +15,17 @@ use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
 
 class StoreController extends ClientApiController
 {
+    private Node $node;
+    private ServerCreationService $creationService;
     /**
      * StoreController constructor.
      */
-    public function __construct(ServerCreationService $creationService)
+    public function __construct(ServerCreationService $creationService, Node $node)
     {
         parent::__construct();
 
         $this->creationService = $creationService;
+        $this->node = $node;
     }
 
 
@@ -50,19 +53,20 @@ class StoreController extends ClientApiController
      */
     public function newServer(StoreRequest $request): array
     {
-        $allocation = $this->getAllocationId();
-        if (!$allocation) throw new DisplayException('No allocations could be found on the requested node.');
-
-        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
-        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
-
         $this->validate($request, [
             'name' => 'required',
             'cpu' => 'required',
             'ram' => 'required',
             'storage' => 'required',
-            'egg' => 'required|integer'
+            'egg' => 'required|integer',
+            'nodeId' => 'required|integer'
         ]);
+
+        $allocation = $this->getAllocationId($request['nodeId']);
+        if ($allocation == -1) throw new DisplayException('No allocations could be found on the requested node.');
+
+        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
+        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
 
         $data = [
             'name' => $request->input('name'),
@@ -106,25 +110,17 @@ class StoreController extends ClientApiController
             'cr_storage' => $request->user()->cr_storage - $request->input('storage'),
         ]);
 
-
         return [
             'success' => true,
             'data' => [],
         ];
     }
 
-    private function getAllocationId($memory = 0, $attempt = 0): ?bool
+    private function getAllocationId($node_id): int
     {
+        $allocation = DB::table('allocations')->select('*')->where('node_id', '=', $node_id)->where('server_id', '=', null)->get()->first();
 
-        if ($attempt > 6) return new DisplayException('No allocations could be found on the node.');
-
-        $node = Node::where('nodes.public', true)->where('nodes.maintenance_mode', false)->first();
-
-        if (!$node) return false;
-
-        $allocation = $node->allocations()->where('server_id', null)->inRandomOrder()->first();
-
-        if (!$allocation) return $this->getAllocationId($memory, $attempt+1);
+        if (!$allocation) return -1;
 
         return $allocation->id;
     }
