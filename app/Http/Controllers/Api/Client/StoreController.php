@@ -58,7 +58,6 @@ class StoreController extends ClientApiController
             'cpu' => 'required',
             'ram' => 'required',
             'storage' => 'required',
-            'egg' => 'required|integer',
         ]);
 
         $allocation = $this->getAllocationId(1);
