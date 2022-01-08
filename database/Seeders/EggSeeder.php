@@ -73,10 +73,7 @@ class EggSeeder extends Seeder
     protected function getEggsToImport(): Collection
     {
         return collect([
-            'Minecraft',
-            'Source Engine',
-            'Voice Servers',
-            'Rust',
+            'Jexactyl',
         ]);
     }
 
@@ -88,7 +85,7 @@ class EggSeeder extends Seeder
     private function findMatchingNest(string $nestName): Nest
     {
         return $this->nestRepository->findFirstWhere([
-            ['author', '=', 'support@pterodactyl.io'],
+            ['author', '=', 'support@jexactyl.xyz'],
             ['name', '=', $nestName],
         ]);
     }

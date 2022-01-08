@@ -64,14 +64,11 @@ class StoreController extends ClientApiController
         $allocation = $this->getAllocationId(1);
         if ($allocation == -1) throw new DisplayException('No allocations could be found on the requested node.');
 
-        $egg = DB::table('eggs')->where('id', '=', $request->input('egg'))->first();
-        $nest = DB::table('nests')->where('id', '=', $egg->nest_id)->first();
-
         $data = [
             'name' => $request->input('name'),
             'owner_id' => $request->user()->id,
-            'egg_id' => $egg->id,
-            'nest_id' => $nest->id,
+            'egg_id' => 1,
+            'nest_id' => 1,
             'allocation_id' => $allocation,
             'environment' => [],
             'memory' => $request->input('ram') * 1024,

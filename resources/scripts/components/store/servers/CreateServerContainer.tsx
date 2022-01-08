@@ -9,7 +9,7 @@ import { number, object, string } from 'yup';
 import Field from '@/components/elements/Field';
 import createServer from '@/api/store/createServer';
 import getConfig from '@/api/store/getConfig';
-import { faHdd, faLayerGroup, faMicrochip, faMemory, faPuzzlePiece } from '@fortawesome/free-solid-svg-icons';
+import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
 import { useStoreState } from '@/state/hooks';
 import { RouteComponentProps } from 'react-router-dom';
@@ -30,7 +30,6 @@ interface CreateValues {
     cpu: number;
     ram: number;
     storage: number;
-    egg: number;
 }
 
 export default ({ match }: RouteComponentProps<Props>) => {
@@ -40,12 +39,12 @@ export default ({ match }: RouteComponentProps<Props>) => {
     const user = useStoreState(state => state.user.data);
     const { data, error, mutate } = useSWR<ConfigResponse>([ id, '/store' ], (id) => getConfig(id));
 
-    const submit = ({ name, cpu, ram, storage, egg }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+    const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
         clearFlashes('account:store');
         setSubmitting(false);
         setSubmit(true);
 
-        createServer(name, cpu, ram, storage, egg).then(() => {
+        createServer(name, cpu, ram, storage).then(() => {
             mutate();
             setSubmit(false);
         })
@@ -58,6 +57,11 @@ export default ({ match }: RouteComponentProps<Props>) => {
                 // @ts-ignore
                 window.location = '/';
             })
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store',
+                message: 'Your server has been deployed and is now installing.',
+            }))
             .catch(error => {
                 setSubmitting(false);
                 setSubmit(false);
@@ -93,14 +97,12 @@ export default ({ match }: RouteComponentProps<Props>) => {
                                 cpu: 0,
                                 ram: 0,
                                 storage: 0,
-                                egg: 0,
                             }}
                             validationSchema={object().shape({
                                 name: string().required(),
                                 cpu: number().required(),
                                 ram: number().required(),
                                 storage: number().required(),
-                                egg: number().required(),
                             })}
                         >
                             <Form>
@@ -146,16 +148,6 @@ export default ({ match }: RouteComponentProps<Props>) => {
                                                 />
                                                 <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crStorage)} available</p>
                                                 <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of storage allowed for this server in GB.</p>
-                                            </div>
-                                        </TitledGreyBox>
-                                    </div>
-                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
-                                        <TitledGreyBox title={'Server Egg ID'} icon={faPuzzlePiece}>
-                                            <div css={tw`px-1 py-2`}>
-                                                <Field
-                                                    name={'egg'}
-                                                />
-                                                <p css={tw`mt-1 text-xs text-neutral-400`}>The egg ID to use for this server.</p>
                                             </div>
                                         </TitledGreyBox>
                                     </div>
