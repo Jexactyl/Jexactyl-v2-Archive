@@ -74,7 +74,7 @@ class StoreController extends ClientApiController
             'nest_id' => $nest->id,
             'allocation_id' => $allocation,
             'environment' => [],
-            'memory' => $request->input('ram')*1024,
+            'memory' => $request->input('ram') * 1024,
             'disk' => $request->input('storage') * 1024,
             'cpu' => $request->input('cpu'),
             'swap' => 0,
@@ -104,8 +104,8 @@ class StoreController extends ClientApiController
 
         DB::table('users')->where('id', '=', $request->user()->id)->update([
             'cr_cpu' => $request->user()->cr_cpu - $request->input('cpu'),
-            'cr_ram' => $request->user()->cr_ram - $request->input('ram'),
-            'cr_storage' => $request->user()->cr_storage - $request->input('storage'),
+            'cr_ram' => $request->user()->cr_ram - $request->input('ram') * 1024,
+            'cr_storage' => $request->user()->cr_storage - $request->input('storage') * 1024,
         ]);
 
         return [
