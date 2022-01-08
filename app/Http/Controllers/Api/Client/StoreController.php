@@ -63,11 +63,14 @@ class StoreController extends ClientApiController
         $allocation = $this->getAllocationId(1);
         if ($allocation == -1) throw new DisplayException('No allocations could be found on the requested node.');
 
+        $egg = DB::table('eggs')->where('id', '=', 1)->first();
+        $nest = DB::table('nests')->where('id', '=', 1)->first();
+
         $data = [
             'name' => $request->input('name'),
             'owner_id' => $request->user()->id,
-            'egg_id' => 1,
-            'nest_id' => 1,
+            'egg_id' => $egg->id,
+            'nest_id' => $nest->id,
             'allocation_id' => $allocation,
             'environment' => [],
             'memory' => $request->input('ram') * 1024,
@@ -75,7 +78,7 @@ class StoreController extends ClientApiController
             'cpu' => $request->input('cpu'),
             'swap' => 0,
             'io' => 500,
-            'image' => 'ghcr.io/pterodactyl/yolks:nodejs_14',
+            'image' => 'quay.io/chirag350/multi-egg',
             'startup' => $egg->startup,
             'start_on_completion' => true,
         ];
