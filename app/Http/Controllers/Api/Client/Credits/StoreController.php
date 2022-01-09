@@ -1,17 +1,18 @@
 <?php
 
-namespace Pterodactyl\Http\Controllers\Api\Client;
+namespace Pterodactyl\Http\Controllers\Api\Client\Credits;
 
-use Throwable;
-use Pterodactyl\Models\Node;
 use Illuminate\Support\Facades\DB;
-use Pterodactyl\Exceptions\DisplayException;
 use Illuminate\Validation\ValidationException;
-use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
-use Pterodactyl\Services\Servers\ServerCreationService;
+use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
-use Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException;
 use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
+use Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException;
+use Pterodactyl\Http\Controllers\Api\Client\ClientApiController;
+use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
+use Pterodactyl\Models\Node;
+use Pterodactyl\Services\Servers\ServerCreationService;
+use Throwable;
 
 class StoreController extends ClientApiController
 {
@@ -29,10 +30,9 @@ class StoreController extends ClientApiController
     }
 
 
-    public function getConfig(StoreRequest $request, $id): array
+    public function getConfig(StoreRequest $request): array
     {
-        $id = (int) $id;
-        $user = DB::table('users')->select('cr_ram', 'cr_storage')->where('id', '=', $request->user()->id)->get();
+        $user = DB::table('users')->select('cr_cpu', 'cr_ram', 'cr_storage')->where('id', '=', $request->user()->id)->get();
 
         return [
             'success' => true,
@@ -121,4 +121,6 @@ class StoreController extends ClientApiController
 
         return $allocation->id;
     }
+
+
 }

@@ -12,7 +12,10 @@ class StoreFormRequest extends AdminFormRequest
     public function rules(): array
     {
         return [
-            'enabled' => 'int',
+            'enabled' => 'int|nullable',
+            'cpu_cost' => 'int|nullable',
+            'ram_cost' => 'int|nullable',
+            'storage_cost' => 'int|nullable'
         ];
     }
 }

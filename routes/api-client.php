@@ -135,6 +135,9 @@ Route::group(['prefix' => '/servers/{server}', 'middleware' => [AuthenticateServ
 |
 */
 Route::group(['prefix' => '/store'], function () {
-    Route::get('/config/{id}', 'StoreController@getConfig');
-    Route::post('/create', 'StoreController@newServer');
+    Route::get('/config', 'Credits\StoreController@getConfig');
+    Route::post('/create', 'Credits\StoreController@newServer');
+    Route::group(['prefix' => '/buy'], function () {
+        Route::post('/cpu', 'Credits\PurchaseController@buyCPU');
+    });
 });
