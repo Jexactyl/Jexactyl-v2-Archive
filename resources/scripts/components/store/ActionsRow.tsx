@@ -5,8 +5,19 @@ import Button from '@/components/elements/Button';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
+import http from '@/api/http';
 
 const ActionsRow = () => {
+    /* Don't do this in production - this is for dev purposes only. */
+    const buyCPU = () => {
+        return new Promise((resolve, reject) => {
+            http.post('/api/client/store/buy/cpu')
+                .then((data) => {
+                    resolve(data.data || []);
+                }).catch(reject);
+        });
+    };
+
     return (
         <>
             <TitledGreyBox
@@ -14,6 +25,9 @@ const ActionsRow = () => {
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
+                <Button onClick={() => buyCPU()} css={tw`flex-1`}>
+                    Buy CPU
+                </Button>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
