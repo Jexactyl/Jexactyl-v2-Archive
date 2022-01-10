@@ -10,6 +10,19 @@ import useFlash from '@/plugins/useFlash';
 import buySlots from '@/api/store/buy/buySlots';
 import buyRAM from '@/api/store/buy/buyRAM';
 import buyStorage from '@/api/store/buy/buyStorage';
+import styled from 'styled-components/macro';
+
+const ButtonContainer = styled.p`
+    flex: 0 0 25%;
+    max-width: 25%;
+    flex-basis: 0;
+    flex-grow: 1;
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 5px;
+`;
 
 const ActionsRow = () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
@@ -73,18 +86,26 @@ const ActionsRow = () => {
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
-                <Button onClick={() => submitSlots()} css={tw`flex-1`}>
-                    1 Slot
-                </Button>
-                <Button onClick={() => submitCPU()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
-                    50% CPU
-                </Button>
-                <Button onClick={() => submitRAM()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
-                    1GB RAM
-                </Button>
-                <Button onClick={() => submitStorage()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
-                    1GB Storage
-                </Button>
+                <ButtonContainer>
+                    <Button onClick={() => submitSlots()}>
+                        1 Slot
+                    </Button>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <Button onClick={() => submitCPU()}>
+                        50% CPU
+                    </Button>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <Button onClick={() => submitRAM()}>
+                        1GB RAM
+                    </Button>
+                </ButtonContainer>
+                <ButtonContainer>
+                    <Button onClick={() => submitStorage()}>
+                        1GB storage
+                    </Button>
+                </ButtonContainer>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
