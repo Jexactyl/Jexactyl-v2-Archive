@@ -12,17 +12,12 @@ import getConfig from '@/api/store/getConfig';
 import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
 import { useStoreState } from '@/state/hooks';
-import { RouteComponentProps } from 'react-router-dom';
 import useSWR from 'swr';
 import Spinner from '@/components/elements/Spinner';
 import FlashMessageRender from '@/components/FlashMessageRender';
 
 export interface ConfigResponse {
     user: any[];
-}
-
-type Props = {
-    id: string;
 }
 
 interface CreateValues {
@@ -32,12 +27,11 @@ interface CreateValues {
     storage: number;
 }
 
-export default ({ match }: RouteComponentProps<Props>) => {
-    const id = match.params.id;
+export default () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
     const [ isSubmit, setSubmit ] = useState(false);
     const user = useStoreState(state => state.user.data);
-    const { data, error, mutate } = useSWR<ConfigResponse>([ id, '/store' ], (id) => getConfig(id));
+    const { data, error, mutate } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
 
     const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
         clearFlashes('account:store');
