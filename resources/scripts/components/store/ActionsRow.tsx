@@ -13,14 +13,14 @@ const ActionsRow = () => {
     const [ isSubmit, setSubmit ] = useState(false);
 
     const submitSlots = () => {
-        clearFlashes('resources:slots');
+        clearFlashes('resources');
         setSubmit(true);
 
         buySlots()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'resources:slots',
+                key: 'resources',
                 message: '1 server slot has been added to your account.',
             }))
             .catch(error => {
@@ -30,14 +30,14 @@ const ActionsRow = () => {
     };
 
     const submitCPU = () => {
-        clearFlashes('resources:cpu');
+        clearFlashes('resources');
         setSubmit(true);
 
         buyCPU()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'resources:cpu',
+                key: 'resources',
                 message: '50% CPU has been added to your account.',
             }))
             .catch(error => {
@@ -46,7 +46,7 @@ const ActionsRow = () => {
     };
 
     const submitRAM = () => {
-        clearFlashes('resources:ram');
+        clearFlashes('resources');
         setSubmit(true);
 
         buyRAM()
@@ -62,14 +62,14 @@ const ActionsRow = () => {
     };
 
     const submitStorage = () => {
-        clearFlashes('resources:storage');
+        clearFlashes('resources');
         setSubmit(true);
 
         buyStorage()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'resources:storage',
+                key: 'resources',
                 message: '1GB Storage has been added to your account.',
             }))
             .catch(error => {
