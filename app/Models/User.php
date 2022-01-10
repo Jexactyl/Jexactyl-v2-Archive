@@ -29,6 +29,7 @@ use Pterodactyl\Notifications\SendPasswordReset as ResetPasswordNotification;
  * @property string $language
  * @property bool $root_admin
  * @property int $cr_balance
+ * @property int $cr_slots
  * @property int $cr_cpu
  * @property int $cr_ram
  * @property int $cr_storage
@@ -96,6 +97,7 @@ class User extends Model implements
         'gravatar',
         'root_admin',
         'cr_balance',
+        'cr_slots',
         'cr_cpu',
         'cr_ram',
         'cr_storage'
@@ -152,6 +154,7 @@ class User extends Model implements
         'password' => 'sometimes|nullable|string',
         'root_admin' => 'boolean',
         'cr_balance' => 'int',
+        'cr_slots' => 'int',
         'cr_cpu' => 'int',
         'cr_ram' => 'int',
         'cr_storage' => 'int',

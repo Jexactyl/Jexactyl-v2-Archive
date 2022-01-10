@@ -5,17 +5,65 @@ import Button from '@/components/elements/Button';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
-import http from '@/api/http';
+import buyCPU from '@/api/store/buy/buyCPU';
+import useFlash from '@/plugins/useFlash';
+import buySlots from '@/api/store/buy/buySlots';
+import buyRAM from '@/api/store/buy/buyRAM';
+import buyStorage from '@/api/store/buy/buyStorage';
 
 const ActionsRow = () => {
-    /* Don't do this in production - this is for dev purposes only. */
-    const buyCPU = () => {
-        return new Promise((resolve, reject) => {
-            http.post('/api/client/store/buy/cpu')
-                .then((data) => {
-                    resolve(data.data || []);
-                }).catch(reject);
-        });
+    const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
+
+    const submitSlots = () => {
+        clearFlashes('account:store:slots');
+        buySlots()
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store:slots',
+                message: '1 server slot has been added to your account.',
+            }))
+            .catch(error => {
+                clearAndAddHttpError(error);
+            });
+    };
+
+    const submitCPU = () => {
+        clearFlashes('account:store:cpu');
+        buyCPU()
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store:cpu',
+                message: '50% CPU has been added to your account.',
+            }))
+            .catch(error => {
+                clearAndAddHttpError(error);
+            });
+    };
+
+    const submitRAM = () => {
+        clearFlashes('account:store:ram');
+        buyRAM()
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store:ram',
+                message: '1GB RAM has been added to your account.',
+            }))
+            .catch(error => {
+                clearAndAddHttpError(error);
+            });
+    };
+
+    const submitStorage = () => {
+        clearFlashes('account:store:storage');
+        buyStorage()
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store:storage',
+                message: '1GB Storage has been added to your account.',
+            }))
+            .catch(error => {
+                clearAndAddHttpError(error);
+            });
     };
 
     return (
@@ -25,8 +73,17 @@ const ActionsRow = () => {
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
-                <Button onClick={() => buyCPU()} css={tw`flex-1`}>
-                    Buy CPU
+                <Button onClick={() => submitSlots()} css={tw`flex-1`}>
+                    1 Slot
+                </Button>
+                <Button onClick={() => submitCPU()} css={tw`flex-1`}>
+                    50% CPU
+                </Button>
+                <Button onClick={() => submitRAM()} css={tw`flex-1`}>
+                    1GB RAM
+                </Button>
+                <Button onClick={() => submitStorage()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
+                    1GB Storage
                 </Button>
             </TitledGreyBox>
             <TitledGreyBox

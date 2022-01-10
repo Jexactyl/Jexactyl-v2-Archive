@@ -13,6 +13,7 @@ class StoreFormRequest extends AdminFormRequest
     {
         return [
             'enabled' => 'int|nullable',
+            'slots_cost' => 'int|nullable',
             'cpu_cost' => 'int|nullable',
             'ram_cost' => 'int|nullable',
             'storage_cost' => 'int|nullable'

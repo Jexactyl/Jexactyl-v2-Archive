@@ -26,7 +26,10 @@ class StoreController extends Controller
     {
         return view('admin.credits.store', [
             'enabled' => $this->credits->get('store:enabled', false),
-            'cpu_cost' => $this->credits->get('store:cpu_cost', 20)
+            'slots_cost' => $this->credits->get('store:slots_cost', 100),
+            'cpu_cost' => $this->credits->get('store:cpu_cost', 20),
+            'ram_cost' => $this->credits->get('store:ram_cost', 10),
+            'storage_cost' => $this->credits->get('store:storage_cost', 5),
         ]);
     }
 
