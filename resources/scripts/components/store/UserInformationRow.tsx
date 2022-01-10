@@ -11,7 +11,7 @@ const UserInformationRow = () => {
     const user = useStoreState(state => state.user.data);
 
     return (
-        <>
+        <div css={tw`md:flex`}>
             <TitledGreyBox
                 title={'User Information'}
                 icon={faInfoCircle}
@@ -35,7 +35,7 @@ const UserInformationRow = () => {
                     </NavLink>
                 </div>
             </TitledGreyBox>
-        </>
+        </div>
     );
 };
 
