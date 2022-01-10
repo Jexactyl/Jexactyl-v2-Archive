@@ -76,10 +76,10 @@ const ActionsRow = () => {
                 <Button onClick={() => submitSlots()} css={tw`flex-1`}>
                     1 Slot
                 </Button>
-                <Button onClick={() => submitCPU()} css={tw`flex-1`}>
+                <Button onClick={() => submitCPU()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
                     50% CPU
                 </Button>
-                <Button onClick={() => submitRAM()} css={tw`flex-1`}>
+                <Button onClick={() => submitRAM()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
                     1GB RAM
                 </Button>
                 <Button onClick={() => submitStorage()} css={tw`flex-1 lg:flex-none lg:w-1/4 mt-8 md:mt-0 md:ml-10`}>
