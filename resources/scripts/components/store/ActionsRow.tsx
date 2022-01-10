@@ -12,16 +12,25 @@ import buyRAM from '@/api/store/buy/buyRAM';
 import buyStorage from '@/api/store/buy/buyStorage';
 import styled from 'styled-components/macro';
 
-const ButtonContainer = styled.p`
+const ButtonRow = styled.div`
     flex: 0 0 25%;
     max-width: 25%;
-    flex-basis: 0;
-    flex-grow: 1;
     position: relative;
     width: 100%;
     min-height: 1px;
     padding-right: 5px;
     padding-left: 5px;
+`;
+
+const ButtonContainer = styled.div`
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding-right: 5px;
+    padding-left: 5px;
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
 `;
 
 const ActionsRow = () => {
@@ -86,26 +95,34 @@ const ActionsRow = () => {
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
-                <ButtonContainer>
-                    <Button onClick={() => submitSlots()}>
-                        1 Slot
-                    </Button>
-                </ButtonContainer>
-                <ButtonContainer>
-                    <Button onClick={() => submitCPU()}>
-                        50% CPU
-                    </Button>
-                </ButtonContainer>
-                <ButtonContainer>
-                    <Button onClick={() => submitRAM()}>
-                        1GB RAM
-                    </Button>
-                </ButtonContainer>
-                <ButtonContainer>
-                    <Button onClick={() => submitStorage()}>
-                        1GB storage
-                    </Button>
-                </ButtonContainer>
+                <ButtonRow>
+                    <ButtonContainer>
+                        <Button onClick={() => submitSlots()}>
+                            1 Slot
+                        </Button>
+                    </ButtonContainer>
+                </ButtonRow>
+                <ButtonRow>
+                    <ButtonContainer>
+                        <Button onClick={() => submitCPU()}>
+                            50% CPU
+                        </Button>
+                    </ButtonContainer>
+                </ButtonRow>
+                <ButtonRow>
+                    <ButtonContainer>
+                        <Button onClick={() => submitRAM()}>
+                            1GB RAM
+                        </Button>
+                    </ButtonContainer>
+                </ButtonRow>
+                <ButtonRow>
+                    <ButtonContainer>
+                        <Button onClick={() => submitStorage()}>
+                            1GB Storage
+                        </Button>
+                    </ButtonContainer>
+                </ButtonRow>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
