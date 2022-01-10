@@ -80,7 +80,7 @@ class PurchaseController extends ClientApiController
             ];
         }
 
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_ram' => $userCPU + 1024]);
+        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_ram' => $userRAM + 1024]);
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
 
         return [
