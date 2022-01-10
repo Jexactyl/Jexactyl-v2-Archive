@@ -1,10 +1,7 @@
-import { faArrowCircleRight, faDollarSign, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faHdd, faLayerGroup, faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
-import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NavLink } from 'react-router-dom';
 import buyCPU from '@/api/store/buy/buyCPU';
 import useFlash from '@/plugins/useFlash';
 import buySlots from '@/api/store/buy/buySlots';
@@ -82,39 +79,42 @@ const ActionsRow = () => {
 
     return (
         <>
-            <TitledGreyBox
-                title={'Purchase Resources'}
-                icon={faDollarSign}
-                css={tw`flex-1`}
-            >
-                <Button onClick={() => submitSlots()} disabled={isSubmit}>
-                    1 Slot
-                </Button>
-                <Button onClick={() => submitCPU()} disabled={isSubmit}>
-                    50% CPU
-                </Button>
-                <Button onClick={() => submitRAM()} disabled={isSubmit}>
-                    1GB RAM
-                </Button>
-                <Button onClick={() => submitStorage()} disabled={isSubmit}>
-                    1GB Storage
-                </Button>
-            </TitledGreyBox>
-            <TitledGreyBox
-                title={'Create Server'}
-                icon={faLayerGroup}
-                css={tw`flex-1 lg:flex-none lg:w-1/3 mt-8 md:mt-0 md:ml-10`}
-            >
-                Create a server with a specific amount of RAM, CPU and storage
-                allocated to it.
-                <div css={tw`mt-8 flex justify-end`}>
-                    <NavLink to={'/store/servers/new'}>
-                        <Button type={'button'}>
-                            Create server <FontAwesomeIcon icon={faArrowCircleRight}/>
+            <div className={'storePurchaseBox'}>
+                <div className={'storePurchaseCol'}>
+                    <TitledGreyBox title={'Purchase Server Slots'} icon={faLayerGroup}>
+                        <Button onClick={() => submitSlots()} disabled={isSubmit}>
+                                1 Slot
                         </Button>
-                    </NavLink>
+                    </TitledGreyBox>
                 </div>
-            </TitledGreyBox>
+            </div>
+            <div className={'storePurchaseBox'}>
+                <div className={'storePurchaseCol'}>
+                    <TitledGreyBox title={'Purchase CPU'} icon={faMicrochip}>
+                        <Button onClick={() => submitCPU()} disabled={isSubmit}>
+                                50% CPU
+                        </Button>
+                    </TitledGreyBox>
+                </div>
+            </div>
+            <div className={'storePurchaseBox'}>
+                <div className={'storePurchaseCol'}>
+                    <TitledGreyBox title={'Purchase RAM'} icon={faMemory}>
+                        <Button onClick={() => submitRAM()} disabled={isSubmit}>
+                                1GB RAM
+                        </Button>
+                    </TitledGreyBox>
+                </div>
+            </div>
+            <div className={'storePurchaseBox'}>
+                <div className={'storePurchaseCol'}>
+                    <TitledGreyBox title={'Purchase Storage'} icon={faHdd}>
+                        <Button onClick={() => submitStorage()} disabled={isSubmit}>
+                                1GB Storage
+                        </Button>
+                    </TitledGreyBox>
+                </div>
+            </div>
         </>
     );
 };
