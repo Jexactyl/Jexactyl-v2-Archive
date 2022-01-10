@@ -22,7 +22,7 @@ class PurchaseController extends ClientApiController
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
         $userSlotsRaw = DB::table('users')->select('cr_slots')->where('id', '=', $request->user()->id)->get();
         $userBal = $userBalRaw[0]->cr_balance;
-        $userSlots = $userRAMRaw[0]->cr_slots;
+        $userSlots = $userSlotsRaw[0]->cr_slots;
         $cost = $this->credits->get('store:slots_cost', 100);
 
         if ($userBal < $cost) {
