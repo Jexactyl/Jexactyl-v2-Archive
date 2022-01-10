@@ -94,7 +94,7 @@ class PurchaseController extends ClientApiController
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
         $userStorageRaw = DB::table('users')->select('cr_storage')->where('id', '=', $request->user()->id)->get();
         $userBal = $userBalRaw[0]->cr_balance;
-        $userStorage = $userRAMRaw[0]->cr_storage;
+        $userStorage = $userStorageRaw[0]->cr_storage;
         $cost = $this->credits->get('store:storage_cost', 5);
 
         if ($userBal < $cost) {
