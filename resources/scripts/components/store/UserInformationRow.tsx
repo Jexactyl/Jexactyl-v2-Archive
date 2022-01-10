@@ -19,6 +19,14 @@ const UserInformationRow = () => {
             >
                 <div>Nice to see you, {user!.username}!</div>
                 <div>You have {user!.crBalance} credits available.</div>
+                {user!.crSlots === 0 &&
+                    <>
+                        <br/>
+                        Notice: It seems like you&apos;re in need of a
+                        server slot in order to to make a server. You
+                        will not be able to deploy a new server without one.
+                    </>
+                }
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
