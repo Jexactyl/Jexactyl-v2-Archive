@@ -53,7 +53,7 @@ const ActionsRow = () => {
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'resources:ram',
+                key: 'resources',
                 message: '1GB RAM has been added to your account.',
             }))
             .catch(error => {
