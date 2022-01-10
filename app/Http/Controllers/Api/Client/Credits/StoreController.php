@@ -54,7 +54,6 @@ class StoreController extends ClientApiController
     public function newServer(StoreRequest $request): array
     {
         $this->validate($request, [
-            'slots' => 'required',
             'name' => 'required',
             'cpu' => 'required',
             'ram' => 'required',
