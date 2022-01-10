@@ -10,21 +10,20 @@ import useFlash from '@/plugins/useFlash';
 import buySlots from '@/api/store/buy/buySlots';
 import buyRAM from '@/api/store/buy/buyRAM';
 import buyStorage from '@/api/store/buy/buyStorage';
-import FlashMessageRender from '../FlashMessageRender';
 
 const ActionsRow = () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
     const [ isSubmit, setSubmit ] = useState(false);
 
     const submitSlots = () => {
-        clearFlashes('account:slots');
+        clearFlashes('resources:slots');
         setSubmit(true);
 
         buySlots()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'account:slots',
+                key: 'resources:slots',
                 message: '1 server slot has been added to your account.',
             }))
             .catch(error => {
@@ -34,14 +33,14 @@ const ActionsRow = () => {
     };
 
     const submitCPU = () => {
-        clearFlashes('account:cpu');
+        clearFlashes('resources:cpu');
         setSubmit(true);
 
         buyCPU()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'account:cpu',
+                key: 'resources:cpu',
                 message: '50% CPU has been added to your account.',
             }))
             .catch(error => {
@@ -50,14 +49,14 @@ const ActionsRow = () => {
     };
 
     const submitRAM = () => {
-        clearFlashes('account:ram');
+        clearFlashes('resources:ram');
         setSubmit(true);
 
         buyRAM()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'account:ram',
+                key: 'resources:ram',
                 message: '1GB RAM has been added to your account.',
             }))
             .catch(error => {
@@ -66,14 +65,14 @@ const ActionsRow = () => {
     };
 
     const submitStorage = () => {
-        clearFlashes('account:storage');
+        clearFlashes('resources:storage');
         setSubmit(true);
 
         buyStorage()
             .then(() => setSubmit(false))
             .then(() => addFlash({
                 type: 'success',
-                key: 'account:storage',
+                key: 'resources:storage',
                 message: '1GB Storage has been added to your account.',
             }))
             .catch(error => {
@@ -83,42 +82,23 @@ const ActionsRow = () => {
 
     return (
         <>
-            <div css={tw`w-full`}>
-                <FlashMessageRender byKey={'account:store'} css={tw`mb-4`} />
-            </div>
             <TitledGreyBox
                 title={'Purchase Resources'}
                 icon={faDollarSign}
                 css={tw`flex-1`}
             >
-                <div className={'butonBox'}>
-                    <div className={'buttonCol'}>
-                        <Button onClick={() => submitSlots()} disabled={isSubmit}>
-                            1 Slot
-                        </Button>
-                    </div>
-                </div>
-                <div className={'butonBox'}>
-                    <div className={'buttonCol'}>
-                        <Button onClick={() => submitCPU()} disabled={isSubmit}>
-                            50% CPU
-                        </Button>
-                    </div>
-                </div>
-                <div className={'butonBox'}>
-                    <div className={'buttonCol'}>
-                        <Button onClick={() => submitRAM()} disabled={isSubmit}>
-                            1GB RAM
-                        </Button>
-                    </div>
-                </div>
-                <div className={'butonBox'}>
-                    <div className={'buttonCol'}>
-                        <Button onClick={() => submitStorage()} disabled={isSubmit}>
-                            1GB Storage
-                        </Button>
-                    </div>
-                </div>
+                <Button onClick={() => submitSlots()} disabled={isSubmit}>
+                    1 Slot
+                </Button>
+                <Button onClick={() => submitCPU()} disabled={isSubmit}>
+                    50% CPU
+                </Button>
+                <Button onClick={() => submitRAM()} disabled={isSubmit}>
+                    1GB RAM
+                </Button>
+                <Button onClick={() => submitStorage()} disabled={isSubmit}>
+                    1GB Storage
+                </Button>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Create Server'}
