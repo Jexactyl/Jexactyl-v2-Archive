@@ -53,13 +53,13 @@ export default () => {
             })
             .then(() => addFlash({
                 type: 'success',
-                key: 'account:store',
+                key: 'account:store:deployed',
                 message: 'Your server has been deployed and is now installing.',
             }))
             .catch(error => {
                 setSubmitting(false);
                 setSubmit(false);
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ key: 'account:store', error });
             });
     };
 
