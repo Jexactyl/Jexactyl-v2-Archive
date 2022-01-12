@@ -26,6 +26,7 @@ interface ExtendedWindow extends Window {
         root_admin: boolean;
         use_totp: boolean;
         cr_balance: number;
+        cr_slots: number;
         cr_cpu: number;
         cr_ram: number;
         cr_storage: number;
@@ -59,6 +60,7 @@ const App = () => {
             rootAdmin: PterodactylUser.root_admin,
             useTotp: PterodactylUser.use_totp,
             crBalance: PterodactylUser.cr_balance,
+            crSlots: PterodactylUser.cr_slots,
             crCpu: PterodactylUser.cr_cpu,
             crRam: PterodactylUser.cr_ram,
             crStorage: PterodactylUser.cr_storage,

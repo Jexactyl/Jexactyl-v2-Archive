@@ -4,9 +4,10 @@
 {{-- This software is licensed under the terms of the MIT license. --}}
 {{-- https://opensource.org/licenses/MIT --}}
 @extends('layouts.admin')
+@include('partials/admin.users.nav', ['activeTab' => 'view'])
 
 @section('title')
-    Manager User: {{ $user->username }}
+    Manage User: {{ $user->username }}
 @endsection
 
 @section('content-header')

@@ -13,6 +13,7 @@ import useSWR from 'swr';
 import { PaginatedResult } from '@/api/http';
 import Pagination from '@/components/elements/Pagination';
 import { useLocation } from 'react-router-dom';
+import FlashMessageRender from '@/components/FlashMessageRender';
 
 export default () => {
     const { search } = useLocation();
@@ -50,6 +51,9 @@ export default () => {
 
     return (
         <PageContentBlock title={'Dashboard'} showFlashKey={'dashboard'}>
+            <div css={tw`w-full`}>
+                <FlashMessageRender byKey={'account:store:deployed'} css={tw`mb-4`} />
+            </div>
             {rootAdmin &&
             <div css={tw`mb-2 flex justify-end items-center`}>
                 <Switch

@@ -72,7 +72,7 @@ export default () => {
                             </div>
                             <div css={tw`mt-6`}>
                                 <Button size={'small'} disabled={isSubmitting || !isValid}>
-                                    Update Email
+                                    Update Username
                                 </Button>
                             </div>
                         </Form>

@@ -125,3 +125,22 @@ Route::group(['prefix' => '/servers/{server}', 'middleware' => [AuthenticateServ
         Route::put('/docker-image', 'Servers\SettingsController@dockerImage');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Client Control API
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/client/store
+|
+*/
+Route::group(['prefix' => '/store'], function () {
+    Route::get('/config', 'Credits\StoreController@getConfig');
+    Route::post('/create', 'Credits\StoreController@newServer');
+    Route::group(['prefix' => '/buy'], function () {
+        Route::post('/slots', 'Credits\PurchaseController@buySlots');
+        Route::post('/cpu', 'Credits\PurchaseController@buyCPU');
+        Route::post('/ram', 'Credits\PurchaseController@buyRAM');
+        Route::post('/storage', 'Credits\PurchaseController@buyStorage');
+    });
+});

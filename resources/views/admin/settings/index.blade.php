@@ -103,8 +103,8 @@
                                 <label class="control-label">Rainbow Progress Bar</label>
                                 <div>
                                     <select name="app:rainbow_bar" class="form-control">
-                                    <option value="{{ 0 }}" @if(!$rainbowBar) selected @endif>Disabled</option>
-                                        <option value="{{ 1 }}" @if($rainbowBar) selected @endif>Enabled</option>
+                                    <option value="{{ 0 }}" @if(!$rainbow_bar) selected @endif>Disabled</option>
+                                        <option value="{{ 1 }}" @if($rainbow_bar) selected @endif>Enabled</option>
                                     </select>
                                     <p class="text-muted"><small>If enabled, the loading bar will be rainbow!</small></p>
                                 </div>

@@ -29,6 +29,7 @@ class AccountTransformer extends BaseClientTransformer
             'first_name' => $model->name_first,
             'last_name' => $model->name_last,
             'cr_balance' => $model->cr_balance,
+            'cr_slots' => $model->cr_slots,
             'cr_cpu' => $model->cr_cpu,
             'cr_ram' => $model->cr_ram,
             'cr_storage' => $model->cr_storage,

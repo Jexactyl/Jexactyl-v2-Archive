@@ -33,6 +33,22 @@
                                 </select>
                                 <p class="text-muted"><small>When enabled, users will be able to access the store in order to buy servers and resources.</small></p>
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="slots_cost">Server slots Cost</label>
+                                <input type="text" id="slots_cost" name="slots_cost" class="form-control form-autocomplete-stop" value="{{ $slots_cost }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="cpu_cost">CPU Cost</label>
+                                <input type="text" id="cpu_cost" name="cpu_cost" class="form-control form-autocomplete-stop" value="{{ $cpu_cost }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="ram_cost">RAM Cost</label>
+                                <input type="text" id="ram_cost" name="ram_cost" class="form-control form-autocomplete-stop" value="{{ $ram_cost }}">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="storage_cost">Storage Cost</label>
+                                <input type="text" id="storage_cost" name="storage_cost" class="form-control form-autocomplete-stop" value="{{ $storage_cost }}">
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">

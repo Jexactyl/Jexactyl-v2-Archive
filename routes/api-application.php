@@ -121,3 +121,15 @@ Route::group(['prefix' => '/nests'], function () {
         Route::get('/{egg}', 'Nests\EggController@view')->name('api.application.nests.eggs.view');
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Credits Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /api/application/credits
+|
+*/
+/*Route::group(['prefix' => '/credits'], function () {
+    Route::get('/get/{id}', 'CreditsController@get')->name('api.application.credits.get');
+});*/

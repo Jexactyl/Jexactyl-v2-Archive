@@ -21,7 +21,7 @@ const ResourceRow = () => {
                         title={'Server Slots Available'}
                         icon={faLayerGroup}
                     >
-                        <h3 css={tw`text-2xl`}>-/-</h3>
+                        <h3 css={tw`text-2xl`}>{user!.crSlots}</h3>
                     </TitledGreyBox>
                 </div>
             </div>

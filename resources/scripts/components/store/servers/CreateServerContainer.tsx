@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageContentBlock from '@/components/elements/PageContentBlock';
 import useFlash from '@/plugins/useFlash';
 import tw from 'twin.macro';
@@ -8,9 +8,18 @@ import Button from '@/components/elements/Button';
 import { number, object, string } from 'yup';
 import Field from '@/components/elements/Field';
 import createServer from '@/api/store/createServer';
-import { faHdd, faLayerGroup, faMemory } from '@fortawesome/free-solid-svg-icons';
+import getConfig from '@/api/store/getConfig';
+import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
 import { useStoreState } from '@/state/hooks';
+import useSWR from 'swr';
+import Spinner from '@/components/elements/Spinner';
+import FlashMessageRender from '@/components/FlashMessageRender';
+import InputSpinner from '@/components/elements/InputSpinner';
+
+export interface ConfigResponse {
+    user: any[];
+}
 
 interface CreateValues {
     name: string;
@@ -20,105 +29,138 @@ interface CreateValues {
 }
 
 export default () => {
-    const { clearAndAddHttpError } = useFlash();
+    const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
     const [ isSubmit, setSubmit ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     const user = useStoreState(state => state.user.data);
+    const { data, error, mutate } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
 
     const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+        setLoading(true);
+        clearFlashes('account:store');
         setSubmitting(false);
         setSubmit(true);
 
         createServer(name, cpu, ram, storage).then(() => {
+            mutate();
             setSubmit(false);
         })
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store',
+                message: 'Your server has been created!',
+            }))
+            .then(() => setLoading(false))
             .then(() => {
                 // @ts-ignore
                 window.location = '/';
             })
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:store:deployed',
+                message: 'Your server has been deployed and is now installing.',
+            }))
             .catch(error => {
                 setSubmitting(false);
                 setSubmit(false);
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ key: 'account:store', error });
             });
     };
 
+    useEffect(() => {
+        if (!error) {
+            clearFlashes('account:store');
+        } else {
+            clearAndAddHttpError({ key: 'account:store', error });
+        }
+    });
+
     return (
         <PageContentBlock title={'Create a Server'} css={tw`flex flex-wrap`}>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>New Server</h3>
             <div css={tw`w-full`}>
-                <Formik
-                    onSubmit={submit}
-                    initialValues={{
-                        name: 'My Server',
-                        cpu: 50,
-                        ram: 1,
-                        storage: 1,
-                    }}
-                    validationSchema={object().shape({
-                        name: string().required(),
-                        cpu: number().required(),
-                        ram: number().required(),
-                        storage: number().required(),
-                    })}
-                >
-                    <Form>
-                        <div css={tw`flex flex-wrap`}>
-                            <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
-                                <TitledGreyBox title={'Server Name'} icon={faLayerGroup}>
-                                    <div css={tw`px-1 py-2`}>
-                                        <Field
-                                            name={'name'}
-                                            placeholder={'Server Name'}
-                                        />
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>Assign a name to your server for use in the Panel.</p>
-                                    </div>
-                                </TitledGreyBox>
-                            </div>
-                            <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
-                                <TitledGreyBox title={'Server Name'} icon={faLayerGroup}>
-                                    <div css={tw`px-1 py-2`}>
-                                        <Field
-                                            name={'cpu'}
-                                            placeholder={'Server CPU'}
-                                        />
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{user!.crCpu}% available</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>Assign CPU cores and threads to your server. (100% = 1 thread)</p>
-                                    </div>
-                                </TitledGreyBox>
-                            </div>
-                            <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
-                                <TitledGreyBox title={'Server RAM'} icon={faMemory}>
-                                    <div css={tw`px-1 py-2`}>
-                                        <Field
-                                            name={'ram'}
-                                            placeholder={'4'}
-                                        />
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crRam)} available</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of memory allowed for this server in GB.</p>
-                                    </div>
-                                </TitledGreyBox>
-                            </div>
-                            <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
-                                <TitledGreyBox title={'Server Storage'} icon={faHdd}>
-                                    <div css={tw`px-1 py-2`}>
-                                        <Field
-                                            name={'storage'}
-                                            placeholder={'16'}
-                                        />
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crStorage)} available</p>
-                                        <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of storage allowed for this server in GB.</p>
-                                    </div>
-                                </TitledGreyBox>
-                            </div>
-
-                        </div>
-                        <br></br>
-                        <div css={tw`flex justify-end text-right`}>
-                            <Button type={'submit'} disabled={isSubmit}>Create</Button>
-                        </div>
-                    </Form>
-                </Formik>
+                <FlashMessageRender byKey={'account:store'} css={tw`mb-4`} />
             </div>
+            {!data ?
+                <div css={tw`w-full`}>
+                    <Spinner size={'large'} centered />
+                </div>
+                :
+                <>
+                    <h3 css={tw`mt-8 mb-2 text-2xl`}>New Server</h3>
+                    <div css={tw`w-full`}>
+                        <Formik
+                            onSubmit={submit}
+                            initialValues={{
+                                name: `${user!.username}'s server`,
+                                cpu: user!.crCpu,
+                                ram: user!.crRam,
+                                storage: user!.crStorage,
+                            }}
+                            validationSchema={object().shape({
+                                name: string().required().min(3),
+                                cpu: number().required().min(50).max(user!.crCpu),
+                                ram: number().required().min(1).max(user!.crRam / 1024),
+                                storage: number().required().min(1).max(user!.crStorage / 1024),
+                            })}
+                        >
+                            <Form>
+                                <div css={tw`flex flex-wrap`}>
+                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
+                                        <TitledGreyBox title={'Server Name'} icon={faLayerGroup}>
+                                            <div css={tw`px-1 py-2`}>
+                                                <Field
+                                                    name={'name'}
+                                                />
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>Character limits: <code>a-z A-Z 0-9 _ - .</code> and <code>[Space]</code>.</p>
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>Assign a name to your server for use in the Panel.</p>
+                                            </div>
+                                        </TitledGreyBox>
+                                    </div>
+                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
+                                        <TitledGreyBox title={'Server CPU'} icon={faMicrochip}>
+                                            <div css={tw`px-1 py-2`}>
+                                                <Field
+                                                    name={'cpu'}
+                                                />
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>{user!.crCpu}% available</p>
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>Assign CPU cores and threads to your server. (100% = 1 thread)</p>
+                                            </div>
+                                        </TitledGreyBox>
+                                    </div>
+                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
+                                        <TitledGreyBox title={'Server RAM'} icon={faMemory}>
+                                            <div css={tw`px-1 py-2`}>
+                                                <Field
+                                                    name={'ram'}
+                                                />
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crRam)} available</p>
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of memory allowed for this server in GB.</p>
+                                            </div>
+                                        </TitledGreyBox>
+                                    </div>
+                                    <div css={tw`lg:w-6/12 lg:pl-4 pt-4`}>
+                                        <TitledGreyBox title={'Server Storage'} icon={faHdd}>
+                                            <div css={tw`px-1 py-2`}>
+                                                <Field
+                                                    name={'storage'}
+                                                />
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crStorage)} available</p>
+                                                <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of storage allowed for this server in GB.</p>
+                                            </div>
+                                        </TitledGreyBox>
+                                    </div>
+                                </div>
+                                <br></br>
+                                <div css={tw`flex justify-end text-right`}>
+                                    <InputSpinner visible={loading}>
+                                        <Button type={'submit'} disabled={isSubmit}>Create Servers</Button>
+                                    </InputSpinner>
+                                </div>
+                            </Form>
+                        </Formik>
+                    </div>
+                </>
+            }
         </PageContentBlock>
     );
 };
