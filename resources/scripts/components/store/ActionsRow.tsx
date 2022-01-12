@@ -24,7 +24,7 @@ const ActionsRow = () => {
                 message: '1 server slot has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ error });
                 setSubmit(false);
             });
     };
@@ -41,7 +41,7 @@ const ActionsRow = () => {
                 message: '50% CPU has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ error });
             });
     };
 
@@ -57,7 +57,7 @@ const ActionsRow = () => {
                 message: '1GB RAM has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ error });
             });
     };
 
@@ -73,7 +73,7 @@ const ActionsRow = () => {
                 message: '1GB Storage has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError(error);
+                clearAndAddHttpError({ error });
             });
     };
 

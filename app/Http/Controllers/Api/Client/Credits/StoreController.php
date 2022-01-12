@@ -84,16 +84,32 @@ class StoreController extends ClientApiController
         ];
 
         if ($request->user()->cr_slots < 1) {
-            return throw new DisplayException('You don\'t have a server slot available to make this server.');
+            throw new DisplayException('You don\'t have a server slot available to make this server.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
         }
         if ($request->user()->cr_cpu < $request->input('cpu')) {
-            return throw new DisplayException('You don\'t have enough CPU available in your account.');
+            throw new DisplayException('You don\'t have enough CPU available in your account.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
         }
         if ($request->user()->cr_ram < $request->input('ram')) {
-            return throw new DisplayException('You don\'t have enough RAM available in your account.');
+            throw new DisplayException('You don\'t have enough RAM available in your account.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
         }
         if ($request->user()->cr_storage < $request->input('storage')) {
-            return throw new DisplayException('You don\'t have that much storage available om your account.');
+            throw new DisplayException('You don\'t have that much storage available om your account.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
         }
 
         foreach (DB::table('egg_variables')->where('egg_id', '=', $egg->id)->get() as $var) {
@@ -121,7 +137,13 @@ class StoreController extends ClientApiController
     {
         $allocation = DB::table('allocations')->select('*')->where('node_id', '=', $node_id)->where('server_id', '=', null)->get()->first();
 
-        if (!$allocation) return -1;
+        if (!$allocation) {
+            throw new DisplayException('No allocations are available to deploy a server instance.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
+        };
 
         return $allocation->id;
     }

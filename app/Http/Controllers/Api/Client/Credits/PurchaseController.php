@@ -26,6 +26,7 @@ class PurchaseController extends ClientApiController
         $cost = $this->credits->get('store:slots_cost', 100);
 
         if ($userBal < $cost) {
+            throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
                 'data' => []
@@ -50,6 +51,7 @@ class PurchaseController extends ClientApiController
         $cost = $this->credits->get('store:cpu_cost', 20);
 
         if ($userBal < $cost) {
+            throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
                 'data' => []
@@ -74,6 +76,7 @@ class PurchaseController extends ClientApiController
         $cost = $this->credits->get('store:ram_cost', 10);
 
         if ($userBal < $cost) {
+            throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
                 'data' => []
@@ -98,6 +101,7 @@ class PurchaseController extends ClientApiController
         $cost = $this->credits->get('store:storage_cost', 5);
 
         if ($userBal < $cost) {
+            throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
                 'data' => []
