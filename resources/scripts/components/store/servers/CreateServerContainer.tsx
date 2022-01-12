@@ -15,6 +15,7 @@ import { useStoreState } from '@/state/hooks';
 import useSWR from 'swr';
 import Spinner from '@/components/elements/Spinner';
 import FlashMessageRender from '@/components/FlashMessageRender';
+import InputSpinner from '@/components/elements/InputSpinner';
 
 export interface ConfigResponse {
     user: any[];
@@ -30,10 +31,12 @@ interface CreateValues {
 export default () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
     const [ isSubmit, setSubmit ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
     const user = useStoreState(state => state.user.data);
     const { data, error, mutate } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
 
     const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+        setLoading(true);
         clearFlashes('account:store');
         setSubmitting(false);
         setSubmit(true);
@@ -47,6 +50,7 @@ export default () => {
                 key: 'account:store',
                 message: 'Your server has been created!',
             }))
+            .then(() => setLoading(false))
             .then(() => {
                 // @ts-ignore
                 window.location = '/';
@@ -87,10 +91,10 @@ export default () => {
                         <Formik
                             onSubmit={submit}
                             initialValues={{
-                                name: 'My Server',
-                                cpu: 0,
-                                ram: 0,
-                                storage: 0,
+                                name: `${user!.username}'s server`,
+                                cpu: user!.crCpu,
+                                ram: user!.crRam,
+                                storage: user!.crStorage,
                             }}
                             validationSchema={object().shape({
                                 name: string().required().min(3),
@@ -148,7 +152,9 @@ export default () => {
                                 </div>
                                 <br></br>
                                 <div css={tw`flex justify-end text-right`}>
-                                    <Button type={'submit'} disabled={isSubmit}>Create</Button>
+                                    <InputSpinner visible={loading}>
+                                        <Button type={'submit'} disabled={isSubmit}>Create Servers</Button>
+                                    </InputSpinner>
                                 </div>
                             </Form>
                         </Formik>
