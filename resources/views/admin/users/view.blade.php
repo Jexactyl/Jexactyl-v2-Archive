@@ -4,7 +4,7 @@
 {{-- This software is licensed under the terms of the MIT license. --}}
 {{-- https://opensource.org/licenses/MIT --}}
 @extends('layouts.admin')
-@include('partials/admin.users.nav', ['activeTab' => 'view'])
+@include('partials/admin.users.nav', ['activeTab' => 'view', 'user' => $user])
 
 @section('title')
     Manage User: {{ $user->username }}
@@ -20,6 +20,7 @@
 @endsection
 
 @section('content')
+    @yield('users::nav')
 <div class="row">
     <form action="{{ route('admin.users.view', $user->id) }}" method="post">
         <div class="col-md-6">

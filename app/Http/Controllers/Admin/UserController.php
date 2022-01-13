@@ -2,7 +2,15 @@
 
 namespace Pterodactyl\Http\Controllers\Admin;
 
+use Exception;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\RedzirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Pterodactyl\Exceptions\Model\DataValidationException;
+use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Models\Model;
 use Pterodactyl\Models\User;
 use Prologue\Alerts\AlertsMessageBag;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -16,38 +24,39 @@ use Pterodactyl\Services\Users\UserDeletionService;
 use Pterodactyl\Http\Requests\Admin\UserFormRequest;
 use Pterodactyl\Http\Requests\Admin\UserStoreFormRequest;
 use Pterodactyl\Contracts\Repository\UserRepositoryInterface;
+use Throwable;
 
 class UserController extends Controller
 {
     use AvailableLanguages;
 
     /**
-     * @var \Prologue\Alerts\AlertsMessageBag
+     * @var AlertsMessageBag
      */
     protected $alert;
 
     /**
-     * @var \Pterodactyl\Services\Users\UserCreationService
+     * @var UserCreationService
      */
     protected $creationService;
 
     /**
-     * @var \Pterodactyl\Services\Users\UserDeletionService
+     * @var UserDeletionService
      */
     protected $deletionService;
 
     /**
-     * @var \Pterodactyl\Contracts\Repository\UserRepositoryInterface
+     * @var UserRepositoryInterface
      */
     protected $repository;
 
     /**
-     * @var \Illuminate\Contracts\Translation\Translator
+     * @var Translator
      */
     protected $translator;
 
     /**
-     * @var \Pterodactyl\Services\Users\UserUpdateService
+     * @var UserUpdateService
      */
     protected $updateService;
 
@@ -61,7 +70,8 @@ class UserController extends Controller
         Translator $translator,
         UserUpdateService $updateService,
         UserRepositoryInterface $repository
-    ) {
+    )
+    {
         $this->alert = $alert;
         $this->creationService = $creationService;
         $this->deletionService = $deletionService;
@@ -73,7 +83,7 @@ class UserController extends Controller
     /**
      * Display user index page.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function index(Request $request)
     {
@@ -95,7 +105,7 @@ class UserController extends Controller
     /**
      * Display new user page.
      *
-     * @return \Illuminate\View\View
+     * @return View
      */
     public function create()
     {
@@ -107,9 +117,10 @@ class UserController extends Controller
     /**
      * Display user view page.
      *
-     * @return \Illuminate\View\View
+     * @param User $user
+     * @return View
      */
-    public function view(User $user)
+    public function view(User $user): View
     {
         return view('admin.users.view', [
             'user' => $user,
@@ -120,9 +131,10 @@ class UserController extends Controller
     /**
      * Display user view page.
      *
-     * @return \Illuminate\View\View
+     * @param User $user
+     * @return View
      */
-    public function viewStore(User $user)
+    public function viewStore(User $user): View
     {
         return view('admin.users.store', [
             'user' => $user,
@@ -132,10 +144,10 @@ class UserController extends Controller
     /**
      * Delete a user from the system.
      *
-     * @return \Illuminate\Http\RedzirectResponse
+     * @return RedirectResponse
      *
-     * @throws \Exception
-     * @throws \Pterodactyl\Exceptions\DisplayException
+     * @throws Exception
+     * @throws DisplayException
      */
     public function delete(Request $request, User $user)
     {
@@ -151,10 +163,10 @@ class UserController extends Controller
     /**
      * Create a user.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
-     * @throws \Exception
-     * @throws \Throwable
+     * @throws Exception
+     * @throws Throwable
      */
     public function store(UserFormRequest $request)
     {
@@ -167,10 +179,10 @@ class UserController extends Controller
     /**
      * Update a user on the system.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
-     * @throws \Pterodactyl\Exceptions\Model\DataValidationException
-     * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
+     * @throws DataValidationException
+     * @throws RecordNotFoundException
      */
     public function update(UserFormRequest $request, User $user)
     {
@@ -186,10 +198,10 @@ class UserController extends Controller
     /**
      * Update a user on the system.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      *
-     * @throws \Pterodactyl\Exceptions\Model\DataValidationException
-     * @throws \Pterodactyl\Exceptions\Repository\RecordNotFoundException
+     * @throws DataValidationException
+     * @throws RecordNotFoundException
      */
     public function updateStore(UserStoreFormRequest $request, User $user)
     {
@@ -205,7 +217,7 @@ class UserController extends Controller
     /**
      * Get a JSON response of users on the system.
      *
-     * @return \Illuminate\Support\Collection|\Pterodactyl\Models\Model
+     * @return Collection|Model
      */
     public function json(Request $request)
     {

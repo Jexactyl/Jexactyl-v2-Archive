@@ -4,7 +4,7 @@
 {{-- This software is licensed under the terms of the MIT license. --}}
 {{-- https://opensource.org/licenses/MIT --}}
 @extends('layouts.admin')
-@include('partials/admin.users.nav', ['activeTab' => 'store'])
+@include('partials/admin.users.nav', ['activeTab' => 'store', 'user' => $user])
 
 @section('title')
     Manage User: {{ $user->username }}
@@ -15,12 +15,13 @@
     <ol class="breadcrumb">
         <li><a href="{{ route('admin.index') }}">Admin</a></li>
         <li><a href="{{ route('admin.users') }}">Users</a></li>
-        <li class="{{ route('admin.users.view') }}">{{ $user->username }}</li>
+        <li class="{{ route('admin.users.view', ['user' => $user]) }}">{{ $user->username }}</li>
         <li class="active">Resources</li>
     </ol>
 @endsection
 
 @section('content')
+    @yield('user::nav')
 <div class="row">
         <div class="col-xs-12">
             <div class="box">
