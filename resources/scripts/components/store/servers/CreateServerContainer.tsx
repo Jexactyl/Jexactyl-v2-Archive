@@ -93,8 +93,8 @@ export default () => {
                             initialValues={{
                                 name: `${user!.username}'s server`,
                                 cpu: user!.crCpu,
-                                ram: user!.crRam,
-                                storage: user!.crStorage,
+                                ram: user!.crRam / 1024,
+                                storage: user!.crStorage / 1024,
                             }}
                             validationSchema={object().shape({
                                 name: string().required().min(3),
