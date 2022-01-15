@@ -36,6 +36,10 @@
                                     <input type="text" id="cr_balance" value="{{ $user->cr_balance }}" name="cr_balance" class="form-control form-autocomplete-stop">
                                 </div>
                                 <div class="form-group col-md-4">
+                                    <label for="cr_slots" class="control-label">Server slots available</label>
+                                    <input type="text" id="cr_slots" value="{{ $user->cr_slots }}" name="slots" class="form-control form-autocomplete-stop">
+                                </div>
+                                <div class="form-group col-md-4">
                                     <label for="cr_cpu" class="control-label">CPU available</label>
                                     <input type="text" id="cr_cpu" value="{{ $user->cr_cpu }}" name="cr_cpu" class="form-control form-autocomplete-stop">
                                 </div>
