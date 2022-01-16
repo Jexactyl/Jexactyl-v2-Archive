@@ -254,3 +254,16 @@ Route::group(['prefix' => 'credits'], function () {
     Route::patch('/', 'Credits\ConfigController@update')->name('admin.credits.update');
     Route::patch('/store', 'Credits\StoreController@update')->name('admin.credits.store.update');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Billing System Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/billing
+|
+*/
+Route::group(['prefix' => 'billing'], function () {
+    Route::get('/', 'BillingController@index')->name('admin.billing');
+    Route::patch('/', 'BillingController@update')->name('admin.billing.update');
+});

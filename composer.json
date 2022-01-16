@@ -34,6 +34,7 @@
         "spatie/laravel-fractal": "^5.8",
         "spatie/laravel-query-builder": "^3.5",
         "staudenmeir/belongs-to-through": "^2.11",
+        "stripe/stripe-php": "^7.110",
         "symfony/yaml": "^5.3",
         "webmozart/assert": "^1.10"
     },
