@@ -32,8 +32,8 @@ const User = styled.div`
 
 const Sidebar = styled.div<{ $collapsed?: boolean }>`
   ${tw`h-screen hidden md:flex flex-col items-center flex-shrink-0 bg-neutral-900 overflow-x-hidden ease-linear`};
-  ${tw`transition-[width] duration-150 ease-in`};
-  ${tw`w-[17.5rem]`};
+  ${tw`transition duration-150 ease-in`};
+  ${tw`w-72`};
   & > a {
     ${tw`h-10 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-8`};
     ${tw`hover:text-neutral-50`};
