@@ -14,48 +14,36 @@ const ResourceRow = () => {
     const user = useStoreState(state => state.user.data);
 
     return (
-        <>
-            <div className={'storeResourceBox'}>
-                <div className={'storeResourceCol'}>
-                    <TitledGreyBox
-                        title={'Server Slots Available'}
-                        icon={faLayerGroup}
-                    >
-                        <h3 css={tw`text-2xl`}>{user!.crSlots}</h3>
-                    </TitledGreyBox>
-                </div>
-            </div>
-            <div className={'storeResourceBox'}>
-                <div className={'storeResourceCol'}>
-                    <TitledGreyBox
-                        title={'CPU available'}
-                        icon={faMicrochip}
-                    >
-                        <h3 css={tw`text-2xl`}>{user!.crCpu}%</h3>
-                    </TitledGreyBox>
-                </div>
-            </div>
-            <div className={'storeResourceBox'}>
-                <div className={'storeResourceCol'}>
-                    <TitledGreyBox
-                        title={'RAM available'}
-                        icon={faMemory}
-                    >
-                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crRam)}</h3>
-                    </TitledGreyBox>
-                </div>
-            </div>
-            <div className={'storeResourceBox'}>
-                <div className={'storeResourceCol'}>
-                    <TitledGreyBox
-                        title={'Storage available'}
-                        icon={faHdd}
-                    >
-                        <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crStorage)}</h3>
-                    </TitledGreyBox>
-                </div>
-            </div>
-        </>
+        <div css={tw`md:flex`}>
+            <TitledGreyBox
+                title={'Server Slots Available'}
+                icon={faLayerGroup}
+                css={tw`flex-1`}
+            >
+                <h3 css={tw`text-2xl`}>{user!.crSlots}</h3>
+            </TitledGreyBox>
+            <TitledGreyBox
+                title={'CPU available'}
+                icon={faMicrochip}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+            >
+                <h3 css={tw`text-2xl`}>{user!.crCpu}%</h3>
+            </TitledGreyBox>
+            <TitledGreyBox
+                title={'RAM available'}
+                icon={faMemory}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+            >
+                <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crRam)}</h3>
+            </TitledGreyBox>
+            <TitledGreyBox
+                title={'Storage available'}
+                icon={faHdd}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+            >
+                <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crStorage)}</h3>
+            </TitledGreyBox>
+        </div>
     );
 };
 

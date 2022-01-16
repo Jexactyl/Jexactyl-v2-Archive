@@ -65,9 +65,7 @@ Route::group(['prefix' => 'databases'], function () {
 */
 Route::group(['prefix' => 'settings'], function () {
     Route::get('/', 'Settings\IndexController@index')->name('admin.settings');
-    Route::get('/secret', 'Settings\SecretController@index')->name('admin.settings.secret');
     Route::get('/mail', 'Settings\MailController@index')->name('admin.settings.mail');
-    Route::get('/advanced', 'Settings\AdvancedController@index')->name('admin.settings.advanced');
     Route::get('/advanced', 'Settings\AdvancedController@index')->name('admin.settings.advanced');
     Route::post('/mail/test', 'Settings\MailController@test')->name('admin.settings.mail.test');
 
