@@ -21,7 +21,40 @@ import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import { FileActionCheckbox } from '@/components/server/files/SelectFileCheckbox';
 import { hashToPath } from '@/helpers';
 
+let sortMethod = 'namedown';
+
 const sortFiles = (files: FileObject[]): FileObject[] => {
+    // Sorts by name
+    if (sortMethod === 'namedown') {
+        return files.sort((a, b) => a.name.localeCompare(b.name))
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Sorts by file size
+    if (sortMethod === 'sizedown') {
+        return files.sort((a, b) => b.size - a.size)
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Sorts by date modified
+    if (sortMethod === 'datedown') {
+        return files.sort((a, b) => a.modifiedAt.getDate() - b.modifiedAt.getDate())
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Sorts by name
+    if (sortMethod === 'nameup') {
+        return files.sort((a, b) => b.name.localeCompare(a.name))
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Sorts by file size
+    if (sortMethod === 'sizeup') {
+        return files.sort((a, b) => a.size - b.size)
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Sorts by date modified
+    if (sortMethod === 'dateup') {
+        return files.sort((a, b) => b.modifiedAt.getDate() - a.modifiedAt.getDate())
+            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    }
+    // Fallback to name
     return files.sort((a, b) => a.name.localeCompare(b.name))
         .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
 };
@@ -49,6 +82,40 @@ export default () => {
 
     const onSelectAllClick = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFiles(e.currentTarget.checked ? (files?.map(file => file.name) || []) : []);
+    };
+
+    const sortName = () => {
+        if (sortMethod === 'namedown') {
+            sortMethod = 'nameup';
+        } else {
+            sortMethod = 'namedown';
+        }
+
+        if (!files) return;
+        sortFiles(files.splice(0, 250));
+        mutate();
+    };
+
+    const sortSize = () => {
+        if (sortMethod === 'sizedown') {
+            sortMethod = 'sizeup';
+        } else {
+            sortMethod = 'sizedown';
+        }
+        if (!files) return;
+        sortFiles(files.splice(0, 250));
+        mutate();
+    };
+
+    const sortDate = () => {
+        if (sortMethod === 'datedown') {
+            sortMethod = 'dateup';
+        } else {
+            sortMethod = 'datedown';
+        }
+        if (!files) return;
+        sortFiles(files.splice(0, 250));
+        mutate();
     };
 
     if (error) {
@@ -94,12 +161,47 @@ export default () => {
                     <Spinner size={'large'} centered/>
                     :
                     <>
+                        <div>
+                            <Button css={tw`mb-4 mx-auto`} onClick={sortName}>
+                                {sortMethod === 'nameup' ?
+                                    <p>
+                                    Name &uarr;
+                                    </p>
+                                    :
+                                    <p>
+                                    Name &darr;
+                                    </p>
+                                }
+                            </Button>
+                            <Button css={tw`mb-4 mx-auto`} onClick={sortSize}>
+                                {sortMethod === 'sizeup' ?
+                                    <p>
+                                    Size &uarr;
+                                    </p>
+                                    :
+                                    <p>
+                                    Size &darr;
+                                    </p>
+                                }
+                            </Button>
+                            <Button css={tw`mb-4 mx-auto`} onClick={sortDate}>
+                                {sortMethod === 'dateup' ?
+                                    <p>
+                                    Date &uarr;
+                                    </p>
+                                    :
+                                    <p>
+                                    Date &darr;
+                                    </p>
+                                }
+                            </Button>
+                        </div>
                         {!files.length ?
                             <p css={tw`text-sm text-neutral-400 text-center`}>
                                 This directory seems to be empty.
                             </p>
                             :
-                            <CSSTransition classNames={'fade'} timeout={150} appear in>
+                            <CSSTransition id="container" classNames={'fade'} timeout={150} appear in>
                                 <div>
                                     {files.length > 250 &&
                                     <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
