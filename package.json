@@ -116,6 +116,17 @@
         "build:production": "yarn run clean && cross-env NODE_ENV=production ./node_modules/.bin/webpack --mode production",
         "serve": "yarn run clean && cross-env PUBLIC_PATH=https://pterodactyl.test:8080 NODE_ENV=development webpack-dev-server --host 0.0.0.0 --hot --https --key /etc/ssl/private/pterodactyl.test-key.pem --cert /etc/ssl/private/pterodactyl.test.pem"
     },
+    "babelMacros": {
+        "twin": {
+            "preset": "styled-components",
+            "autoCssProp": true
+        },
+        "styledComponents": {
+            "pure": true,
+            "displayName": true,
+            "fileName": true
+        }
+    },
     "browserslist": [
         "> 0.5%",
         "last 2 versions",
