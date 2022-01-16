@@ -5,7 +5,7 @@ import { withSubComponents } from '@/components/helpers';
 const Wrapper = styled.div`
   ${tw`w-full flex flex-col px-4`};
   & > a {
-    ${tw`h-10 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-4`};
+    ${tw`h-20 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-4`};
     ${tw`hover:text-neutral-50`};
     & > svg {
       ${tw`h-6 w-6 flex flex-shrink-0`};
