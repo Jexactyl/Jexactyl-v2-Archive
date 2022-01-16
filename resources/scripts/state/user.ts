@@ -9,6 +9,7 @@ export interface UserData {
     language: string;
     rootAdmin: boolean;
     useTotp: boolean;
+    avatarURL: string;
     crBalance: number;
     crSlots: number;
     crCpu: number;

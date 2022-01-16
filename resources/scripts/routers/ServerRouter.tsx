@@ -4,7 +4,6 @@ import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import ServerConsole from '@/components/server/ServerConsole';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
-import SidePanel from '@/components/SidePanel';
 import { ServerContext } from '@/state/server';
 import DatabasesContainer from '@/components/server/databases/DatabasesContainer';
 import FileManagerContainer from '@/components/server/files/FileManagerContainer';
@@ -19,10 +18,11 @@ import Can from '@/components/elements/Can';
 import BackupContainer from '@/components/server/backups/BackupContainer';
 import Spinner from '@/components/elements/Spinner';
 import ScreenBlock, { NotFound, ServerError } from '@/components/elements/ScreenBlock';
-import { httpErrorToHuman } from '@/api/http';
-import { useStoreState } from 'easy-peasy';
+import http, { httpErrorToHuman } from '@/api/http';
+import { State, useStoreState } from 'easy-peasy';
 import SubNavigation from '@/components/elements/SubNavigation';
 import NetworkContainer from '@/components/server/network/NetworkContainer';
+import Sidebar from '@/components/elements/Sidebar';
 import InstallListener from '@/components/server/InstallListener';
 import StartupContainer from '@/components/server/startup/StartupContainer';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
@@ -34,8 +34,11 @@ import {
     faDatabase,
     faExternalLinkAlt,
     faFolder,
+    faLayerGroup,
+    faLock,
     faPlay,
     faScroll,
+    faSignOutAlt,
     faSitemap,
     faTerminal,
     faUser,
@@ -45,6 +48,7 @@ import ServerInstallSvg from '@/assets/images/server_installing.svg';
 import ServerRestoreSvg from '@/assets/images/server_restore.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
 import tw from 'twin.macro';
+import { ApplicationStore } from '@/state';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -83,6 +87,17 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const serverId = ServerContext.useStoreState(state => state.server.data?.internalId);
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
     const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
+    const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
+    const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
+    const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
+    const crBalance = useStoreState((state: State<ApplicationStore>) => state.user.data!.crBalance);
+
+    const onTriggerLogout = () => {
+        http.post('/auth/logout').finally(() => {
+            // @ts-ignore
+            window.location = '/';
+        });
+    };
 
     useEffect(() => () => {
         clearServerState();
@@ -105,7 +120,38 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     return (
         <React.Fragment key={'server-router'}>
             <div css={tw`flex flex-row`}>
-                <SidePanel />
+                <Sidebar css={tw`flex-none`}>
+                    <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
+                        <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}>{name}</h1>
+                    </div>
+                    <Sidebar.Wrapper>
+                        <Sidebar.Section>Administration</Sidebar.Section>
+                        <NavLink to={'/'} exact>
+                            <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
+                        </NavLink>
+                        <NavLink to={'/account'} exact>
+                            <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                        </NavLink>
+                        <NavLink to={'/account/api'} exact>
+                            <FontAwesomeIcon icon={faSitemap}/><span>API</span>
+                        </NavLink>
+                        <NavLink to={'/account/security'} exact>
+                            <FontAwesomeIcon icon={faLock}/><span>Security</span>
+                        </NavLink>
+                    </Sidebar.Wrapper>
+                    <button title={'Logout'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
+                        <FontAwesomeIcon icon={faSignOutAlt}/><span>Logout</span>
+                    </button>
+                    <Sidebar.User>
+                        {avatarURL &&
+                    <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
+                        }
+                        <div css={tw`flex flex-col ml-3`}>
+                            <span css={tw`font-sans font-normal text-sm text-neutral-50 whitespace-nowrap leading-tight select-none`}>{email}</span>
+                            <span css={tw`font-header font-normal text-xs text-neutral-300 whitespace-nowrap leading-tight select-none`}>{crBalance} credits</span>
+                        </div>
+                    </Sidebar.User>
+                </Sidebar>
                 <div css={tw`flex-shrink flex-grow pl-32`}>
                     {(!uuid || !id) ?
                         error ?

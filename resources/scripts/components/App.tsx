@@ -25,6 +25,7 @@ interface ExtendedWindow extends Window {
         /* eslint-disable camelcase */
         root_admin: boolean;
         use_totp: boolean;
+        avatar_url: string;
         cr_balance: number;
         cr_slots: number;
         cr_cpu: number;
@@ -59,6 +60,7 @@ const App = () => {
             language: PterodactylUser.language,
             rootAdmin: PterodactylUser.root_admin,
             useTotp: PterodactylUser.use_totp,
+            avatarURL: PterodactylUser.avatar_url,
             crBalance: PterodactylUser.cr_balance,
             crSlots: PterodactylUser.cr_slots,
             crCpu: PterodactylUser.cr_cpu,
