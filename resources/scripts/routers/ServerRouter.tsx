@@ -10,6 +10,7 @@ import DatabasesContainer from '@/components/server/databases/DatabasesContainer
 import FileManagerContainer from '@/components/server/files/FileManagerContainer';
 import { CSSTransition } from 'react-transition-group';
 import FileEditContainer from '@/components/server/files/FileEditContainer';
+import AuditLogsContainer from '@/components/server/auditlogs/AuditLogsContainer';
 import SettingsContainer from '@/components/server/settings/SettingsContainer';
 import ScheduleContainer from '@/components/server/schedules/ScheduleContainer';
 import ScheduleEditContainer from '@/components/server/schedules/ScheduleEditContainer';
@@ -34,6 +35,7 @@ import {
     faExternalLinkAlt,
     faFolder,
     faPlay,
+    faScroll,
     faSitemap,
     faTerminal,
     faUser,
@@ -123,6 +125,11 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                                 <FontAwesomeIcon icon={faFolder}/> Files
                                             </NavLink>
                                         </Can>
+                                        <Can action={'audit-logs.*'}>
+                                            <NavLink to={`${match.url}/auditlogs`}>
+                                                <FontAwesomeIcon icon={faScroll}/> Logs
+                                            </NavLink>
+                                        </Can>
                                         <Can action={'database.*'}>
                                             <NavLink to={`${match.url}/databases`}>
                                                 <FontAwesomeIcon icon={faDatabase}/> Databases
@@ -185,6 +192,11 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                                 <Spinner.Suspense>
                                                     <FileEditContainer/>
                                                 </Spinner.Suspense>
+                                            </Route>
+                                            <Route path={`${match.path}/auditlogs`} exact>
+                                                <RequireServerPermission permissions={'audit-logs.*'}>
+                                                    <AuditLogsContainer/>
+                                                </RequireServerPermission>
                                             </Route>
                                             <Route path={`${match.path}/databases`} exact>
                                                 <RequireServerPermission permissions={'database.*'}>
