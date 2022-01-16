@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  ${tw`h-[18px] font-header font-medium text-xs text-neutral-300 whitespace-nowrap uppercase ml-4 mb-1 select-none`};
+  ${tw`h-10 font-header font-medium text-xs text-neutral-300 whitespace-nowrap uppercase ml-4 mb-1 select-none`};
   &:not(:first-of-type) {
     ${tw`mt-4`};
   }
