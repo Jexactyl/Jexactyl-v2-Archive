@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import PageContentBlock from '@/components/elements/PageContentBlock';
-import useFlash from '@/plugins/useFlash';
+import useSWR from 'swr';
 import tw from 'twin.macro';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import { Form, Formik, FormikHelpers } from 'formik';
-import Button from '@/components/elements/Button';
+import useFlash from '@/plugins/useFlash';
 import { number, object, string } from 'yup';
-import Field from '@/components/elements/Field';
-import createServer from '@/api/store/createServer';
-import getConfig from '@/api/store/getConfig';
-import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
 import { megabytesToHuman } from '@/helpers';
 import { useStoreState } from '@/state/hooks';
-import useSWR from 'swr';
+import getConfig from '@/api/store/getConfig';
+import Field from '@/components/elements/Field';
+import Button from '@/components/elements/Button';
+import React, { useEffect, useState } from 'react';
+import createServer from '@/api/store/createServer';
 import Spinner from '@/components/elements/Spinner';
-import FlashMessageRender from '@/components/FlashMessageRender';
+import { Form, Formik, FormikHelpers } from 'formik';
 import InputSpinner from '@/components/elements/InputSpinner';
+import TitledGreyBox from '@/components/elements/TitledGreyBox';
+import FlashMessageRender from '@/components/FlashMessageRender';
+import PageContentBlock from '@/components/elements/PageContentBlock';
+import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
 
 export interface ConfigResponse {
     user: any[];

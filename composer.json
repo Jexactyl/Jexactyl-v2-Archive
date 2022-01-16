@@ -16,6 +16,7 @@
         "guzzlehttp/guzzle": "^7.3",
         "hashids/hashids": "^4.1",
         "laracasts/utilities": "^3.2",
+        "laravel/cashier": "^13.7",
         "laravel/framework": "^8.68",
         "laravel/helpers": "^1.4",
         "laravel/sanctum": "^2.11",
@@ -33,6 +34,7 @@
         "spatie/laravel-fractal": "^5.8",
         "spatie/laravel-query-builder": "^3.5",
         "staudenmeir/belongs-to-through": "^2.11",
+        "stripe/stripe-php": "^7.110",
         "symfony/yaml": "^5.3",
         "webmozart/assert": "^1.10"
     },
@@ -82,6 +84,9 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": false
+        "optimize-autoloader": false,
+        "allow-plugins": {
+            "composer/package-versions-deprecated": true
+        }
     }
 }

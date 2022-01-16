@@ -1,10 +1,10 @@
 import React from 'react';
-import PageContentBlock from '@/components/elements/PageContentBlock';
 import tw from 'twin.macro';
-import UserInformationRow from '@/components/store/UserInformationRow';
-import ResourceRow from '@/components/store/ResourceRow';
 import ActionsRow from '@/components/store/ActionsRow';
+import ResourceRow from '@/components/store/ResourceRow';
 import FlashMessageRender from '@/components/FlashMessageRender';
+import PageContentBlock from '@/components/elements/PageContentBlock';
+import UserInformationRow from '@/components/store/UserInformationRow';
 
 const StoreContainer = () => {
     return (

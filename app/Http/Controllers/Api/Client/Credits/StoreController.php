@@ -2,22 +2,23 @@
 
 namespace Pterodactyl\Http\Controllers\Api\Client\Credits;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
-use Pterodactyl\Exceptions\DisplayException;
-use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
-use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
-use Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException;
-use Pterodactyl\Http\Controllers\Api\Client\ClientApiController;
-use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
-use Pterodactyl\Models\Node;
-use Pterodactyl\Services\Servers\ServerCreationService;
 use Throwable;
+use Pterodactyl\Models\Node;
+use Illuminate\Support\Facades\DB;
+use Pterodactyl\Exceptions\DisplayException;
+use Illuminate\Validation\ValidationException;
+use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
+use Pterodactyl\Services\Servers\ServerCreationService;
+use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Http\Controllers\Api\Client\ClientApiController;
+use Pterodactyl\Exceptions\Service\Deployment\NoViableNodeException;
+use Pterodactyl\Exceptions\Service\Deployment\NoViableAllocationException;
 
 class StoreController extends ClientApiController
 {
     private Node $node;
     private ServerCreationService $creationService;
+
     /**
      * StoreController constructor.
      */
@@ -40,7 +41,6 @@ class StoreController extends ClientApiController
                 'user' => $user,
             ],
         ];
-
     }
 
     /**
@@ -60,9 +60,6 @@ class StoreController extends ClientApiController
             'storage' => 'required',
         ]);
 
-        $allocation = $this->getAllocationId(1);
-        if ($allocation == -1) throw new DisplayException('No allocations could be found on the requested node.');
-
         $egg = DB::table('eggs')->where('id', '=', 1)->first();
         $nest = DB::table('nests')->where('id', '=', 1)->first();
 
@@ -71,7 +68,7 @@ class StoreController extends ClientApiController
             'owner_id' => $request->user()->id,
             'egg_id' => $egg->id,
             'nest_id' => $nest->id,
-            'allocation_id' => $allocation,
+            'allocation_id' => $this->getAllocationId(1),
             'environment' => [],
             'memory' => $request->input('ram') * 1024,
             'disk' => $request->input('storage') * 1024,
@@ -83,38 +80,22 @@ class StoreController extends ClientApiController
             'start_on_completion' => true,
         ];
 
-        if ($request->user()->cr_slots < 1) {
-            throw new DisplayException('You don\'t have a server slot available to make this server.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
-        }
-        if ($request->user()->cr_cpu < $request->input('cpu')) {
-            throw new DisplayException('You don\'t have enough CPU available in your account.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
-        }
-        if ($request->user()->cr_ram < $request->input('ram')) {
-            throw new DisplayException('You don\'t have enough RAM available in your account.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
-        }
-        if ($request->user()->cr_storage < $request->input('storage')) {
-            throw new DisplayException('You don\'t have that much storage available om your account.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
-        }
-
         foreach (DB::table('egg_variables')->where('egg_id', '=', $egg->id)->get() as $var) {
             $key = "v{$nest->id}-{$egg->id}-{$var->env_variable}";
             $data['environment'][$var->env_variable] = $request->get($key, $var->default_value);
+        }
+
+        if (
+            $request->user()->cr_slots < 1 |
+            $request->user()->cr_cpu < $request->input('cpu') |
+            $request->user()->cr_ram < $request->input('ram') |
+            $request->user()->cr_storage < $request->input('storage')
+        ) {
+            throw new DisplayException('You don\'t have the resources available to make this server.');
+            return [
+                'success' => false,
+                'data' => []
+            ];
         }
 
         $server = $this->creationService->handle($data);

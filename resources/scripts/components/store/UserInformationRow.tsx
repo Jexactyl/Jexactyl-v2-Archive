@@ -1,11 +1,11 @@
-import { faArrowCircleRight, faInfoCircle, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import tw from 'twin.macro';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import { useStoreState } from '@/state/hooks';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
+import { useStoreState } from '@/state/hooks';
 import Button from '@/components/elements/Button';
+import TitledGreyBox from '@/components/elements/TitledGreyBox';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowCircleRight, faInfoCircle, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 const UserInformationRow = () => {
     const user = useStoreState(state => state.user.data);

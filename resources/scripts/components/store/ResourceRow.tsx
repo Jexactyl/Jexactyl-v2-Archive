@@ -1,14 +1,9 @@
-import {
-    faLayerGroup,
-    faMicrochip,
-    faMemory,
-    faHdd,
-} from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 import tw from 'twin.macro';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import { useStoreState } from '@/state/hooks';
 import { megabytesToHuman } from '@/helpers';
+import { useStoreState } from '@/state/hooks';
+import TitledGreyBox from '@/components/elements/TitledGreyBox';
+import { faLayerGroup, faMicrochip, faMemory, faHdd } from '@fortawesome/free-solid-svg-icons';
 
 const ResourceRow = () => {
     const user = useStoreState(state => state.user.data);
