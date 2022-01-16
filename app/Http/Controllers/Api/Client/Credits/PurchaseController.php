@@ -15,17 +15,15 @@ class PurchaseController extends ClientApiController
     {
         parent::__construct();
         $this->credits = $credits;
+        $this->balance = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
     }
 
     public function buySlots(StoreRequest $request): array
     {
-        $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
-        $userSlotsRaw = DB::table('users')->select('cr_slots')->where('id', '=', $request->user()->id)->get();
-        $userBal = $userBalRaw[0]->cr_balance;
-        $userSlots = $userSlotsRaw[0]->cr_slots;
-        $cost = $this->credits->get('store:slots_cost', 100);
+        $user_slots = DB::table('users')->select('cr_slots')->where('id', '=', $request->user()->id)->get();
+        $slots_cost = $this->credits->get('store:slots_cost', 100);
 
-        if ($userBal < $cost) {
+        if ($this->balance < $slots_cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
@@ -33,8 +31,10 @@ class PurchaseController extends ClientApiController
             ];
         }
 
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_slots' => $userSlots + 1]);
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
+        DB::table('users')->where('id', '=', $request->user()->id)->update([
+            'cr_balance' => $this->balance - $slots_cost,
+            'cr_slots' => $user_slots + 1
+        ]);
 
         return [
             'success' => true,
@@ -44,13 +44,10 @@ class PurchaseController extends ClientApiController
 
     public function buyCPU(StoreRequest $request): array
     {
-        $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
-        $userCPURaw = DB::table('users')->select('cr_cpu')->where('id', '=', $request->user()->id)->get();
-        $userBal = $userBalRaw[0]->cr_balance;
-        $userCPU = $userCPURaw[0]->cr_cpu;
-        $cost = $this->credits->get('store:cpu_cost', 20);
+        $user_cpu = DB::table('users')->select('cr_cpu')->where('id', '=', $request->user()->id)->get();
+        $cpu_cost = $this->credits->get('store:cpu_cost', 20);
 
-        if ($userBal < $cost) {
+        if ($this->balance < $cpu_cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
@@ -58,8 +55,10 @@ class PurchaseController extends ClientApiController
             ];
         }
 
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_cpu' => $userCPU + 50]);
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
+        DB::table('users')->where('id', '=', $request->user()->id)->update([
+            'cr_balance' => $this->balance - $cpu_cost,
+            'cr_cpu' => $user_cpu + 50
+        ]);
 
         return [
             'success' => true,
@@ -69,13 +68,10 @@ class PurchaseController extends ClientApiController
 
     public function buyRAM(StoreRequest $request): array
     {
-        $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
-        $userRAMRaw = DB::table('users')->select('cr_ram')->where('id', '=', $request->user()->id)->get();
-        $userBal = $userBalRaw[0]->cr_balance;
-        $userRAM = $userRAMRaw[0]->cr_ram;
-        $cost = $this->credits->get('store:ram_cost', 10);
+        $user_ram = DB::table('users')->select('cr_ram')->where('id', '=', $request->user()->id)->get();
+        $ram_cost = $this->credits->get('store:ram_cost', 10);
 
-        if ($userBal < $cost) {
+        if ($this->balance < $ram_cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
@@ -83,8 +79,10 @@ class PurchaseController extends ClientApiController
             ];
         }
 
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_ram' => $userRAM + 1024]);
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
+        DB::table('users')->where('id', '=', $request->user()->id)->update([
+            'cr_balance' => $this->balance - $ram_cost,
+            'cr_ram' => $user_ram + 1024
+        ]);
 
         return [
             'success' => true,
@@ -94,13 +92,10 @@ class PurchaseController extends ClientApiController
 
     public function buyStorage(StoreRequest $request): array
     {
-        $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
-        $userStorageRaw = DB::table('users')->select('cr_storage')->where('id', '=', $request->user()->id)->get();
-        $userBal = $userBalRaw[0]->cr_balance;
-        $userStorage = $userStorageRaw[0]->cr_storage;
-        $cost = $this->credits->get('store:storage_cost', 5);
+        $user_storage = DB::table('users')->select('cr_storage')->where('id', '=', $request->user()->id)->get();
+        $storage_cost = $this->credits->get('store:storage_cost', 5);
 
-        if ($userBal < $cost) {
+        if ($this->balance < $storage_cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
             return [
                 'success' => false,
@@ -108,8 +103,10 @@ class PurchaseController extends ClientApiController
             ];
         }
 
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_storage' => $userStorage + 1024]);
-        DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
+        DB::table('users')->where('id', '=', $request->user()->id)->update([
+            'cr_balance' => $this->balance - $storage_cost,
+            'cr_storage' => $user_storage + 1024
+        ]);
 
         return [
             'success' => true,

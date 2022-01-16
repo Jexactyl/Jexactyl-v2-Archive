@@ -1,13 +1,13 @@
-import { faHdd, faLayerGroup, faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react';
-import Button from '@/components/elements/Button';
-import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import buyCPU from '@/api/store/buy/buyCPU';
-import useFlash from '@/plugins/useFlash';
-import buySlots from '@/api/store/buy/buySlots';
-import buyRAM from '@/api/store/buy/buyRAM';
-import buyStorage from '@/api/store/buy/buyStorage';
 import tw from 'twin.macro';
+import React, { useState } from 'react';
+import useFlash from '@/plugins/useFlash';
+import buyCPU from '@/api/store/buy/buyCPU';
+import buyRAM from '@/api/store/buy/buyRAM';
+import buySlots from '@/api/store/buy/buySlots';
+import Button from '@/components/elements/Button';
+import buyStorage from '@/api/store/buy/buyStorage';
+import TitledGreyBox from '@/components/elements/TitledGreyBox';
+import { faHdd, faLayerGroup, faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 
 const ActionsRow = () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
@@ -25,7 +25,8 @@ const ActionsRow = () => {
                 message: '1 server slot has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError({ error });
+                console.error(error);
+                clearAndAddHttpError({ key: 'resources', error });
                 setSubmit(false);
             });
     };
@@ -42,7 +43,9 @@ const ActionsRow = () => {
                 message: '50% CPU has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError({ error });
+                console.error(error);
+                clearAndAddHttpError({ key: 'resources', error });
+                setSubmit(false);
             });
     };
 
@@ -58,7 +61,8 @@ const ActionsRow = () => {
                 message: '1GB RAM has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError({ error });
+                clearAndAddHttpError({ key: 'resources', error });
+                setSubmit(false);
             });
     };
 
@@ -74,7 +78,8 @@ const ActionsRow = () => {
                 message: '1GB Storage has been added to your account.',
             }))
             .catch(error => {
-                clearAndAddHttpError({ error });
+                clearAndAddHttpError({ key: 'resources', error });
+                setSubmit(false);
             });
     };
 
