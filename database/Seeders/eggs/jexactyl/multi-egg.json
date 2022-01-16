@@ -8,7 +8,9 @@
     "name": "Multi-egg",
     "author": "doge@chiragdev.xyz",
     "description": "A multi egg by chirag350.",
-    "features": null,
+    "features": [
+        "pid_limit"
+    ],
     "images": [
         "quay.io\/chirag350\/multi-egg"
     ],
