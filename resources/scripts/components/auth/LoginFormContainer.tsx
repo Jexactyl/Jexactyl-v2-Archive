@@ -161,7 +161,7 @@ const Container = ({ title, children }: { title?: string, children: React.ReactN
                 <FlashMessageRender css={tw`mb-2 px-1`}/>
                 {children}
                 <p css={tw`text-center text-neutral-500 text-xs mt-4`}>
-                &copy; {(new Date()).getFullYear()}&nbsp;Jexactyl
+                &copy; {(new Date()).getFullYear()}&nbsp;Jexactyl, built on <a href="https://pterodactyl.io">Pterodactyl</a>.
                 </p>
             </Wrapper>
         </div>

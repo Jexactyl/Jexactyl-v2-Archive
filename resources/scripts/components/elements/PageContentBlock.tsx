@@ -34,7 +34,7 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({ title, showFlashKey
                             href={'https://jexactyl.xyz'}
                             css={tw`no-underline text-neutral-500 hover:text-neutral-300`}
                         >
-                            Jexactyl
+                            Jexactyl, built with <a href="https://pterodactyl.io">Pterodactyl</a>.
                         </a>
                     </p>
                 </ContentContainer>
