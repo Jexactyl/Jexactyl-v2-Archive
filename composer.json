@@ -34,7 +34,8 @@
         "spatie/laravel-query-builder": "^3.5",
         "staudenmeir/belongs-to-through": "^2.11",
         "symfony/yaml": "^5.3",
-        "webmozart/assert": "^1.10"
+        "webmozart/assert": "^1.10",
+        "illuminate/support": ">=5.5.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -57,12 +58,14 @@
         "psr-4": {
             "Pterodactyl\\": "app/",
             "Database\\Factories\\": "database/Factories/",
-            "Database\\Seeders\\": "database/Seeders/"
+            "Database\\Seeders\\": "database/Seeders/",
+            "Emotality\\TawkTo\\": "views/scripts/tawk/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Pterodactyl\\Tests\\": "tests/"
+            "Pterodactyl\\Tests\\": "tests/",
+            "Emotality\\TawkTo\\": "src/"
         }
     },
     "scripts": {
@@ -77,6 +80,16 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover || true"
         ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Emotality\\TawkTo\\TawkToServiceProvider"
+            ],
+            "aliases": {
+                "TawkTo": "Emotality\\TawkTo\\TawkTo"
+            }
+        }
     },
     "prefer-stable": true,
     "config": {

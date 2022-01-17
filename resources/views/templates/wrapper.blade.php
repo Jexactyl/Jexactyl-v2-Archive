@@ -48,5 +48,6 @@
         @section('scripts')
             {!! $asset->js('main.js') !!}
         @show
+        {{ \TawkTo::widgetCode() }}
     </body>
 </html>
