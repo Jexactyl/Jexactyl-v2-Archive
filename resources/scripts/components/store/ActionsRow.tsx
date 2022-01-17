@@ -88,7 +88,7 @@ const ActionsRow = () => {
             <TitledGreyBox
                 title={'Purchase Server Slots'}
                 icon={faLayerGroup}
-                css={tw`flex-1`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <Button onClick={() => submitSlots()} disabled={isSubmit}>
                     1 Slot
@@ -97,7 +97,7 @@ const ActionsRow = () => {
             <TitledGreyBox
                 title={'Purchase CPU'}
                 icon={faMicrochip}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <Button onClick={() => submitCPU()} disabled={isSubmit}>
                     50% CPU
@@ -106,7 +106,7 @@ const ActionsRow = () => {
             <TitledGreyBox
                 title={'Purchase RAM'}
                 icon={faMemory}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <Button onClick={() => submitRAM()} disabled={isSubmit}>
                     1GB RAM
@@ -115,7 +115,7 @@ const ActionsRow = () => {
             <TitledGreyBox
                 title={'Purchase Storage'}
                 icon={faHdd}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <Button onClick={() => submitStorage()} disabled={isSubmit}>
                     1GB Storage

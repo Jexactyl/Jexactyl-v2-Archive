@@ -16,11 +16,11 @@ const StoreContainer = () => {
             <div>
                 <UserInformationRow/>
             </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>Resources</h3>
+            <h3 css={tw`mt-8 mb-2 text-2xl px-10`}>Resources</h3>
             <div css={tw`md:flex`}>
                 <ResourceRow/>
             </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>Actions</h3>
+            <h3 css={tw`mt-8 mb-2 text-2xl px-10`}>Actions</h3>
             <div css={tw`md:flex`}>
                 <ActionsRow/>
             </div>

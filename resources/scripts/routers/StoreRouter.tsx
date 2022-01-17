@@ -9,7 +9,7 @@ import { State } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import Sidebar from '@/components/elements/Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore } from '@fortawesome/free-solid-svg-icons';
 import http from '@/api/http';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
@@ -17,6 +17,8 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
     const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
     const crBalance = useStoreState((state: State<ApplicationStore>) => state.user.data!.crBalance);
+    const rootAdmin = useStoreState((state: State<ApplicationStore>) => state.user.data!.rootAdmin);
+    const storeEnabled = useStoreState((state: State<ApplicationStore>) => state.settings.data!.store.enabled);
 
     const onTriggerLogout = () => {
         http.post('/auth/logout').finally(() => {
@@ -29,10 +31,15 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
         <div css={tw`flex flex-row`}>
             <Sidebar css={tw`flex-none`}>
                 <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
-                    <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}>{name}</h1>
+                    <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                 </div>
                 <Sidebar.Wrapper>
-                    <Sidebar.Section>Administration</Sidebar.Section>
+                    {location.pathname.endsWith('/store') &&
+                        <Sidebar.Section>Store - Home</Sidebar.Section>
+                    }
+                    {location.pathname.endsWith('/store/servers/new') &&
+                        <Sidebar.Section>Store - New Server</Sidebar.Section>
+                    }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
                     </NavLink>
@@ -45,10 +52,20 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                     <NavLink to={'/account/security'} exact>
                         <FontAwesomeIcon icon={faLock}/><span>Security</span>
                     </NavLink>
+                    {storeEnabled &&
+                      <NavLink to={'/store'} exact>
+                          <FontAwesomeIcon icon={faStore}/><span>Store</span>
+                      </NavLink>
+                    }
+                    {rootAdmin &&
+                      <a href={'/admin'}>
+                          <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
+                      </a>
+                    }
                 </Sidebar.Wrapper>
-                <button title={'Logout'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
-                    <FontAwesomeIcon icon={faSignOutAlt}/><span>Logout</span>
-                </button>
+                <NavLink to={'/'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
+                    <FontAwesomeIcon icon={faSignOutAlt}/> <span>Logout</span>
+                </NavLink>
                 <Sidebar.User>
                     {avatarURL &&
                         <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
@@ -59,7 +76,7 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                     </div>
                 </Sidebar.User>
             </Sidebar>
-            <div css={tw`flex-grow flex-shrink pl-32`}>
+            <div css={tw`flex-grow flex-shrink`}>
                 <TransitionRouter>
                     <Switch location={location}>
                         <Route path={`${match.path}`} component={StoreContainer} exact/>

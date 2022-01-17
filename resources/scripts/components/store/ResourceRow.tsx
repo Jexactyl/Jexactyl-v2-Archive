@@ -13,28 +13,28 @@ const ResourceRow = () => {
             <TitledGreyBox
                 title={'Server Slots Available'}
                 icon={faLayerGroup}
-                css={tw`flex-1`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <h3 css={tw`text-2xl`}>{user!.crSlots}</h3>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'CPU available'}
                 icon={faMicrochip}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <h3 css={tw`text-2xl`}>{user!.crCpu}%</h3>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'RAM available'}
                 icon={faMemory}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crRam)}</h3>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Storage available'}
                 icon={faHdd}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-4 md:mt-0 md:ml-5`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
             >
                 <h3 css={tw`text-2xl`}>{megabytesToHuman(user!.crStorage)}</h3>
             </TitledGreyBox>

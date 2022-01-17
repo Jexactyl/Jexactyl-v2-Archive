@@ -42,6 +42,7 @@ import {
     faSitemap,
     faTerminal,
     faUser,
+    faStore,
 } from '@fortawesome/free-solid-svg-icons';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
@@ -91,6 +92,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
     const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
     const crBalance = useStoreState((state: State<ApplicationStore>) => state.user.data!.crBalance);
+    const storeEnabled = useStoreState((state: State<ApplicationStore>) => state.settings.data!.store.enabled);
 
     const onTriggerLogout = () => {
         http.post('/auth/logout').finally(() => {
@@ -122,10 +124,39 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
             <div css={tw`flex flex-row`}>
                 <Sidebar css={tw`flex-none`}>
                     <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
-                        <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}>{name}</h1>
+                        <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                     </div>
                     <Sidebar.Wrapper>
-                        <Sidebar.Section>Administration</Sidebar.Section>
+                        {location.pathname.endsWith(`/server/${id}`) &&
+                            <Sidebar.Section>Server - Console</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/files`) &&
+                            <Sidebar.Section>Server - Files</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/auditlogs`) &&
+                            <Sidebar.Section>Server - Logs</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/databases`) &&
+                            <Sidebar.Section>Server - Databases</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/schedules`) &&
+                            <Sidebar.Section>Server - Tasks</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/users`) &&
+                            <Sidebar.Section>Server - Subusers</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/backups`) &&
+                            <Sidebar.Section>Server - Backups</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/network`) &&
+                            <Sidebar.Section>Server - Network</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/startup`) &&
+                            <Sidebar.Section>Server - Startup</Sidebar.Section>
+                        }
+                        {location.pathname.startsWith(`/server/${id}/settings`) &&
+                            <Sidebar.Section>Server - Settings</Sidebar.Section>
+                        }
                         <NavLink to={'/'} exact>
                             <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
                         </NavLink>
@@ -138,10 +169,20 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         <NavLink to={'/account/security'} exact>
                             <FontAwesomeIcon icon={faLock}/><span>Security</span>
                         </NavLink>
+                        {storeEnabled &&
+                          <NavLink to={'/store'} exact>
+                              <FontAwesomeIcon icon={faStore}/><span>Store</span>
+                          </NavLink>
+                        }
+                        {rootAdmin &&
+                          <a href={'/admin'}>
+                              <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
+                          </a>
+                        }
                     </Sidebar.Wrapper>
-                    <button title={'Logout'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
-                        <FontAwesomeIcon icon={faSignOutAlt}/><span>Logout</span>
-                    </button>
+                    <NavLink to={'/'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
+                        <FontAwesomeIcon icon={faSignOutAlt}/> <span>Logout</span>
+                    </NavLink>
                     <Sidebar.User>
                         {avatarURL &&
                     <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
@@ -152,7 +193,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         </div>
                     </Sidebar.User>
                 </Sidebar>
-                <div css={tw`flex-shrink flex-grow pl-32`}>
+                <div css={tw`flex-shrink flex-grow`}>
                     {(!uuid || !id) ?
                         error ?
                             <ServerError message={error}/>

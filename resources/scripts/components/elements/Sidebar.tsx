@@ -5,7 +5,7 @@ import { withSubComponents } from '@/components/helpers';
 const Wrapper = styled.div`
   ${tw`w-full flex flex-col px-4`};
   & > a {
-    ${tw`h-20 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-4`};
+    ${tw`h-12 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-5`};
     ${tw`hover:text-neutral-50`};
     & > svg {
       ${tw`h-6 w-6 flex flex-shrink-0`};
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const Section = styled.div`
-  ${tw`h-10 font-header font-medium text-xs text-neutral-300 whitespace-nowrap uppercase ml-4 mb-1 select-none`};
+  ${tw`h-6 font-header font-medium text-xs text-neutral-300 whitespace-nowrap uppercase ml-4 mb-1 select-none`};
   &:not(:first-of-type) {
     ${tw`mt-4`};
   }
@@ -30,12 +30,11 @@ const User = styled.div`
   ${tw`h-16 w-full flex items-center bg-neutral-700 justify-center`};
 `;
 
-const Sidebar = styled.div<{ $collapsed?: boolean }>`
+const Sidebar = styled.div`
   ${tw`h-screen hidden md:flex flex-col items-center flex-shrink-0 bg-neutral-900 overflow-x-hidden ease-linear`};
-  ${tw`transition duration-150 ease-in`};
-  ${tw`w-72`};
+  ${tw`w-48`};
   & > a {
-    ${tw`h-10 w-full flex flex-row items-center text-neutral-300 cursor-pointer select-none px-8`};
+    ${tw`flex flex-row items-center text-neutral-300 cursor-pointer select-none px-8`};
     ${tw`hover:text-neutral-50`};
     & > svg {
       ${tw`transition-none h-6 w-6 flex flex-shrink-0`};
