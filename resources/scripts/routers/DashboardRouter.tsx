@@ -12,10 +12,15 @@ import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore }
 import Sidebar from '@/components/elements/Sidebar';
 import { useStoreState } from '@/state/hooks';
 import { ApplicationStore } from '@/state';
+import { CSSTransition } from 'react-transition-group';
 import { State } from 'easy-peasy';
 import http from '@/api/http';
+import useWindowDimensions from '@/plugins/useWindowDimensions';
+import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
 
 const DashboardRouter = ({ location }: RouteComponentProps) => {
+    const { width } = useWindowDimensions();
+
     const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
     const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
@@ -38,16 +43,16 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                 </div>
                 <Sidebar.Wrapper>
                     {location.pathname.endsWith('/') &&
-                        <Sidebar.Section>Dashboard - Servers</Sidebar.Section>
+                          <Sidebar.Section>Dashboard - Servers</Sidebar.Section>
                     }
                     {location.pathname.endsWith('/account') &&
-                        <Sidebar.Section>Dashboard - Account</Sidebar.Section>
+                          <Sidebar.Section>Dashboard - Account</Sidebar.Section>
                     }
                     {location.pathname.endsWith('/account/api') &&
-                        <Sidebar.Section>Dashboard - API</Sidebar.Section>
+                          <Sidebar.Section>Dashboard - API</Sidebar.Section>
                     }
                     {location.pathname.endsWith('/account/security') &&
-                        <Sidebar.Section>Dashboard - Security</Sidebar.Section>
+                          <Sidebar.Section>Dashboard - Security</Sidebar.Section>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
@@ -62,14 +67,14 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                         <FontAwesomeIcon icon={faLock}/><span>Security</span>
                     </NavLink>
                     {storeEnabled &&
-                      <NavLink to={'/store'} exact>
-                          <FontAwesomeIcon icon={faStore}/><span>Store</span>
-                      </NavLink>
+                        <NavLink to={'/store'} exact>
+                            <FontAwesomeIcon icon={faStore}/><span>Store</span>
+                        </NavLink>
                     }
                     {rootAdmin &&
-                      <a href={'/admin'}>
-                          <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
-                      </a>
+                        <a href={'/admin'}>
+                            <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
+                        </a>
                     }
                 </Sidebar.Wrapper>
                 <NavLink to={'/'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
@@ -77,7 +82,7 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                 </NavLink>
                 <Sidebar.User>
                     {avatarURL &&
-                    <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
+                      <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
                     }
                     <div css={tw`flex flex-col ml-3`}>
                         <span css={tw`font-sans font-normal text-sm text-neutral-50 whitespace-nowrap leading-tight select-none`}>{email}</span>
@@ -85,7 +90,40 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                     </div>
                 </Sidebar.User>
             </Sidebar>
-            <div css={tw`flex-grow flex-shrink`}>
+            <div css={tw`flex-shrink flex-grow`}>
+                {width < 768 &&
+                    <CSSTransition timeout={150} classNames={'fade'} appear in>
+                        <StaticSubNavigation>
+                            <div>
+                                <NavLink to={'/'}>
+                                    <FontAwesomeIcon icon={faLayerGroup}/>
+                                </NavLink>
+                                <NavLink to={'/account'}>
+                                    <FontAwesomeIcon icon={faUser}/>
+                                </NavLink>
+                                <NavLink to={'/account/api'}>
+                                    <FontAwesomeIcon icon={faSitemap}/>
+                                </NavLink>
+                                <NavLink to={'/account/security'}>
+                                    <FontAwesomeIcon icon={faLock}/>
+                                </NavLink>
+                                {storeEnabled &&
+                                  <NavLink to={'/store'}>
+                                      <FontAwesomeIcon icon={faStore}/>
+                                  </NavLink>
+                                }
+                                {rootAdmin &&
+                                <a href={'/admin'}>
+                                    <FontAwesomeIcon icon={faCog}/>
+                                </a>
+                                }
+                                <NavLink to={'/'} onClick={onTriggerLogout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt}/>
+                                </NavLink>
+                            </div>
+                        </StaticSubNavigation>
+                    </CSSTransition>
+                }
                 <TransitionRouter>
                     <Switch location={location}>
                         <Route path={'/'} exact>

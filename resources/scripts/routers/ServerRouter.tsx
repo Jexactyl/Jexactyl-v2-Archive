@@ -43,6 +43,7 @@ import {
     faTerminal,
     faUser,
     faStore,
+    faHome,
 } from '@fortawesome/free-solid-svg-icons';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
@@ -50,6 +51,7 @@ import ServerRestoreSvg from '@/assets/images/server_restore.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
 import tw from 'twin.macro';
 import { ApplicationStore } from '@/state';
+import useWindowDimensions from '@/plugins/useWindowDimensions';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -79,8 +81,8 @@ const ConflictStateRenderer = () => {
 };
 
 const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) => {
-    const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
     const [ error, setError ] = useState('');
+    const { width } = useWindowDimensions();
 
     const id = ServerContext.useStoreState(state => state.server.data?.id);
     const uuid = ServerContext.useStoreState(state => state.server.data?.uuid);
@@ -89,6 +91,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
     const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
     const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
+    const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
     const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
     const crBalance = useStoreState((state: State<ApplicationStore>) => state.user.data!.crBalance);
@@ -204,6 +207,11 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                             <CSSTransition timeout={150} classNames={'fade'} appear in>
                                 <SubNavigation>
                                     <div>
+                                        {width < 768 &&
+                                          <NavLink to={'/'} exact>
+                                              <FontAwesomeIcon icon={faHome}/>
+                                          </NavLink>
+                                        }
                                         <NavLink to={`${match.url}`} exact>
                                             <FontAwesomeIcon icon={faTerminal}/> Console
                                         </NavLink>

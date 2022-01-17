@@ -11,8 +11,13 @@ import Sidebar from '@/components/elements/Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore } from '@fortawesome/free-solid-svg-icons';
 import http from '@/api/http';
+import useWindowDimensions from '@/plugins/useWindowDimensions';
+import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
+import { CSSTransition } from 'react-transition-group';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
+    const { width } = useWindowDimensions();
+
     const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
     const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
@@ -77,6 +82,39 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                 </Sidebar.User>
             </Sidebar>
             <div css={tw`flex-grow flex-shrink`}>
+                {width < 768 &&
+                    <CSSTransition timeout={150} classNames={'fade'} appear in>
+                        <StaticSubNavigation>
+                            <div>
+                                <NavLink to={'/'}>
+                                    <FontAwesomeIcon icon={faLayerGroup}/>
+                                </NavLink>
+                                <NavLink to={'/account'}>
+                                    <FontAwesomeIcon icon={faUser}/>
+                                </NavLink>
+                                <NavLink to={'/account/api'}>
+                                    <FontAwesomeIcon icon={faSitemap}/>
+                                </NavLink>
+                                <NavLink to={'/account/security'}>
+                                    <FontAwesomeIcon icon={faLock}/>
+                                </NavLink>
+                                {storeEnabled &&
+                                  <NavLink to={'/store'}>
+                                      <FontAwesomeIcon icon={faStore}/>
+                                  </NavLink>
+                                }
+                                {rootAdmin &&
+                                <a href={'/admin'}>
+                                    <FontAwesomeIcon icon={faCog}/>
+                                </a>
+                                }
+                                <NavLink to={'/'} onClick={onTriggerLogout}>
+                                    <FontAwesomeIcon icon={faSignOutAlt}/>
+                                </NavLink>
+                            </div>
+                        </StaticSubNavigation>
+                    </CSSTransition>
+                }
                 <TransitionRouter>
                     <Switch location={location}>
                         <Route path={`${match.path}`} component={StoreContainer} exact/>
