@@ -3,6 +3,7 @@
 ![Maintained](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 ![Discord](https://img.shields.io/discord/922284031129825280?style=for-the-badge)
 ![Downloads](https://img.shields.io/github/downloads/jexactyl/panel/total?style=for-the-badge)
+![Version](https://img.shields.io/github/v/release/jexactyl/panel?style=for-the-badge)
 
 # Jexactyl
 Jexactyl is an all-in-one server management panel
