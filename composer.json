@@ -65,7 +65,7 @@
     "autoload-dev": {
         "psr-4": {
             "Pterodactyl\\Tests\\": "tests/",
-            "Emotality\\TawkTo\\": "src/"
+            "Emotality\\TawkTo\\": "views/scripts/tawk/"
         }
     },
     "scripts": {
