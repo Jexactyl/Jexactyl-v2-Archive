@@ -14,6 +14,7 @@ import http from '@/api/http';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
 import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
 import { CSSTransition } from 'react-transition-group';
+import Spinner from '@/components/elements/Spinner';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -39,11 +40,12 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                     <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                 </div>
                 <Sidebar.Wrapper>
-                    {location.pathname.endsWith('/store') &&
+                    {location.pathname.endsWith('/store') ?
                         <Sidebar.Section>Store - Home</Sidebar.Section>
-                    }
-                    {location.pathname.endsWith('/store/servers/new') &&
-                        <Sidebar.Section>Store - New Server</Sidebar.Section>
+                        : location.pathname.endsWith('/store/servers/new') ?
+                            <Sidebar.Section>Store - New Server</Sidebar.Section>
+                            :
+                            <Spinner size={'small'} centered isBlue/>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>

@@ -17,6 +17,7 @@ import { State } from 'easy-peasy';
 import http from '@/api/http';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
 import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
+import Spinner from '@/components/elements/Spinner';
 
 const DashboardRouter = ({ location }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -42,17 +43,16 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                     <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                 </div>
                 <Sidebar.Wrapper>
-                    {location.pathname.endsWith('/') &&
-                          <Sidebar.Section>Dashboard - Servers</Sidebar.Section>
-                    }
-                    {location.pathname.endsWith('/account') &&
-                          <Sidebar.Section>Dashboard - Account</Sidebar.Section>
-                    }
-                    {location.pathname.endsWith('/account/api') &&
-                          <Sidebar.Section>Dashboard - API</Sidebar.Section>
-                    }
-                    {location.pathname.endsWith('/account/security') &&
-                          <Sidebar.Section>Dashboard - Security</Sidebar.Section>
+                    {location.pathname.endsWith('/') ?
+                        <Sidebar.Section>Dashboard - Servers</Sidebar.Section>
+                        : location.pathname.endsWith('/account') ?
+                            <Sidebar.Section>Dashboard - Account</Sidebar.Section>
+                            : location.pathname.endsWith('/account/api') ?
+                                <Sidebar.Section>Dashboard - API</Sidebar.Section>
+                                : location.pathname.endsWith('/account/security') ?
+                                    <Sidebar.Section>Dashboard - Security</Sidebar.Section>
+                                    :
+                                    <Spinner size={'small'} centered isBlue/>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>

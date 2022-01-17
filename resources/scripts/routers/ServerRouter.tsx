@@ -130,35 +130,29 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                     </div>
                     <Sidebar.Wrapper>
-                        {location.pathname.endsWith(`/server/${id}`) &&
+                        {location.pathname.endsWith(`/server/${id}`) ?
                             <Sidebar.Section>Server - Console</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/files`) &&
-                            <Sidebar.Section>Server - Files</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/auditlogs`) &&
-                            <Sidebar.Section>Server - Logs</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/databases`) &&
-                            <Sidebar.Section>Server - Databases</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/schedules`) &&
-                            <Sidebar.Section>Server - Tasks</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/users`) &&
-                            <Sidebar.Section>Server - Subusers</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/backups`) &&
-                            <Sidebar.Section>Server - Backups</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/network`) &&
-                            <Sidebar.Section>Server - Network</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/startup`) &&
-                            <Sidebar.Section>Server - Startup</Sidebar.Section>
-                        }
-                        {location.pathname.startsWith(`/server/${id}/settings`) &&
-                            <Sidebar.Section>Server - Settings</Sidebar.Section>
+                            : location.pathname.startsWith(`/server/${id}/files`) ?
+                                <Sidebar.Section>Server - Files</Sidebar.Section>
+                                : location.pathname.startsWith(`/server/${id}/auditlogs`) ?
+                                    <Sidebar.Section>Server - Logs</Sidebar.Section>
+                                    : location.pathname.startsWith(`/server/${id}/databases`) ?
+                                        <Sidebar.Section>Server - Databases</Sidebar.Section>
+                                        : location.pathname.startsWith(`/server/${id}/schedules`) ?
+                                            <Sidebar.Section>Server - Tasks</Sidebar.Section>
+                                            : location.pathname.startsWith(`/server/${id}/users`) ?
+                                                <Sidebar.Section>Server - Subusers</Sidebar.Section>
+                                                : location.pathname.startsWith(`/server/${id}/backups`) ?
+                                                    <Sidebar.Section>Server - Backups</Sidebar.Section>
+                                                    : location.pathname.startsWith(`/server/${id}/network`) ?
+                                                        <Sidebar.Section>Server - Network</Sidebar.Section>
+                                                        : location.pathname.startsWith(`/server/${id}/startup`) ?
+                                                            <Sidebar.Section>Server - Startup</Sidebar.Section>
+                                                            : location.pathname.startsWith(`/server/${id}/settings`) ?
+                                                                <Sidebar.Section>Server - Settings</Sidebar.Section>
+                                                                :
+                                                                <Spinner size={'small'} centered isBlue/>
+
                         }
                         <NavLink to={'/'} exact>
                             <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
