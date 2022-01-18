@@ -190,7 +190,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         </div>
                     </Sidebar.User>
                 </Sidebar>
-                <div css={tw`flex-shrink flex-grow`}>
+                <div css={tw`flex-shrink flex-grow w-full`}>
                     {(!uuid || !id) ?
                         error ?
                             <ServerError message={error}/>
