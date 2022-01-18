@@ -32,6 +32,8 @@ const ServerConsole = () => {
                 <React.Suspense fallback={null}>
                     {eggFeatures.includes('eula') && <EulaModalFeature/>}
                     {eggFeatures.includes('java_version') && <JavaVersionModalFeature/>}
+                    {eggFeatures.includes('gsl_token') && <GSLTokenModalFeature/>}
+                    {eggFeatures.includes('pid_limit') && <PIDLimitModalFeature/>}
                 </React.Suspense>
             </div>
             <div css={tw`w-full md:w-1/4 flex flex-col space-y-6`}>

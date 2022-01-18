@@ -65,9 +65,7 @@ Route::group(['prefix' => 'databases'], function () {
 */
 Route::group(['prefix' => 'settings'], function () {
     Route::get('/', 'Settings\IndexController@index')->name('admin.settings');
-    Route::get('/secret', 'Settings\SecretController@index')->name('admin.settings.secret');
     Route::get('/mail', 'Settings\MailController@index')->name('admin.settings.mail');
-    Route::get('/advanced', 'Settings\AdvancedController@index')->name('admin.settings.advanced');
     Route::get('/advanced', 'Settings\AdvancedController@index')->name('admin.settings.advanced');
     Route::post('/mail/test', 'Settings\MailController@test')->name('admin.settings.mail.test');
 
@@ -255,4 +253,17 @@ Route::group(['prefix' => 'credits'], function () {
 
     Route::patch('/', 'Credits\ConfigController@update')->name('admin.credits.update');
     Route::patch('/store', 'Credits\StoreController@update')->name('admin.credits.store.update');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Billing System Controller Routes
+|--------------------------------------------------------------------------
+|
+| Endpoint: /admin/billing
+|
+*/
+Route::group(['prefix' => 'billing'], function () {
+    Route::get('/', 'BillingController@index')->name('admin.billing');
+    Route::patch('/', 'BillingController@update')->name('admin.billing.update');
 });

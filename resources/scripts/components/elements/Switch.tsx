@@ -7,23 +7,18 @@ import Input from '@/components/elements/Input';
 
 const ToggleContainer = styled.div`
     ${tw`relative select-none w-12 leading-normal`};
-
     & > input[type="checkbox"] {
         ${tw`hidden`};
-
         &:checked + label {
             ${tw`bg-primary-500 border-primary-700 shadow-none`};
         }
-
         &:checked + label:before {
             right: 0.125rem;
         }
     }
-
     & > label {
         ${tw`mb-0 block overflow-hidden cursor-pointer bg-neutral-400 border border-neutral-700 rounded-full h-6 shadow-inner`};
         transition: all 75ms linear;
-
         &::before {
             ${tw`absolute block bg-white border h-5 w-5 rounded-full`};
             top: 0.125rem;

@@ -182,7 +182,10 @@ class User extends Model implements
      */
     public function toReactObject(): array
     {
-        return (new Collection($this->toArray()))->except(['id', 'external_id'])->toArray();
+        $object = (new Collection($this->toArray()))->except(['id', 'external_id'])->toArray();
+        $object['avatar_url'] = $this->avatarURL();
+
+        return $object;
     }
 
     /**
@@ -201,6 +204,16 @@ class User extends Model implements
     public function setUsernameAttribute(string $value)
     {
         $this->attributes['username'] = mb_strtolower($value);
+    }
+
+    /**
+     * Get's the avatar url for the user.
+     *
+     * @return string
+     */
+    public function avatarURL(): string
+    {
+        return 'https://www.gravatar.com/avatar/' . md5($this->email) . '.jpg';
     }
 
     /**

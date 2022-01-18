@@ -75,6 +75,10 @@ Route::group(['prefix' => '/servers/{server}', 'middleware' => [AuthenticateServ
         Route::get('/upload', 'Servers\FileUploadController');
     });
 
+    Route::group(['prefix' => '/auditlogs'], function () {
+        Route::get('/', 'Servers\AuditLogsController@index');
+    });
+
     Route::group(['prefix' => '/schedules'], function () {
         Route::get('/', 'Servers\ScheduleController@index');
         Route::post('/', 'Servers\ScheduleController@store');

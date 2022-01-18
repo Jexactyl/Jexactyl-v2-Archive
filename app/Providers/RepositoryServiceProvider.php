@@ -13,6 +13,7 @@ use Pterodactyl\Repositories\Eloquent\ServerRepository;
 use Pterodactyl\Repositories\Eloquent\CreditsRepository;
 use Pterodactyl\Repositories\Eloquent\SessionRepository;
 use Pterodactyl\Repositories\Eloquent\SubuserRepository;
+use Pterodactyl\Repositories\Eloquent\BillingRepository;
 use Pterodactyl\Repositories\Eloquent\DatabaseRepository;
 use Pterodactyl\Repositories\Eloquent\LocationRepository;
 use Pterodactyl\Repositories\Eloquent\ScheduleRepository;
@@ -29,6 +30,7 @@ use Pterodactyl\Contracts\Repository\ApiKeyRepositoryInterface;
 use Pterodactyl\Contracts\Repository\ServerRepositoryInterface;
 use Pterodactyl\Repositories\Eloquent\ServerVariableRepository;
 use Pterodactyl\Contracts\Repository\SessionRepositoryInterface;
+use Pterodactyl\Contracts\Repository\BillingRepositoryInterface;
 use Pterodactyl\Contracts\Repository\SubuserRepositoryInterface;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 use Pterodactyl\Contracts\Repository\DatabaseRepositoryInterface;
@@ -66,5 +68,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(TaskRepositoryInterface::class, TaskRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(CreditsRepositoryInterface::class, CreditsRepository::class);
+        $this->app->bind(BillingRepositoryInterface::class, BillingRepository::class);
     }
 }

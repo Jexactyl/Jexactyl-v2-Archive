@@ -4,12 +4,12 @@ import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import ServerConsole from '@/components/server/ServerConsole';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
-import SidePanel from '@/components/SidePanel';
 import { ServerContext } from '@/state/server';
 import DatabasesContainer from '@/components/server/databases/DatabasesContainer';
 import FileManagerContainer from '@/components/server/files/FileManagerContainer';
 import { CSSTransition } from 'react-transition-group';
 import FileEditContainer from '@/components/server/files/FileEditContainer';
+import AuditLogsContainer from '@/components/server/auditlogs/AuditLogsContainer';
 import SettingsContainer from '@/components/server/settings/SettingsContainer';
 import ScheduleContainer from '@/components/server/schedules/ScheduleContainer';
 import ScheduleEditContainer from '@/components/server/schedules/ScheduleEditContainer';
@@ -18,10 +18,11 @@ import Can from '@/components/elements/Can';
 import BackupContainer from '@/components/server/backups/BackupContainer';
 import Spinner from '@/components/elements/Spinner';
 import ScreenBlock, { NotFound, ServerError } from '@/components/elements/ScreenBlock';
-import { httpErrorToHuman } from '@/api/http';
-import { useStoreState } from 'easy-peasy';
+import http, { httpErrorToHuman } from '@/api/http';
+import { State, useStoreState } from 'easy-peasy';
 import SubNavigation from '@/components/elements/SubNavigation';
 import NetworkContainer from '@/components/server/network/NetworkContainer';
+import Sidebar from '@/components/elements/Sidebar';
 import InstallListener from '@/components/server/InstallListener';
 import StartupContainer from '@/components/server/startup/StartupContainer';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
@@ -33,16 +34,24 @@ import {
     faDatabase,
     faExternalLinkAlt,
     faFolder,
+    faLayerGroup,
+    faLock,
     faPlay,
+    faScroll,
+    faSignOutAlt,
     faSitemap,
     faTerminal,
     faUser,
+    faStore,
+    faHome,
 } from '@fortawesome/free-solid-svg-icons';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
 import ServerRestoreSvg from '@/assets/images/server_restore.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
 import tw from 'twin.macro';
+import { ApplicationStore } from '@/state';
+import useWindowDimensions from '@/plugins/useWindowDimensions';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -72,8 +81,8 @@ const ConflictStateRenderer = () => {
 };
 
 const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) => {
-    const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
     const [ error, setError ] = useState('');
+    const { width } = useWindowDimensions();
 
     const id = ServerContext.useStoreState(state => state.server.data?.id);
     const uuid = ServerContext.useStoreState(state => state.server.data?.uuid);
@@ -81,6 +90,19 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     const serverId = ServerContext.useStoreState(state => state.server.data?.internalId);
     const getServer = ServerContext.useStoreActions(actions => actions.server.getServer);
     const clearServerState = ServerContext.useStoreActions(actions => actions.clearServerState);
+    const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
+    const rootAdmin = useStoreState(state => state.user.data!.rootAdmin);
+    const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);
+    const email = useStoreState((state: State<ApplicationStore>) => state.user.data!.email);
+    const crBalance = useStoreState((state: State<ApplicationStore>) => state.user.data!.crBalance);
+    const storeEnabled = useStoreState((state: State<ApplicationStore>) => state.settings.data!.store.enabled);
+
+    const onTriggerLogout = () => {
+        http.post('/auth/logout').finally(() => {
+            // @ts-ignore
+            window.location = '/';
+        });
+    };
 
     useEffect(() => () => {
         clearServerState();
@@ -103,8 +125,72 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
     return (
         <React.Fragment key={'server-router'}>
             <div css={tw`flex flex-row`}>
-                <SidePanel />
-                <div css={tw`flex-shrink flex-grow pl-32`}>
+                <Sidebar css={tw`flex-none`}>
+                    <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
+                        <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
+                    </div>
+                    <Sidebar.Wrapper>
+                        {location.pathname.endsWith(`/server/${id}`) ?
+                            <Sidebar.Section>Server - Console</Sidebar.Section>
+                            : location.pathname.startsWith(`/server/${id}/files`) ?
+                                <Sidebar.Section>Server - Files</Sidebar.Section>
+                                : location.pathname.startsWith(`/server/${id}/auditlogs`) ?
+                                    <Sidebar.Section>Server - Logs</Sidebar.Section>
+                                    : location.pathname.startsWith(`/server/${id}/databases`) ?
+                                        <Sidebar.Section>Server - Databases</Sidebar.Section>
+                                        : location.pathname.startsWith(`/server/${id}/schedules`) ?
+                                            <Sidebar.Section>Server - Tasks</Sidebar.Section>
+                                            : location.pathname.startsWith(`/server/${id}/users`) ?
+                                                <Sidebar.Section>Server - Subusers</Sidebar.Section>
+                                                : location.pathname.startsWith(`/server/${id}/backups`) ?
+                                                    <Sidebar.Section>Server - Backups</Sidebar.Section>
+                                                    : location.pathname.startsWith(`/server/${id}/network`) ?
+                                                        <Sidebar.Section>Server - Network</Sidebar.Section>
+                                                        : location.pathname.startsWith(`/server/${id}/startup`) ?
+                                                            <Sidebar.Section>Server - Startup</Sidebar.Section>
+                                                            : location.pathname.startsWith(`/server/${id}/settings`) ?
+                                                                <Sidebar.Section>Server - Settings</Sidebar.Section>
+                                                                :
+                                                                <Spinner size={'small'} centered isBlue/>
+
+                        }
+                        <NavLink to={'/'} exact>
+                            <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
+                        </NavLink>
+                        <NavLink to={'/account'} exact>
+                            <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                        </NavLink>
+                        <NavLink to={'/account/api'} exact>
+                            <FontAwesomeIcon icon={faSitemap}/><span>API</span>
+                        </NavLink>
+                        <NavLink to={'/account/security'} exact>
+                            <FontAwesomeIcon icon={faLock}/><span>Security</span>
+                        </NavLink>
+                        {storeEnabled &&
+                          <NavLink to={'/store'} exact>
+                              <FontAwesomeIcon icon={faStore}/><span>Store</span>
+                          </NavLink>
+                        }
+                        {rootAdmin &&
+                          <a href={'/admin'}>
+                              <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
+                          </a>
+                        }
+                    </Sidebar.Wrapper>
+                    <NavLink to={'/'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
+                        <FontAwesomeIcon icon={faSignOutAlt}/> <span>Logout</span>
+                    </NavLink>
+                    <Sidebar.User>
+                        {avatarURL &&
+                    <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
+                        }
+                        <div css={tw`flex flex-col ml-3`}>
+                            <span css={tw`font-sans font-normal text-sm text-neutral-50 whitespace-nowrap leading-tight select-none`}>{email}</span>
+                            <span css={tw`font-header font-normal text-xs text-neutral-300 whitespace-nowrap leading-tight select-none`}>{crBalance} credits</span>
+                        </div>
+                    </Sidebar.User>
+                </Sidebar>
+                <div css={tw`flex-shrink flex-grow w-full`}>
                     {(!uuid || !id) ?
                         error ?
                             <ServerError message={error}/>
@@ -115,12 +201,22 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                             <CSSTransition timeout={150} classNames={'fade'} appear in>
                                 <SubNavigation>
                                     <div>
+                                        {width < 768 &&
+                                          <NavLink to={'/'} exact>
+                                              <FontAwesomeIcon icon={faHome}/>
+                                          </NavLink>
+                                        }
                                         <NavLink to={`${match.url}`} exact>
                                             <FontAwesomeIcon icon={faTerminal}/> Console
                                         </NavLink>
                                         <Can action={'file.*'}>
                                             <NavLink to={`${match.url}/files`}>
                                                 <FontAwesomeIcon icon={faFolder}/> Files
+                                            </NavLink>
+                                        </Can>
+                                        <Can action={'audit-logs.*'}>
+                                            <NavLink to={`${match.url}/auditlogs`}>
+                                                <FontAwesomeIcon icon={faScroll}/> Logs
                                             </NavLink>
                                         </Can>
                                         <Can action={'database.*'}>
@@ -185,6 +281,11 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                                                 <Spinner.Suspense>
                                                     <FileEditContainer/>
                                                 </Spinner.Suspense>
+                                            </Route>
+                                            <Route path={`${match.path}/auditlogs`} exact>
+                                                <RequireServerPermission permissions={'audit-logs.*'}>
+                                                    <AuditLogsContainer/>
+                                                </RequireServerPermission>
                                             </Route>
                                             <Route path={`${match.path}/databases`} exact>
                                                 <RequireServerPermission permissions={'database.*'}>
