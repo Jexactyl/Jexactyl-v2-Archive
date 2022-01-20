@@ -9,7 +9,6 @@ import ServerRouter from '@/routers/ServerRouter';
 import AuthenticationRouter from '@/routers/AuthenticationRouter';
 import StoreRouter from '@/routers/StoreRouter';
 import { SiteSettings } from '@/state/settings';
-import ProgressBar from '@/components/elements/ProgressBar';
 import { NotFound } from '@/components/elements/ScreenBlock';
 import tw, { GlobalStyles as TailwindGlobalStyles } from 'twin.macro';
 import GlobalStylesheet from '@/assets/css/GlobalStylesheet';
@@ -88,7 +87,6 @@ const App = () => {
             <GlobalStylesheet/>
             <TailwindGlobalStyles/>
             <StoreProvider store={store}>
-                <ProgressBar/>
                 <div css={tw`mx-auto w-auto`}>
                     <Router history={history}>
                         {SiteConfiguration?.analytics && <Pageview/>}

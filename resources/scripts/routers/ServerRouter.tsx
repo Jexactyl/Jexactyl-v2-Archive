@@ -52,6 +52,7 @@ import ServerErrorSvg from '@/assets/images/server_error.svg';
 import tw from 'twin.macro';
 import { ApplicationStore } from '@/state';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
+import ProgressBar from '@/components/elements/ProgressBar';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -126,6 +127,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
         <React.Fragment key={'server-router'}>
             <div css={tw`flex flex-row`}>
                 <Sidebar css={tw`flex-none`}>
+                    <ProgressBar/>
                     <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
                         <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                     </div>

@@ -6,8 +6,9 @@ import { CSSTransition } from 'react-transition-group';
 import tw from 'twin.macro';
 
 const BarFill = styled.div`
-    ${tw`h-full`};
+    ${tw`h-full bg-cyan-400`};
     transition: 250ms ease-in-out;
+    box-shadow: 0 -2px 10px 2px hsl(178, 78%, 57%);
 `;
 
 export default () => {
@@ -58,19 +59,15 @@ export default () => {
     }, [ progress, continuous ]);
 
     return (
-        <div css={tw`w-full fixed`} style={{ height: '2px' }}>
+        <div css={tw`w-48 fixed`} style={{ height: '2px' }}>
             <CSSTransition
-                timeout={150}
+                timeout={250}
                 appear
                 in={visible}
                 unmountOnExit
                 classNames={'fade'}
             >
-                <BarFill
-                    css={'bg-cyan-400'}
-                    style={{ width: progress === undefined ? '100%' : `${progress}%` }}
-                />
-
+                <BarFill style={{ width: progress === undefined ? '100%' : `${progress}%` }}/>
             </CSSTransition>
         </div>
     );

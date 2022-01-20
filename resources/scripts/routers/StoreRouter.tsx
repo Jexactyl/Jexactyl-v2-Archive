@@ -15,6 +15,7 @@ import useWindowDimensions from '@/plugins/useWindowDimensions';
 import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
 import { CSSTransition } from 'react-transition-group';
 import Spinner from '@/components/elements/Spinner';
+import ProgressBar from '@/components/elements/ProgressBar';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -36,6 +37,7 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
     return (
         <div css={tw`flex flex-row`}>
             <Sidebar css={tw`flex-none`}>
+                <ProgressBar/>
                 <div css={tw`h-16 w-full flex flex-col items-center justify-center mt-1 mb-3 select-none cursor-pointer`}>
                     <h1 css={tw`text-2xl text-neutral-50 whitespace-nowrap font-medium`}><a href="/">{name}</a></h1>
                 </div>
