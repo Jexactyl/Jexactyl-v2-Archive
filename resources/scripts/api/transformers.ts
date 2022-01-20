@@ -80,6 +80,7 @@ export const rawDataToServerEggVariable = ({ attributes }: FractalResponseData):
 export const rawDataToServerAuditLog = ({ attributes }: FractalResponseData): ServerAuditLog => ({
     uuid: attributes.uuid,
     user: attributes.user,
+    username: attributes.username,
     action: attributes.action,
     device: attributes.device,
     metadata: attributes.metadata,
