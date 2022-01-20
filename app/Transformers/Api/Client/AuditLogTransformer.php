@@ -28,6 +28,7 @@ class AuditLogTransformer extends BaseClientTransformer
         return [
             'uuid' => $model->uuid,
             'user' => $model->user ? $model->user->email : "System",
+            'username' => $model->user ? $model->user->username : "System",
             'action' => $model->action,
             'device' => $model->device,
             'metadata' => $model->metadata,

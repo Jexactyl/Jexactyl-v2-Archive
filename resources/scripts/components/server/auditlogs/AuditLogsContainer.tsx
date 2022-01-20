@@ -37,7 +37,7 @@ const AuditLogsContainer = () => {
                             {page > 1 ?
                                 'Looks like we\'ve run out of logs to show you, try going back a page.'
                                 :
-                                'It looks like there are no logs currently stored for this server.'
+                                'No audit logs are available for this server.'
                             }
                         </p>
                         :

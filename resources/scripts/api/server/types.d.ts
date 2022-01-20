@@ -25,6 +25,7 @@ export interface ServerEggVariable {
 export interface ServerAuditLog {
     uuid: string;
     user: string;
+    username: string;
     action: string;
     device: Record<string, any>;
     metadata: Record<string, any>;

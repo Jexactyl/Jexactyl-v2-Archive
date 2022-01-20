@@ -43,6 +43,10 @@ export default ({ log, className }: Props) => {
                     <p css={tw`text-sm`}>{formatDistanceToNow(log.createdAt, { includeSeconds: true, addSuffix: true })}</p>
                 </div>
                 <div css={tw`mt-6`}>
+                    <Label>UUID</Label>
+                    <p css={tw`text-sm`}>{log.uuid}</p>
+                </div>
+                <div css={tw`mt-6`}>
                     <Label>Metadata</Label>
                     <p css={tw`text-sm`}>{JSON.stringify(log.metadata)}</p>
                 </div>
@@ -58,7 +62,7 @@ export default ({ log, className }: Props) => {
                     <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>Action</p>
                 </div>
                 <div css={tw`flex-1 ml-4`}>
-                    <p css={tw`text-sm`}>{log.user}</p>
+                    <p css={tw`text-sm`}>{log.username} ({log.user})</p>
                     <p css={tw`mt-1 text-2xs text-neutral-500 uppercase select-none`}>User</p>
                 </div>
                 <div css={tw`flex-1 ml-4`}>
