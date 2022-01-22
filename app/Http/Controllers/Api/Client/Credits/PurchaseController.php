@@ -119,7 +119,11 @@ class PurchaseController extends ClientApiController
         ];
     }
 
-    public function buyCredits()
+    /**
+     * Will redirect the client to PayPal to purchase credits.
+     * @return array 
+     */
+    public function buyCredits(): array
     {
         $client_id = env('PAYPAL_CLIENT_ID');
         $client_secret = env('PAYPAL_CLIENT_SECRET');
@@ -150,5 +154,10 @@ class PurchaseController extends ClientApiController
         } catch (IOException $e) {
             dd($e);
         }
+
+        return [
+            'success' => true,
+            'data' => []
+        ];
     }
 }
