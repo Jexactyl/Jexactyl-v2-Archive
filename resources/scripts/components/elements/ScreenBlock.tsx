@@ -7,13 +7,11 @@ import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import NotFoundSvg from '@/assets/images/not_found.svg';
 import ServerErrorSvg from '@/assets/images/server_error.svg';
-import { NavLink } from 'react-router-dom';
 
 interface BaseProps {
     title: string;
     image: string;
     message: string;
-    storeButton?: boolean;
     onRetry?: () => void;
     onBack?: () => void;
 }
@@ -42,7 +40,7 @@ const ActionButton = styled(Button)`
     }
 `;
 
-const ScreenBlock = ({ title, image, message, onBack, onRetry, storeButton }: ScreenBlockProps) => (
+const ScreenBlock = ({ title, image, message, onBack, onRetry }: ScreenBlockProps) => (
     <PageContentBlock>
         <div css={tw`flex justify-center`}>
             <div css={tw`w-full sm:w-3/4 md:w-1/2 p-12 md:p-20 bg-neutral-100 rounded-lg shadow-lg text-center relative`}>
@@ -61,13 +59,6 @@ const ScreenBlock = ({ title, image, message, onBack, onRetry, storeButton }: Sc
                 <p css={tw`text-sm text-neutral-700 mt-2`}>
                     {message}
                 </p>
-                {storeButton &&
-                <NavLink to={'/store'} css={tw`mt-auto mb-3`}>
-                    <Button type={'button'}>
-                        Back to store
-                    </Button>
-                </NavLink>
-                }
             </div>
         </div>
     </PageContentBlock>
