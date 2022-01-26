@@ -1,4 +1,4 @@
-[![Logo Image](https://i.imgur.com/jdD4dLG.png)](https://jexactyl.xyz)
+[![Logo Image](https://imgshare.io/images/2022/01/23/Jexactyl.jpg)](https://jexactyl.xyz)
 ![Tests](https://img.shields.io/github/workflow/status/pterodactyl/panel/tests?label=Tests&style=for-the-badge)
 ![Maintained](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 ![Discord](https://img.shields.io/discord/922284031129825280?style=for-the-badge)
