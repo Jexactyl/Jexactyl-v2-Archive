@@ -1,10 +1,11 @@
 import http from '@/api/http';
 
-export default (): Promise<any> => {
+export default (value: string): Promise<any> => {
     return new Promise((resolve, reject) => {
-        http.post('/api/client/store/buy/credits')
-            .then((data) => {
-                resolve(data.data || []);
-            }).catch(reject);
+        http.post('/api/client/store/buy/credits', {
+            value,
+        }).then((data) => {
+            resolve(data.data || []);
+        }).catch(reject);
     });
 };

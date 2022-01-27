@@ -15,10 +15,10 @@ const UserInformationRow = () => {
     const [ isSubmit, setSubmit ] = useState(false);
     const user = useStoreState(state => state.user.data);
 
-    const submitCredits = () => {
+    const submitCredits = (value: string) => {
         setSubmit(true);
 
-        buyCredits()
+        buyCredits(value)
             .then(() => setSubmit(false))
             .catch(error => {
                 console.error(error);
@@ -37,12 +37,13 @@ const UserInformationRow = () => {
                 <div>You have {user!.crBalance} credits available.</div>
                 <br/>
                 <Select
-                    onChange={() => submitCredits()}
+                    onChange={e => submitCredits(e.target.value)}
                     name={'Purchase Credits'}
                     disabled={isSubmit}
                 >
-                    <option key={'credits:100'} value={100}>Purchase 100 credits</option>
-                    <option key={'credits:100'} value={200}>Purchase 200 credits</option>
+                    <option key={'credits:buy:100'} value={100}>Purchase 100 credits</option>
+                    <option key={'credits:buy:200'} value={200}>Purchase 200 credits</option>
+                    <option key={'credits:buy:500'} value={500}>Purchase 500 credits</option>
                 </Select>
             </TitledGreyBox>
             <TitledGreyBox
