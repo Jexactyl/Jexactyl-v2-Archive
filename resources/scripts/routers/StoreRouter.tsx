@@ -49,8 +49,12 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                         <Sidebar.Section>Store - Home</Sidebar.Section>
                         : location.pathname.endsWith('/store/servers/new') ?
                             <Sidebar.Section>Store - New Server</Sidebar.Section>
-                            :
-                            <Spinner size={'small'} centered isBlue/>
+                            : location.pathname.endsWith('/store/payment/success') ?
+                                <Sidebar.Section>Payment Successful</Sidebar.Section>
+                                : location.pathname.endsWith('/store/payment/error') ?
+                                    <Sidebar.Section>Payment Failed</Sidebar.Section>
+                                    :
+                                    <Spinner size={'small'} centered isBlue/>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
