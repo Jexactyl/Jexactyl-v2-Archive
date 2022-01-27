@@ -4,7 +4,6 @@ import useFlash from '@/plugins/useFlash';
 import buyCPU from '@/api/store/buy/buyCPU';
 import buyRAM from '@/api/store/buy/buyRAM';
 import buySlots from '@/api/store/buy/buySlots';
-import buyCredits from '@/api/store/buy/buyCredits';
 import Button from '@/components/elements/Button';
 import buyStorage from '@/api/store/buy/buyStorage';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
@@ -13,19 +12,6 @@ import { faHdd, faLayerGroup, faMemory, faMicrochip } from '@fortawesome/free-so
 const ActionsRow = () => {
     const { addFlash, clearFlashes, clearAndAddHttpError } = useFlash();
     const [ isSubmit, setSubmit ] = useState(false);
-
-    const submitCredits = () => {
-        clearFlashes('resources');
-        setSubmit(true);
-
-        buyCredits()
-            .then(() => setSubmit(false))
-            .catch(error => {
-                console.error(error);
-                clearAndAddHttpError({ key: 'resources', error });
-                setSubmit(false);
-            });
-    };
 
     const submitSlots = () => {
         clearFlashes('resources');
@@ -99,9 +85,6 @@ const ActionsRow = () => {
 
     return (
         <div css={tw`md:flex`}>
-            <Button css={tw`w-full h-full`} onClick={() => submitCredits()} disabled={isSubmit}>
-                69 credits :wesh:
-            </Button>
             <TitledGreyBox
                 title={'Purchase Server Slots'}
                 icon={faLayerGroup}
