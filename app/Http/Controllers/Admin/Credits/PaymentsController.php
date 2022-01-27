@@ -7,11 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Prologue\Alerts\AlertsMessageBag;
 use Pterodactyl\Http\Controllers\Controller;
 use Pterodactyl\Exceptions\Model\DataValidationException;
-use Pterodactyl\Http\Requests\Admin\Credits\StoreFormRequest;
 use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Http\Requests\Admin\Credits\PaymentsFormRequest;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 
-class StoreController extends Controller
+class PaymentsController extends Controller
 {
     private CreditsRepositoryInterface $credits;
     private AlertsMessageBag $alert;
@@ -24,13 +24,11 @@ class StoreController extends Controller
 
     public function index(): View
     {
-        return view('admin.credits.store', [
-            'enabled' => $this->credits->get('store:enabled', false),
-            'slots_cost' => $this->credits->get('store:slots_cost', 100),
-            'cpu_cost' => $this->credits->get('store:cpu_cost', 20),
-            'ram_cost' => $this->credits->get('store:ram_cost', 10),
-            'storage_cost' => $this->credits->get('store:storage_cost', 5),
-            'credits_cost' => $this->credits->get('store:credits_cost', '1.00')
+        return view('admin.credits.payments', [
+            'enabled' => $this->credits->get('payments:enabled', false),
+            'paypal_id' => $this->credits->get('payments:paypal_id', ''),
+            'paypal_secret' => $this->credits->get('payments:paypal_secret', ''),
+            'currency' => $this->credits->get('payments:currency', 'USD')
         ]);
     }
 
@@ -38,14 +36,14 @@ class StoreController extends Controller
      * @throws DataValidationException
      * @throws RecordNotFoundException
      */
-    public function update(StoreFormRequest $request): RedirectResponse
+    public function update(PaymentsFormRequest $request): RedirectResponse
     {
         foreach ($request->normalize() as $key => $value) {
-            $this->credits->set('store:'.$key, $value);
+            $this->credits->set('payments:'.$key, $value);
         }
 
-        $this->alert->success('Store module has been updated.')->flash();
+        $this->alert->success('Payments System has been updated.')->flash();
 
-        return redirect()->route('admin.credits.store');
+        return redirect()->route('admin.credits.payments');
     }
 }

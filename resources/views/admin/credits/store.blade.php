@@ -49,6 +49,11 @@
                                 <label class="control-label" for="storage_cost">Storage Cost</label>
                                 <input type="text" id="storage_cost" name="storage_cost" class="form-control form-autocomplete-stop" value="{{ $storage_cost }}">
                             </div>
+                            <div class="form-group col-md-4">
+                                <label class="control-label" for="credits_cost">Credits Cost</label>
+                                <input type="text" id="credits_cost" name="credits_cost" class="form-control form-autocomplete-stop" value="{{ $credits_cost }}">
+                                <p class="text-muted"><small>Cost per 100 credits.</small></p>
+                            </div>
                         </div>
                     </div>
                     <div class="box-footer">
