@@ -101,6 +101,15 @@ class PaymentController extends ClientApiController
     }
 
     /**
+     * Callback for when a payment is cancelled.
+     * @return RedirectResponse
+     */
+    public function cancel(): RedirectResponse
+    {
+        return redirect('/store/payment/cancel');
+    }
+
+    /**
      * Returns a PayPal Http Client.
      * @return PayPalHttpClient
      */
