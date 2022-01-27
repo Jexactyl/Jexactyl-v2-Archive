@@ -35,13 +35,14 @@ const UserInformationRow = () => {
             >
                 <div>Nice to see you, {user!.username}!</div>
                 <div>You have {user!.crBalance} credits available.</div>
+                <br/>
                 <Select
                     onChange={() => submitCredits()}
                     name={'Purchase Credits'}
                     disabled={isSubmit}
                 >
-                    <option key={'credits:100'} value={100}>100 credits</option>
-                    <option key={'credits:100'} value={200}>200 credits</option>
+                    <option key={'credits:100'} value={100}>Purchase 100 credits</option>
+                    <option key={'credits:100'} value={200}>Purchase 200 credits</option>
                 </Select>
             </TitledGreyBox>
             <TitledGreyBox
