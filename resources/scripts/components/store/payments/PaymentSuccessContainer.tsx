@@ -10,12 +10,13 @@ const PaymentSuccessContainer = () => {
         <PageContentBlock>
             <div css={tw`flex justify-center`}>
                 <div css={tw`w-full sm:w-3/4 md:w-1/2 p-12 md:p-20 bg-neutral-100 rounded-lg shadow-lg text-center relative`}>
-                    <img src={PaymentSuccessSvg} css={tw`w-2/3 h-auto select-none mx-auto`}/>
+                    <img src={PaymentSuccessSvg} css={tw`w-1/2 h-auto select-none mx-auto`}/>
                     <h2 css={tw`mt-10 text-neutral-900 font-bold text-4xl`}>Payment Success!</h2>
                     <p css={tw`text-sm text-neutral-700 mt-2`}>
                         Thanks for your order.
                         We&apos;ve recieved your payment and credits have been added to your account!
                     </p>
+                    <br/>
                     <NavLink to={'/store'} css={tw`mt-auto mb-3`}>
                         <Button type={'button'}>
                             Back to store
