@@ -18,6 +18,7 @@ import Spinner from '@/components/elements/Spinner';
 import ProgressBar from '@/components/elements/ProgressBar';
 import PaymentSuccessContainer from '@/components/store/payments/PaymentSuccessContainer';
 import PaymentErrorContainer from '@/components/store/payments/PaymentErrorContainer';
+import { NotFound } from '@/components/elements/ScreenBlock';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -127,6 +128,7 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                         <Route path={`${match.path}/servers/new`} component={CreateServerContainer} exact/>
                         <Route path={`${match.path}/payment/success`} component={PaymentSuccessContainer} exact/>
                         <Route path={`${match.path}/payment/error`} component={PaymentErrorContainer} exact/>
+                        <Route path={'*'} component={NotFound} exact/>
                     </Switch>
                 </TransitionRouter>
             </div>
