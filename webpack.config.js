@@ -89,15 +89,17 @@ module.exports = {
         }) : null
     ].filter(p => p),
     optimization: {
+        mergeDuplicateChunks: true,
         usedExports: true,
         sideEffects: false,
         runtimeChunk: false,
         removeEmptyChunks: true,
+        compress: isProduction,
         minimize: isProduction,
         minimizer: [
             new TerserPlugin({
                 cache: isProduction,
-                parallel: true,
+                parallel: os.cpus().length,
                 extractComments: false,
                 terserOptions: {
                     mangle: true,
