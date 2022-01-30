@@ -16,15 +16,15 @@ const UserInformationRow = () => {
     const user = useStoreState(state => state.user.data);
 
     const submitCredits = (value: string) => {
-        setSubmit(true);
-
-        buyCredits(value)
-            .then(() => setSubmit(false))
-            .catch(error => {
-                console.error(error);
-                clearAndAddHttpError({ key: 'resources', error });
-                setSubmit(false);
-            });
+        buyCredits(value).then((url) => {
+            setSubmit(false);
+            if (!url) return;
+            window.location.href = url;
+        }).catch(error => {
+            console.error(error);
+            clearAndAddHttpError({ key: 'resources', error });
+            setSubmit(false);
+        });
     };
 
     return (

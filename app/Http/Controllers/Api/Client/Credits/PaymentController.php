@@ -2,6 +2,7 @@
 
 namespace Pterodactyl\Http\Controllers\Api\Client\Credits;
 
+use Illuminate\Http\JsonResponse;
 use PayPalHttp\IOException;
 use Illuminate\Http\Request;
 use PayPalHttp\HttpException;
@@ -15,9 +16,9 @@ use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 use Pterodactyl\Http\Controllers\Api\Client\ClientApiController;
 use Pterodactyl\Contracts\Repository\SettingsRepositoryInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\CssSelector\Exception\InternalErrorException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PaymentController extends ClientApiController
 {
@@ -33,27 +34,30 @@ class PaymentController extends ClientApiController
 
     /**
      * Constructs PayPal Order and redirects the user.
-     * @return RedirectResponse
-     * @throws NotFoundHttpException
+     * @param Request $request
+     * @return JsonResponse
      * @throws InternalErrorException
+     * @throws NotFoundHttpException
      */
-    public function purchase(): RedirectResponse
+    public function purchase(Request $request): JsonResponse
     {
         if ($this->credits->get('payments:enabled') === '0' || $this->credits->get('store:enabled') === '0' || $this->credits->get('credits:enabled') === '0') throw new NotFoundHttpException();
         $client = $this->getPayPalClient();
-        $request = new OrdersCreateRequest();
-        $request->prefer('return=representation');
-        $request->body = [
+        $amount = number_format($request->json('value'));
+        $cost = number_format($this->credits->get('store:credits_cost')) / 100 * $amount;
+        $req = new OrdersCreateRequest();
+        $req->prefer('return=representation');
+        $req->body = [
             "intent" => "CAPTURE",
             "purchase_units" => [
                 [
                     "reference_id" => uniqid(),
-                    "description" => '100 Credits Purchase - '.$this->settings->get('settings::app:name'),
+                    "description" => $amount.'Credits Purchase - '.$this->settings->get('settings::app:name'),
                     "amount" => [
-                        "value" => $this->credits->get('store:credits_cost', "1.00"),
+                        "value" => $cost,
                         'currency_code' => strtoupper($this->credits->get('payments:currency', 'USD')),
                         'breakdown' => [
-                            'item_total' => ['currency_code' => strtoupper($this->credits->get('payments:currency', 'USD')), 'value' => $this->credits->get('store:credits_cost', '1.00'),]
+                            'item_total' => ['currency_code' => strtoupper($this->credits->get('payments:currency', 'USD')), 'value' => $cost]
                         ]
                     ]
                 ]
@@ -67,8 +71,8 @@ class PaymentController extends ClientApiController
         ];
 
         try {
-            $res = $client->execute($request);
-            return redirect()->away($res->result->links[1]->href);
+            $res = $client->execute($req);
+            return new JsonResponse($res->result->links[1]->href, 200, [], null, true);
         } catch (HttpException|IOException $ex) {
             if (env('APP_ENV') === 'local') dd(json_decode($ex->getMessage())); else throw new InternalErrorException();
         }
