@@ -250,20 +250,9 @@ Route::group(['prefix' => 'logs'], function () {
 Route::group(['prefix' => 'credits'], function () {
     Route::get('/', 'Credits\ConfigController@index')->name('admin.credits');
     Route::get('/store', 'Credits\StoreController@index')->name('admin.credits.store');
+    Route::get('/payments', 'Credits\PaymentsController@index')->name('admin.credits.payments');
 
     Route::patch('/', 'Credits\ConfigController@update')->name('admin.credits.update');
     Route::patch('/store', 'Credits\StoreController@update')->name('admin.credits.store.update');
-});
-
-/*
-|--------------------------------------------------------------------------
-| Billing System Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /admin/billing
-|
-*/
-Route::group(['prefix' => 'billing'], function () {
-    Route::get('/', 'BillingController@index')->name('admin.billing');
-    Route::patch('/', 'BillingController@update')->name('admin.billing.update');
+    Route::patch('/payments', 'Credits\PaymentsController@update')->name('admin.credits.payments.update');
 });

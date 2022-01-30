@@ -16,6 +16,9 @@ import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
 import { CSSTransition } from 'react-transition-group';
 import Spinner from '@/components/elements/Spinner';
 import ProgressBar from '@/components/elements/ProgressBar';
+import PaymentSuccessContainer from '@/components/store/payments/PaymentSuccessContainer';
+import PaymentCancelContainer from '@/components/store/payments/PaymentCancelContainer';
+import { NotFound } from '@/components/elements/ScreenBlock';
 
 const StoreRouter = ({ location, match }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -46,8 +49,12 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                         <Sidebar.Section>Store - Home</Sidebar.Section>
                         : location.pathname.endsWith('/store/servers/new') ?
                             <Sidebar.Section>Store - New Server</Sidebar.Section>
-                            :
-                            <Spinner size={'small'} centered isBlue/>
+                            : location.pathname.endsWith('/store/payment/success') ?
+                                <Sidebar.Section>Payment Successful</Sidebar.Section>
+                                : location.pathname.endsWith('/store/payment/error') ?
+                                    <Sidebar.Section>Payment Failed</Sidebar.Section>
+                                    :
+                                    <Spinner size={'small'} centered isBlue/>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
@@ -123,6 +130,9 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                     <Switch location={location}>
                         <Route path={`${match.path}`} component={StoreContainer} exact/>
                         <Route path={`${match.path}/servers/new`} component={CreateServerContainer} exact/>
+                        <Route path={`${match.path}/payment/success`} component={PaymentSuccessContainer} exact/>
+                        <Route path={`${match.path}/payment/cancel`} component={PaymentCancelContainer} exact/>
+                        <Route path={'*'} component={NotFound} exact/>
                     </Switch>
                 </TransitionRouter>
             </div>

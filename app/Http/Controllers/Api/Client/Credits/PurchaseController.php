@@ -3,9 +3,15 @@
 namespace Pterodactyl\Http\Controllers\Api\Client\Credits;
 
 use Illuminate\Support\Facades\DB;
+use PayPalHttp\HttpException;
+use PayPalHttp\IOException;
+use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Http\Requests\Api\Client\StoreRequest;
 use Pterodactyl\Contracts\Repository\CreditsRepositoryInterface;
 use Pterodactyl\Http\Controllers\Api\Client\ClientApiController;
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 
 class PurchaseController extends ClientApiController
 {
@@ -17,6 +23,9 @@ class PurchaseController extends ClientApiController
         $this->credits = $credits;
     }
 
+    /**
+     * @throws DisplayException
+     */
     public function buySlots(StoreRequest $request): array
     {
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
@@ -27,10 +36,6 @@ class PurchaseController extends ClientApiController
 
         if ($userBal < $cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
         }
 
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_slots' => $userSlots + 1]);
@@ -42,6 +47,9 @@ class PurchaseController extends ClientApiController
         ];
     }
 
+    /**
+     * @throws DisplayException
+     */
     public function buyCPU(StoreRequest $request): array
     {
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
@@ -52,10 +60,6 @@ class PurchaseController extends ClientApiController
 
         if ($userBal < $cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
         }
 
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_cpu' => $userCPU + 50]);
@@ -67,6 +71,9 @@ class PurchaseController extends ClientApiController
         ];
     }
 
+    /**
+     * @throws DisplayException
+     */
     public function buyRAM(StoreRequest $request): array
     {
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
@@ -77,10 +84,6 @@ class PurchaseController extends ClientApiController
 
         if ($userBal < $cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
         }
 
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_ram' => $userRAM + 1024]);
@@ -92,6 +95,9 @@ class PurchaseController extends ClientApiController
         ];
     }
 
+    /**
+     * @throws DisplayException
+     */
     public function buyStorage(StoreRequest $request): array
     {
         $userBalRaw = DB::table('users')->select('cr_balance')->where('id', '=', $request->user()->id)->get();
@@ -102,14 +108,52 @@ class PurchaseController extends ClientApiController
 
         if ($userBal < $cost) {
             throw new DisplayException('You don\'t have enough credits to purchase this resource.');
-            return [
-                'success' => false,
-                'data' => []
-            ];
         }
 
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_storage' => $userStorage + 1024]);
         DB::table('users')->where('id', '=', $request->user()->id)->update(['cr_balance' => $userBal - $cost]);
+
+        return [
+            'success' => true,
+            'data' => []
+        ];
+    }
+
+    /**
+     * Will redirect the client to PayPal to purchase credits.
+     * @return array 
+     */
+    public function buyCredits(): array
+    {
+        $client_id = env('PAYPAL_CLIENT_ID');
+        $client_secret = env('PAYPAL_CLIENT_SECRET');
+        $environment = new SandboxEnvironment($client_id, $client_secret);
+        $client = new PayPalHttpClient($environment);
+
+        $order_request = new OrdersCreateRequest();
+        $order_request->prefer('return=representation');
+        $order_request->body = [
+            "intent" => "CAPTURE",
+            "purchase_units" => [[
+                "reference_id" => "test_ref_id1",
+                "amount" => [
+                    "value" => "100.00",
+                    "currency_code" => "USD"
+                ]
+            ]],
+            "application_context" => [
+                "cancel_url" => env('APP_URL')."/callback",
+                "return_url" => env('APP_URL')."/return"
+            ]
+        ];
+
+        try {
+            $res = $client->execute($order_request);
+        } catch (HttpException $ex) {
+            dd($ex);
+        } catch (IOException $e) {
+            dd($e);
+        }
 
         return [
             'success' => true,

@@ -46,7 +46,7 @@ class AssetComposer
             'particles' => $this->settings->get('settings::app:particles'),
             'rainbowBar' => $this->settings->get('settings::app:rainbow_bar'),
             'store' => [
-                'enabled' => $this->credits->get('store:enabled', false),
+                'enabled' => $this->credits->get('store:enabled', 0),
             ],
         ]);
     }

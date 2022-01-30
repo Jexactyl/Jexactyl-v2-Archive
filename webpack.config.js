@@ -3,6 +3,7 @@ const AssetsManifestPlugin = require('webpack-assets-manifest');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const os = require('os')
 
 const isProduction = process.env.NODE_ENV === 'production';
 
@@ -89,15 +90,17 @@ module.exports = {
         }) : null
     ].filter(p => p),
     optimization: {
+        mergeDuplicateChunks: true,
         usedExports: true,
         sideEffects: false,
         runtimeChunk: false,
         removeEmptyChunks: true,
+        compress: isProduction,
         minimize: isProduction,
         minimizer: [
             new TerserPlugin({
                 cache: isProduction,
-                parallel: true,
+                parallel: os.cpus().length,
                 extractComments: false,
                 terserOptions: {
                     mangle: true,
