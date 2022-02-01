@@ -95,7 +95,6 @@ module.exports = {
         sideEffects: false,
         runtimeChunk: false,
         removeEmptyChunks: true,
-        compress: isProduction,
         minimize: isProduction,
         minimizer: [
             new TerserPlugin({
