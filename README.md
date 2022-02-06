@@ -1,4 +1,4 @@
-[![Logo Image](https://imgshare.io/images/2022/01/23/Jexactyl.jpg)](https://jexactyl.xyz)
+[![Logo Image](https://cdn.discordapp.com/attachments/696713493168259106/935167710399201320/Jexactyl_textured.png)](https://jexactyl.com)
 ![Tests](https://img.shields.io/github/workflow/status/pterodactyl/panel/tests?label=Tests&style=for-the-badge)
 ![Maintained](https://img.shields.io/maintenance/yes/2022?style=for-the-badge)
 ![Discord](https://img.shields.io/discord/922284031129825280?style=for-the-badge)
@@ -13,8 +13,8 @@ better security, advanced features and blazing fast performance.
 Stop settling for less. Make game servers a first class citizen on your platform.
 
 ## Links
-* [Site](https://jexactyl.xyz)
-* [Documentation](https://jexactyl.xyz/docs)
+* [Site](https://jexactyl.com)
+* [Documentation](https://jexactyl.com)
 * [GitHub](https://github.com/jexactyl)
 * [Discord](https://discord.gg/qttGR4Z5Pk)
 
