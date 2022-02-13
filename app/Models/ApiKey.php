@@ -2,6 +2,7 @@
 
 namespace Pterodactyl\Models;
 
+use Carbon\Carbon;
 use Pterodactyl\Services\Acl\Api\AdminAcl;
 
 /**
@@ -12,9 +13,9 @@ use Pterodactyl\Services\Acl\Api\AdminAcl;
  * @property string $token
  * @property array $allowed_ips
  * @property string $memo
- * @property \Carbon\Carbon|null $last_used_at
- * @property \Carbon\Carbon $created_at
- * @property \Carbon\Carbon $updated_at
+ * @property Carbon|null $last_used_at
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
  */
 class ApiKey extends Model
 {
@@ -68,6 +69,7 @@ class ApiKey extends Model
         'r_' . AdminAcl::RESOURCE_NESTS => 'int',
         'r_' . AdminAcl::RESOURCE_NODES => 'int',
         'r_' . AdminAcl::RESOURCE_SERVERS => 'int',
+        'r_' . AdminAcl::RESOURCE_CREDITS => 'int'
     ];
 
     /**
@@ -114,6 +116,7 @@ class ApiKey extends Model
         'r_' . AdminAcl::RESOURCE_NESTS => 'integer|min:0|max:3',
         'r_' . AdminAcl::RESOURCE_NODES => 'integer|min:0|max:3',
         'r_' . AdminAcl::RESOURCE_SERVERS => 'integer|min:0|max:3',
+        'r_' . AdminAcl::RESOURCE_CREDITS => 'integer|min:0|max:3'
     ];
 
     /**
