@@ -13,19 +13,19 @@ import { useStoreState } from 'easy-peasy';
 import ConfigureTwoFactorForm from '@/components/dashboard/forms/ConfigureTwoFactorForm';
 
 const Container = styled.div`
-    ${tw`flex flex-wrap`};
+  ${tw`flex flex-wrap`};
 
-    & > div {
-        ${tw`w-full`};
+  & > div {
+    ${tw`w-full`};
 
-        ${breakpoint('md')`
-            width: calc(50% - 1rem);
-        `}
+    ${breakpoint('sm')`
+      width: calc(50% - 1rem);
+    `}
 
-        ${breakpoint('xl')`
-            ${tw`w-auto flex-1`};
-        `}
-    }
+    ${breakpoint('md')`
+      ${tw`w-auto flex-1`};
+    `}
+  }
 `;
 
 export default () => {
@@ -39,12 +39,13 @@ export default () => {
                 Your account must have two-factor authentication enabled in order to continue.
             </MessageBox>
             }
-            <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
+
+            <Container css={[ tw`lg:grid lg:grid-cols-3 mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
                 <ContentBox title={'Update Password'} showFlashes={'account:password'}>
                     <UpdatePasswordForm/>
                 </ContentBox>
                 <ContentBox
-                    css={tw`mt-8 md:mt-0 md:ml-8`}
+                    css={tw`mt-8 sm:mt-0 sm:ml-8`}
                     title={'Update Email Address'}
                     showFlashes={'account:email'}
                 >
@@ -65,6 +66,7 @@ export default () => {
                     <ConfigureTwoFactorForm/>
                 </ContentBox>
             </Container>
+
         </PageContentBlock>
     );
 };
