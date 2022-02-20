@@ -95,7 +95,7 @@ export function bytesToBps (bytesReceived: number, bytesSent: number, chart: boo
 }
 
 // Convert bits per second (bps) to human-readable format.
-export function bpsToHuman (bps: number | string): string {
+export function bpsToHuman (bps: number): string {
     if (bps < 1000) {
         return `${bps} bps`;
     }
