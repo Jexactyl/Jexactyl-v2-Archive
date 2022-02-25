@@ -146,7 +146,7 @@ export default () => {
                                 <br></br>
                                 <div css={tw`flex justify-end text-right`}>
                                     <InputSpinner visible={loading}>
-                                        <Button type={'submit'} disabled={isSubmit}>Create Servers</Button>
+                                        <Button type={'submit'} disabled={isSubmit}>Create Server</Button>
                                     </InputSpinner>
                                 </div>
                             </Form>
