@@ -15,7 +15,7 @@ import InputSpinner from '@/components/elements/InputSpinner';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
+import { faHdd, faLayerGroup, faMicrochip, faMemory, faEgg } from '@fortawesome/free-solid-svg-icons';
 
 export interface ConfigResponse {
     user: any[];
@@ -26,6 +26,7 @@ interface CreateValues {
     cpu: number;
     ram: number;
     storage: number;
+    egg: number;
 }
 
 export default () => {
@@ -35,13 +36,13 @@ export default () => {
     const user = useStoreState(state => state.user.data);
     const { data, error, mutate } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
 
-    const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
+    const submit = ({ name, cpu, ram, storage, egg }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
         setLoading(true);
         clearFlashes('account:store');
         setSubmitting(false);
         setSubmit(true);
 
-        createServer(name, cpu, ram, storage).then(() => {
+        createServer(name, cpu, ram, storage, egg).then(() => {
             mutate();
             setSubmit(false);
         })
@@ -95,12 +96,13 @@ export default () => {
                                 cpu: user!.crCpu,
                                 ram: user!.crRam / 1024,
                                 storage: user!.crStorage / 1024,
+                                egg: 1,
                             }}
                             validationSchema={object().shape({
                                 name: string().required().min(3),
-                                cpu: number().required().min(50).max(user!.crCpu),
+                                cpu: number().required().min(15).max(user!.crCpu),
                                 ram: number().required().min(1).max(user!.crRam / 1024),
-                                storage: number().required().min(1).max(user!.crStorage / 1024),
+                                storage: number().required().min(0.256).max(user!.crStorage / 1024),
                             })}
                         >
                             <Form>
@@ -140,6 +142,14 @@ export default () => {
                                             />
                                             <p css={tw`mt-1 text-xs text-neutral-400`}>{megabytesToHuman(user!.crStorage)} available</p>
                                             <p css={tw`mt-1 text-xs text-neutral-400`}>The maximum amount of storage allowed for this server in GB.</p>
+                                        </div>
+                                    </TitledGreyBox>
+                                    <TitledGreyBox title={'Server Egg (Software)'} icon={faEgg}>
+                                        <div css={tw`px-1 py-2`}>
+                                            <Field
+                                                name={'egg'}
+                                            />
+                                            <p css={tw`mt-1 text-xs text-neutral-400`}>The Server Software to use. (needs to be an id)</p>
                                         </div>
                                     </TitledGreyBox>
                                 </div>
