@@ -100,9 +100,9 @@ export default () => {
                             }}
                             validationSchema={object().shape({
                                 name: string().required().min(3),
-                                cpu: number().required().min(15).max(user!.crCpu),
+                                cpu: number().required().min(25).max(user!.crCpu),
                                 ram: number().required().min(1).max(user!.crRam / 1024),
-                                storage: number().required().min(0.256).max(user!.crStorage / 1024),
+                                storage: number().required().min(0.5).max(user!.crStorage / 1024),
                             })}
                         >
                             <Form>
