@@ -130,6 +130,9 @@ Route::group(['prefix' => '/nests'], function () {
 | Endpoint: /api/application/credits
 |
 */
-/*Route::group(['prefix' => '/credits'], function () {
+Route::group(['prefix' => '/credits'], function () {
     Route::get('/get/{id}', 'CreditsController@get')->name('api.application.credits.get');
-});*/
+    Route::post('/set/{id}', 'CreditsController@set')->name('api.application.credits.set');
+    Route::post('/add/{id}', 'CreditsController@add')->name('api.application.credits.add');
+    Route::post('/remove/{id}', 'CreditsController@remove')->name('api.application.credits.remove');
+});
