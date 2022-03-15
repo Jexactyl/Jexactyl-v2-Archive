@@ -1,10 +1,5 @@
-{{-- Pterodactyl - Panel --}}
-{{-- Copyright (c) 2015 - 2017 Dane Everitt <dane@daneeveritt.com> --}}
-
-{{-- This software is licensed under the terms of the MIT license. --}}
-{{-- https://opensource.org/licenses/MIT --}}
 @extends('layouts.admin')
-@include('partials/admin.users.nav', ['activeTab' => 'store', 'user' => $user])
+@include('partials/admin.users.nav', ['activeTab' => 'resources', 'user' => $user])
 
 @section('title')
     Manage User: {{ $user->username }}
@@ -21,7 +16,7 @@
 @endsection
 
 @section('content')
-    @yield('user::nav')
+    @yield('users::nav')
     <div class="row">
             <div class="col-xs-12">
                 <div class="box">
@@ -32,23 +27,23 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="form-group col-md-4">
-                                    <label for="cr_balance" class="control-label">Credits Balance</label>
+                                    <label for="cr_balance" class="control-label">Credits</label>
                                     <input type="text" id="cr_balance" value="{{ $user->cr_balance }}" name="cr_balance" class="form-control form-autocomplete-stop">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="cr_slots" class="control-label">Server slots available</label>
-                                    <input type="text" id="cr_slots" value="{{ $user->cr_slots }}" name="slots" class="form-control form-autocomplete-stop">
+                                    <label for="cr_slots" class="control-label">Slots</label>
+                                    <input type="text" id="cr_slots" value="{{ $user->cr_slots }}" name="cr_slots" class="form-control form-autocomplete-stop">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="cr_cpu" class="control-label">CPU available</label>
+                                    <label for="cr_cpu" class="control-label">CPU</label>
                                     <input type="text" id="cr_cpu" value="{{ $user->cr_cpu }}" name="cr_cpu" class="form-control form-autocomplete-stop">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="cr_ram" class="control-label">RAM available</label>
+                                    <label for="cr_ram" class="control-label">RAM</label>
                                     <input type="text" id="cr_ram" value="{{ $user->cr_ram }}" name="cr_ram" class="form-control form-autocomplete-stop">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="cr_storage" class="control-label">Storage available</label>
+                                    <label for="cr_storage" class="control-label">Storage</label>
                                     <input type="text" id="cr_storage" value="{{ $user->cr_storage }}" name="cr_storage" class="form-control form-autocomplete-stop">
                                 </div>
                             </div>

@@ -3,27 +3,28 @@
 namespace Pterodactyl\Http\Controllers\Admin;
 
 use Exception;
+use Illuminate\Contracts\Translation\Translator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\RedzirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Prologue\Alerts\AlertsMessageBag;
+use Pterodactyl\Contracts\Repository\UserRepositoryInterface;
+use Pterodactyl\Exceptions\DisplayException;
 use Pterodactyl\Exceptions\Model\DataValidationException;
 use Pterodactyl\Exceptions\Repository\RecordNotFoundException;
+use Pterodactyl\Http\Controllers\Controller;
+use Pterodactyl\Http\Requests\Admin\Users\UserFormRequest;
+use Pterodactyl\Http\Requests\Admin\Users\UserResourceFormRequest;
+use Pterodactyl\Http\Requests\Admin\UserStoreFormRequest;
 use Pterodactyl\Models\Model;
 use Pterodactyl\Models\User;
-use Prologue\Alerts\AlertsMessageBag;
-use Spatie\QueryBuilder\QueryBuilder;
-use Pterodactyl\Exceptions\DisplayException;
-use Pterodactyl\Http\Controllers\Controller;
-use Illuminate\Contracts\Translation\Translator;
-use Pterodactyl\Services\Users\UserUpdateService;
-use Pterodactyl\Traits\Helpers\AvailableLanguages;
 use Pterodactyl\Services\Users\UserCreationService;
 use Pterodactyl\Services\Users\UserDeletionService;
-use Pterodactyl\Http\Requests\Admin\UserFormRequest;
-use Pterodactyl\Http\Requests\Admin\UserStoreFormRequest;
-use Pterodactyl\Contracts\Repository\UserRepositoryInterface;
+use Pterodactyl\Services\Users\UserUpdateService;
+use Pterodactyl\Traits\Helpers\AvailableLanguages;
+use Spatie\QueryBuilder\QueryBuilder;
 use Throwable;
 
 class UserController extends Controller
@@ -129,14 +130,13 @@ class UserController extends Controller
     }
 
     /**
-     * Display user view page.
-     *
+     * Display the user resource page.
      * @param User $user
      * @return View
      */
-    public function viewStore(User $user): View
+    public function resources(User $user): View
     {
-        return view('admin.users.store', [
+        return view('admin.users.resources', [
             'user' => $user,
         ]);
     }
@@ -196,21 +196,17 @@ class UserController extends Controller
     }
 
     /**
-     * Update a user on the system.
+     * Update a users resources.
      *
+     * @param UserResourceFormRequest $request
+     * @param User $user
      * @return RedirectResponse
-     *
-     * @throws DataValidationException
-     * @throws RecordNotFoundException
+     * @throws Throwable
      */
-    public function updateStore(UserStoreFormRequest $request, User $user)
+    public function updateResources(UserResourceFormRequest $request, User $user): RedirectResponse
     {
-        $this->updateService
-            ->setUserLevel(User::USER_LEVEL_ADMIN)
-            ->handle($user, $request->normalize());
-
+        $this->updateService->setUserLevel(User::USER_LEVEL_ADMIN)->handle($user, $request->normalize());
         $this->alert->success(trans('admin/user.notices.account_updated'))->flash();
-
         return redirect()->route('admin.users.store', $user->id);
     }
 

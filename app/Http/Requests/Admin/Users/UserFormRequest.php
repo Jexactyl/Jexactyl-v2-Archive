@@ -1,9 +1,10 @@
 <?php
 
-namespace Pterodactyl\Http\Requests\Admin;
+namespace Pterodactyl\Http\Requests\Admin\Users;
 
-use Pterodactyl\Models\User;
 use Illuminate\Support\Collection;
+use Pterodactyl\Http\Requests\Admin\AdminFormRequest;
+use Pterodactyl\Models\User;
 
 class UserFormRequest extends AdminFormRequest
 {
@@ -23,11 +24,6 @@ class UserFormRequest extends AdminFormRequest
             'password',
             'language',
             'root_admin',
-            'cr_balance',
-            'cr_cpu',
-            'cr_ram',
-            'cr_storage',
-            'cr_slots'
         ])->toArray();
     }
 }

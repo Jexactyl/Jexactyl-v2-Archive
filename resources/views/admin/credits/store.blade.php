@@ -34,20 +34,24 @@
                                 <p class="text-muted"><small>When enabled, users will be able to access the store in order to buy servers and resources.</small></p>
                             </div>
                             <div class="form-group col-md-4">
-                                <label class="control-label" for="slots_cost">Server slots Cost</label>
+                                <label class="control-label" for="slots_cost">Slots Cost</label>
                                 <input type="text" id="slots_cost" name="slots_cost" class="form-control form-autocomplete-stop" value="{{ $slots_cost }}">
+                                <p class="text-muted"><small>Credits cost per 1 slot.</small></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="cpu_cost">CPU Cost</label>
                                 <input type="text" id="cpu_cost" name="cpu_cost" class="form-control form-autocomplete-stop" value="{{ $cpu_cost }}">
+                                <p class="text-muted"><small>Credits cost per 50% CPU.</small></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="ram_cost">RAM Cost</label>
                                 <input type="text" id="ram_cost" name="ram_cost" class="form-control form-autocomplete-stop" value="{{ $ram_cost }}">
+                                <p class="text-muted"><small>Credits cost per 1GB RAM.</small></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="storage_cost">Storage Cost</label>
                                 <input type="text" id="storage_cost" name="storage_cost" class="form-control form-autocomplete-stop" value="{{ $storage_cost }}">
+                                <p class="text-muted"><small>Credits cost per 1GB storage.</small></p>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="control-label" for="credits_cost">Credits Cost</label>
