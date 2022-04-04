@@ -152,9 +152,9 @@ export default () => {
 
     return (
         <>
-            <div css={tw`flex flex-wrap mt-4`}>
-                <div css={tw`w-full sm:w-1/2`}>
-                    <TitledGreyBox title={'Memory usage'} icon={faMemory} css={tw`mr-0 sm:mr-4`}>
+            <div css={tw`mt-4`}>
+                <div css={tw`w-full`}>
+                    <TitledGreyBox title={'Memory usage'} icon={faMemory} css={tw`mr-0`}>
                         {status !== 'offline' ?
                             <canvas
                                 id={'memory_chart'}
@@ -169,22 +169,24 @@ export default () => {
                         }
                     </TitledGreyBox>
                 </div>
-                <div css={tw`w-full sm:w-1/2 mt-4 sm:mt-0`}>
-                    <TitledGreyBox title={'CPU usage'} icon={faMicrochip} css={tw`ml-0 sm:ml-4`}>
-                        {status !== 'offline' ?
-                            <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>
-                            :
-                            <p css={tw`text-xs text-neutral-400 text-center p-3`}>
-                            Server is offline.
-                            </p>
-                        }
-                    </TitledGreyBox>
+                <div css={tw`mt-4`}>
+                    <div css={tw`w-full`}>
+                        <TitledGreyBox title={'CPU usage'} icon={faMicrochip} css={tw`ml-0`}>
+                            {status !== 'offline' ?
+                                <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>
+                                :
+                                <p css={tw`text-xs text-neutral-400 text-center p-3`}>
+                                Server is offline.
+                                </p>
+                            }
+                        </TitledGreyBox>
+                    </div>
                 </div>
             </div>
 
-            <div css={tw`flex flex-wrap mt-4`}>
-                <div css={tw`w-full sm:w-1/2`}>
-                    <TitledGreyBox title={'Network'} icon={faNetworkWired} css={tw`mr-0 sm:mr-4`}>
+            <div css={tw`mt-4`}>
+                <div css={tw`w-full`}>
+                    <TitledGreyBox title={'Network'} icon={faNetworkWired} css={tw`mr-0`}>
                         {status !== 'offline' ?
                             <canvas id={'network_chart'} ref={networkRef} aria-label={'Server Networking Graph'} role={'img'}/>
                             :

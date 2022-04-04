@@ -26,6 +26,9 @@ const ServerConsole = () => {
             <div css={tw`w-full md:w-3/4 mt-4 md:mt-0 md:pr-4`}>
                 <Spinner.Suspense>
                     <ErrorBoundary>
+                        <Can action={[ 'control.start', 'control.stop', 'control.restart' ]} matchAny>
+                            <PowerControls/>
+                        </Can>
                         <ChunkedConsole/>
                     </ErrorBoundary>
                 </Spinner.Suspense>
@@ -59,9 +62,6 @@ const ServerConsole = () => {
                         :
                         false
                 }
-                <Can action={[ 'control.start', 'control.stop', 'control.restart' ]} matchAny>
-                    <PowerControls/>
-                </Can>
                 <Spinner.Suspense>
                     <ServerDetailsBlock/>
                 </Spinner.Suspense>
