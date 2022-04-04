@@ -13,7 +13,7 @@ class PterodactylSerializer extends ArraySerializer
      *
      * @return array
      */
-    public function item($resourceKey, array $data)
+    public function item($resourceKey, array $data): array
     {
         return [
             'object' => $resourceKey,
@@ -28,7 +28,7 @@ class PterodactylSerializer extends ArraySerializer
      *
      * @return array
      */
-    public function collection($resourceKey, array $data)
+    public function collection($resourceKey, array $data): array
     {
         $response = [];
         foreach ($data as $datum) {
@@ -46,7 +46,7 @@ class PterodactylSerializer extends ArraySerializer
      *
      * @return array
      */
-    public function null()
+    public function null(): array
     {
         return [
             'object' => 'null_resource',
@@ -62,7 +62,7 @@ class PterodactylSerializer extends ArraySerializer
      *
      * @return array
      */
-    public function mergeIncludes($transformedData, $includedData)
+    public function mergeIncludes($transformedData, $includedData): array
     {
         foreach ($includedData as $key => $datum) {
             $transformedData['relationships'][$key] = $datum;
