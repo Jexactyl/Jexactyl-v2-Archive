@@ -10,6 +10,7 @@ import PowerControls from '@/components/server/PowerControls';
 import { EulaModalFeature, JavaVersionModalFeature, GSLTokenModalFeature, PIDLimitModalFeature, SteamDiskSpaceFeature } from '@feature/index';
 import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import Spinner from '@/components/elements/Spinner';
+import StatBars from './StatBars';
 
 export type PowerAction = 'start' | 'stop' | 'restart' | 'kill';
 
@@ -63,6 +64,7 @@ const ServerConsole = () => {
                         false
                 }
                 <Spinner.Suspense>
+                    <StatBars/>
                     <ServerDetailsBlock/>
                 </Spinner.Suspense>
                 <Spinner.Suspense>
