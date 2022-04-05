@@ -39,13 +39,14 @@ export default () => {
                 Your account must have two-factor authentication enabled in order to continue.
             </MessageBox>
             }
-
-            <Container css={[ tw`lg:grid lg:grid-cols-3 mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
-                <ContentBox title={'Update Password'} showFlashes={'account:password'}>
-                    <UpdatePasswordForm/>
-                </ContentBox>
+            <Container
+                css={[ tw`lg:grid mb-10`,
+                    state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10`,
+                    usernameEdit === '1' ? tw`lg:grid-cols-2` : tw`lg:grid-cols-3`,
+                ]}
+            >
                 <ContentBox
-                    css={tw`mt-8 sm:mt-0 sm:ml-8`}
+                    css={tw`mt-8 sm:ml-8`}
                     title={'Update Email Address'}
                     showFlashes={'account:email'}
                 >
@@ -53,16 +54,17 @@ export default () => {
                 </ContentBox>
                 {usernameEdit === '1' &&
                     <ContentBox
-                        css={tw`mt-8 md:mt-0 md:ml-8`}
+                        css={tw`lg:ml-8 mt-8`}
                         title={'Update Username'}
                         showFlashes={'account:username'}
                     >
                         <UpdateUsernameForm/>
                     </ContentBox>
                 }
-            </Container>
-            <Container css={[ tw`mb-10`, state?.twoFactorRedirect ? tw`mt-4` : tw`mt-10` ]}>
-                <ContentBox css={tw`lg:ml-8 mt-8 lg:mt-0`} title={'Configure Two Factor'}>
+                <ContentBox title={'Update Password'} css={tw`mt-8 lg:ml-8`} showFlashes={'account:password'}>
+                    <UpdatePasswordForm/>
+                </ContentBox>
+                <ContentBox css={tw`lg:ml-8 mt-8`} title={'Configure Two Factor'}>
                     <ConfigureTwoFactorForm/>
                 </ContentBox>
             </Container>
