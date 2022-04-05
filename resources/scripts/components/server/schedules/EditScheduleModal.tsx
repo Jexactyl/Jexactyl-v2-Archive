@@ -32,7 +32,6 @@ interface Values {
 
 const EditScheduleModal = ({ schedule }: Props) => {
     const { addError, clearFlashes } = useFlash();
-    const [ showCheatsheet, setShowCheetsheet ] = useState(false);
     const { dismiss } = useContext(ModalContext);
 
     const uuid = ServerContext.useStoreState(state => state.server.data!.uuid);
