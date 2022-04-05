@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { httpErrorToHuman } from '@/api/http';
 import { CSSTransition } from 'react-transition-group';
 import Spinner from '@/components/elements/Spinner';
@@ -21,42 +21,9 @@ import ErrorBoundary from '@/components/elements/ErrorBoundary';
 import { FileActionCheckbox } from '@/components/server/files/SelectFileCheckbox';
 import { hashToPath } from '@/helpers';
 
-let sortMethod = 'namedown';
-
-const sortFiles = (files: FileObject[]): FileObject[] => {
-    // Sorts by name
-    if (sortMethod === 'namedown') {
-        return files.sort((a, b) => a.name.localeCompare(b.name))
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Sorts by file size
-    if (sortMethod === 'sizedown') {
-        return files.sort((a, b) => b.size - a.size)
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Sorts by date modified
-    if (sortMethod === 'datedown') {
-        return files.sort((a, b) => a.modifiedAt.getDate() - b.modifiedAt.getDate())
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Sorts by name
-    if (sortMethod === 'nameup') {
-        return files.sort((a, b) => b.name.localeCompare(a.name))
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Sorts by file size
-    if (sortMethod === 'sizeup') {
-        return files.sort((a, b) => a.size - b.size)
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Sorts by date modified
-    if (sortMethod === 'dateup') {
-        return files.sort((a, b) => b.modifiedAt.getDate() - a.modifiedAt.getDate())
-            .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
-    }
-    // Fallback to name
-    return files.sort((a, b) => a.name.localeCompare(b.name))
-        .sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+const sortFiles = (files: FileObject[], searchString: string): FileObject[] => {
+    const sortedFiles: FileObject[] = files.sort((a, b) => a.name.localeCompare(b.name)).sort((a, b) => a.isFile === b.isFile ? 0 : (a.isFile ? 1 : -1));
+    return sortedFiles.filter((file, index) => index === 0 || file.name !== sortedFiles[index - 1].name).filter((file) => file.name.toLowerCase().includes(searchString.toLowerCase()));
 };
 
 export default () => {
@@ -69,6 +36,8 @@ export default () => {
 
     const setSelectedFiles = ServerContext.useStoreActions(actions => actions.files.setSelectedFiles);
     const selectedFilesLength = ServerContext.useStoreState(state => state.files.selectedFiles.length);
+
+    const [ searchString, setSearchString ] = useState('');
 
     useEffect(() => {
         clearFlashes('files');
@@ -84,51 +53,26 @@ export default () => {
         setSelectedFiles(e.currentTarget.checked ? (files?.map(file => file.name) || []) : []);
     };
 
-    const sortName = () => {
-        if (sortMethod === 'namedown') {
-            sortMethod = 'nameup';
-        } else {
-            sortMethod = 'namedown';
-        }
-
-        if (!files) return;
-        sortFiles(files.splice(0, 250));
-        mutate();
-    };
-
-    const sortSize = () => {
-        if (sortMethod === 'sizedown') {
-            sortMethod = 'sizeup';
-        } else {
-            sortMethod = 'sizedown';
-        }
-        if (!files) return;
-        sortFiles(files.splice(0, 250));
-        mutate();
-    };
-
-    const sortDate = () => {
-        if (sortMethod === 'datedown') {
-            sortMethod = 'dateup';
-        } else {
-            sortMethod = 'datedown';
-        }
-        if (!files) return;
-        sortFiles(files.splice(0, 250));
-        mutate();
-    };
-
     if (error) {
         return (
-            <ServerError message={httpErrorToHuman(error)} onRetry={() => mutate()}/>
+            <ServerError message={httpErrorToHuman(error)} onRetry={() => mutate()} />
         );
     }
+
+    const searchFiles = (event: ChangeEvent<HTMLInputElement>) => {
+        if (files) {
+            setSearchString(event.target.value);
+            sortFiles(files, searchString);
+            mutate();
+        }
+    };
 
     return (
         <ServerContentBlock title={'File Manager'} showFlashKey={'files'}>
             <div css={tw`flex flex-wrap-reverse md:flex-nowrap justify-center mb-4`}>
                 <ErrorBoundary>
                     <FileManagerBreadcrumbs
+                        css={tw`w-full`}
                         renderLeft={
                             <FileActionCheckbox
                                 type={'checkbox'}
@@ -138,12 +82,20 @@ export default () => {
                             />
                         }
                     />
+                    <input
+                        onChange={searchFiles}
+                        css={tw`rounded-lg bg-neutral-700 border-2 border-cyan-700 md:mx-6 w-full px-4 mb-4 md:mb-0`}
+                        placeholder='search'
+                        style={{ borderColor: 'rgb(59 130 246);' }}
+                    >
+                    </input>
                 </ErrorBoundary>
+
                 <Can action={'file.create'}>
                     <ErrorBoundary>
                         <div css={tw`flex flex-shrink-0 flex-wrap-reverse md:flex-nowrap justify-end mb-4 md:mb-0 ml-0 md:ml-auto`}>
-                            <NewDirectoryButton css={tw`w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:mr-4`}/>
-                            <UploadButton css={tw`flex-1 mr-4 sm:flex-none sm:mt-0`}/>
+                            <NewDirectoryButton css={tw`w-full flex-none mt-4 sm:mt-0 sm:w-auto sm:mr-4`} />
+                            <UploadButton css={tw`flex-1 mr-4 sm:flex-none sm:mt-0`} />
                             <NavLink
                                 to={`/server/${id}/files/new${window.location.hash}`}
                                 css={tw`flex-1 sm:flex-none sm:mt-0`}
@@ -158,65 +110,30 @@ export default () => {
             </div>
             {
                 !files ?
-                    <Spinner size={'large'} centered/>
+                    <Spinner size={'large'} centered />
                     :
                     <>
-                        <div>
-                            <Button css={tw`mb-4 mx-auto`} onClick={sortName}>
-                                {sortMethod === 'nameup' ?
-                                    <p>
-                                    Name &uarr;
-                                    </p>
-                                    :
-                                    <p>
-                                    Name &darr;
-                                    </p>
-                                }
-                            </Button>
-                            <Button css={tw`mb-4 mx-auto`} onClick={sortSize}>
-                                {sortMethod === 'sizeup' ?
-                                    <p>
-                                    Size &uarr;
-                                    </p>
-                                    :
-                                    <p>
-                                    Size &darr;
-                                    </p>
-                                }
-                            </Button>
-                            <Button css={tw`mb-4 mx-auto`} onClick={sortDate}>
-                                {sortMethod === 'dateup' ?
-                                    <p>
-                                    Date &uarr;
-                                    </p>
-                                    :
-                                    <p>
-                                    Date &darr;
-                                    </p>
-                                }
-                            </Button>
-                        </div>
                         {!files.length ?
                             <p css={tw`text-sm text-neutral-400 text-center`}>
                                 This directory seems to be empty.
                             </p>
                             :
-                            <CSSTransition id="container" classNames={'fade'} timeout={150} appear in>
+                            <CSSTransition classNames={'fade'} timeout={150} appear in>
                                 <div>
                                     {files.length > 250 &&
-                                    <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
-                                        <p css={tw`text-yellow-900 text-sm text-center`}>
-                                            This directory is too large to display in the browser,
-                                            limiting the output to the first 250 files.
-                                        </p>
-                                    </div>
+                                        <div css={tw`rounded bg-yellow-400 mb-px p-3`}>
+                                            <p css={tw`text-yellow-900 text-sm text-center`}>
+                                                This directory is too large to display in the browser,
+                                                limiting the output to the first 250 files.
+                                            </p>
+                                        </div>
                                     }
                                     {
-                                        sortFiles(files.slice(0, 250)).map(file => (
-                                            <FileObjectRow key={file.key} file={file}/>
+                                        sortFiles(files.slice(0, 250), searchString).map(file => (
+                                            <FileObjectRow key={file.key} file={file} />
                                         ))
                                     }
-                                    <MassActionsBar/>
+                                    <MassActionsBar />
                                 </div>
                             </CSSTransition>
                         }
