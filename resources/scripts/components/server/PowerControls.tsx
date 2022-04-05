@@ -15,7 +15,7 @@ const PowerControls = () => {
     };
 
     return (
-        <div css={tw`shadow-md bg-neutral-900 rounded p-3 flex text-xs justify-center`}>
+        <div css={tw`shadow-md bg-neutral-900 rounded p-3 text-xs flex justify-center`}>
             <Can action={'control.start'}>
                 <Button
                     size={'xsmall'}

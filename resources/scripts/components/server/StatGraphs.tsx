@@ -173,7 +173,12 @@ export default () => {
                     <div css={tw`w-full`}>
                         <TitledGreyBox title={'CPU usage'} icon={faMicrochip} css={tw`ml-0`}>
                             {status !== 'offline' ?
-                                <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>
+                                <canvas
+                                    id={'cpu_chart'}
+                                    ref={cpuRef}
+                                    aria-label={'Server CPU Usage Graph'}
+                                    role={'img'}
+                                />
                                 :
                                 <p css={tw`text-xs text-neutral-400 text-center p-3`}>
                                 Server is offline.
@@ -188,7 +193,12 @@ export default () => {
                 <div css={tw`w-full`}>
                     <TitledGreyBox title={'Network'} icon={faNetworkWired} css={tw`mr-0`}>
                         {status !== 'offline' ?
-                            <canvas id={'network_chart'} ref={networkRef} aria-label={'Server Networking Graph'} role={'img'}/>
+                            <canvas
+                                id={'network_chart'}
+                                ref={networkRef}
+                                aria-label={'Server Networking Graph'}
+                                role={'img'}
+                            />
                             :
                             <p css={tw`text-xs text-neutral-400 text-center p-3`}>
                             Server is offline.
