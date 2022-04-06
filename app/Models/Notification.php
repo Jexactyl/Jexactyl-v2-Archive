@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string $action
  * @property array $device
  * @property array $metadata
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
  * @property \Pterodactyl\Models\User|null $user
  * @property \Pterodactyl\Models\Server|null $server
  */

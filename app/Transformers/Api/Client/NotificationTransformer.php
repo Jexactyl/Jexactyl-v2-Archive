@@ -11,24 +11,21 @@ class NotificationTransformer extends BaseClientTransformer
      */
     public function getResourceName(): string
     {
-        return 'notification';
+        return Notification::RESOURCE_NAME;
     }
 
     /**
      * Return the notifications for the current user.
-     *
-     * @return array
      */
-    public function transform(Notification $model)
+    public function transform(Notification $notification): array
     {
         return [
-            'id' => $model->id,
-            'user_id' => $model->user_id,
-            'server_id' => $model->server_id,
-            'action' => $model->action,
-            'device' => $model->device,
-            'metadata' => $model->metadata,
-
+            'id' => $notification->id,
+            'user_id' => $notification->user_id,
+            'server_id' => $notification->server_id,
+            'action' => $notification->action,
+            'device' => $notification->device,
+            'metadata' => $notification->metadata,
         ];
     }
 }
