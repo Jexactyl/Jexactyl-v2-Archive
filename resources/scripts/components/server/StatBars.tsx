@@ -56,11 +56,11 @@ const StatBars = () => {
 
     return (
         <TitledGreyBox title={'Server Statistics'} css={tw`text-xs uppercase`}>
-            CPU used
+            CPU used ({stats.cpu.toFixed(0)}%)
             <Bar style={{ width: stats.cpu.toFixed(0) === undefined ? '100%' : `${stats.cpu.toFixed(0)}%` }} css={tw`mb-2`}/>
-            RAM used
+            RAM used ({ramUsed.toFixed(0)}%)
             <Bar style={{ width: ramUsed.toFixed(0) === undefined ? '100%' : `${ramUsed.toFixed(0)}%` }} css={tw`mb-2`}/>
-            Disk used
+            Disk used ({diskUsed.toFixed(0)}%)
             <Bar style={{ width: diskUsed.toFixed(0) === undefined ? '100%' : `${diskUsed.toFixed(0)}%` }}/>
         </TitledGreyBox>
     );
