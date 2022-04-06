@@ -13,9 +13,18 @@ class CreateNotifsTable extends Migration
      */
     public function up()
     {
-        Schema::create('notifs', function (Blueprint $table) {
+        Schema::create('notification', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedInteger('user_id')->nullable();
+            $table->unsignedInteger('server_id')->nullable();
+            $table->string('action')->nullable();
+            $table->string('subaction')->nullable();
+            $table->json('device');
+            $table->json('metadata');
+            $table->timestamp('created_at', 0);
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('server_id')->references('id')->on('servers')->onDelete('cascade');
         });
     }
 
@@ -26,6 +35,6 @@ class CreateNotifsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notifs');
+        Schema::dropIfExists('notification');
     }
 }

@@ -20,15 +20,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Notification extends Model
 {
-    public const RESOURCE_NAME = 'notifs';
+    public const RESOURCE_NAME = 'notification';
 
     /**
      * @var string[]
      */
     public static $validationRules = [
-        'user_id' => 'required|integer',
-        'server_id' => 'required|integer',
-        'action' => 'required|string|max:191',
+        'user_id' => 'nullable|integer',
+        'server_id' => 'nullable|integer',
+        'action' => 'nullable|string|max:191',
         'device' => 'array',
         'device.ip_address' => 'ip',
         'device.user_agent' => 'string',
@@ -38,7 +38,7 @@ class Notification extends Model
     /**
      * @var string
      */
-    protected $table = 'notifs';
+    protected $table = 'notification';
 
     /**
      * @var string[]
