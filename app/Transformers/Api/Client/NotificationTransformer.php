@@ -16,16 +16,18 @@ class NotificationTransformer extends BaseClientTransformer
 
     /**
      * Return the notifications for the current user.
+     * 
+     * @return array
      */
-    public function transform(Notification $notification): array
+    public function transform(Notification $model)
     {
         return [
-            'id' => $notification->id,
-            'user_id' => $notification->user_id,
-            'server_id' => $notification->server_id,
-            'action' => $notification->action,
-            'device' => $notification->device,
-            'metadata' => $notification->metadata,
+            'id' => $model->id,
+            'user_id' => $model->user_id,
+            'server_id' => $model->server_id,
+            'action' => $model->action,
+            'device' => $model->device,
+            'metadata' => $model->metadata,
         ];
     }
 }

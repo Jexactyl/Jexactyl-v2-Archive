@@ -20,7 +20,7 @@ class NotificationController extends ClientApiController
      */
     public function index(Request $request): array
     {
-        return $this->fractal->item($request->user()->notifications)
+        return $this->fractal->collection($request->user()->notifications)
             ->transformWith($this->getTransformer(NotificationTransformer::class))
             ->toArray();
     }

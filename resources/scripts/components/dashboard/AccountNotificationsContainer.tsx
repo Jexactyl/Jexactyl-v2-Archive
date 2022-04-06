@@ -35,7 +35,7 @@ export default () => {
                 {
                     notifications.length === 0 ?
                         <p css={tw`text-center text-sm`}>
-                            {loading ? <Spinner size={'small'} centered/> : 'You do not have any notifications.'}
+                            {loading ? <Spinner size={'large'} centered/> : 'You do not have any notifications.'}
                         </p>
                         :
                         notifications.map((notification, index) => (
