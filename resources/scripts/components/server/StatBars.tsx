@@ -55,7 +55,7 @@ const StatBars = () => {
     }, [ instance, connected ]);
 
     return (
-        <TitledGreyBox title={'Server Statistics'} css={tw`text-xs uppercase`}>
+        <TitledGreyBox title={'Server Statistics'} css={tw`text-xs uppercase mt-4`}>
             CPU used
             <Bar style={{ width: stats.cpu.toFixed(0) === undefined ? '100%' : `${stats.cpu.toFixed(0)}%` }} css={tw`mb-2`}/>
             RAM used

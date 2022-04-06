@@ -69,6 +69,12 @@ export default () => {
 
     return (
         <ServerContentBlock title={'File Manager'} showFlashKey={'files'}>
+            <input
+                onChange={searchFiles}
+                css={tw`rounded-lg bg-neutral-700 border-2 border-neutral-900 p-2 w-full mb-4`}
+                placeholder={'Search for files...'}
+            >
+            </input>
             <div css={tw`flex flex-wrap-reverse md:flex-nowrap justify-center mb-4`}>
                 <ErrorBoundary>
                     <FileManagerBreadcrumbs
@@ -82,15 +88,7 @@ export default () => {
                             />
                         }
                     />
-                    <input
-                        onChange={searchFiles}
-                        css={tw`rounded-lg bg-neutral-700 border-2 border-cyan-700 md:mx-6 w-full px-4 mb-4 md:mb-0`}
-                        placeholder='search'
-                        style={{ borderColor: 'rgb(59 130 246);' }}
-                    >
-                    </input>
                 </ErrorBoundary>
-
                 <Can action={'file.create'}>
                     <ErrorBoundary>
                         <div css={tw`flex flex-shrink-0 flex-wrap-reverse md:flex-nowrap justify-end mb-4 md:mb-0 ml-0 md:ml-auto`}>
