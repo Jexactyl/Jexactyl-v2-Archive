@@ -8,7 +8,7 @@ import { NotFound } from '@/components/elements/ScreenBlock';
 import TransitionRouter from '@/TransitionRouter';
 import tw from 'twin.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore, faBell } from '@fortawesome/free-solid-svg-icons';
 import Sidebar from '@/components/elements/Sidebar';
 import { useStoreState } from '@/state/hooks';
 import { ApplicationStore } from '@/state';
@@ -19,6 +19,7 @@ import useWindowDimensions from '@/plugins/useWindowDimensions';
 import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
 import Spinner from '@/components/elements/Spinner';
 import ProgressBar from '@/components/elements/ProgressBar';
+import AccountNotificationsContainer from '@/components/dashboard/AccountNotificationsContainer';
 
 const DashboardRouter = ({ location }: RouteComponentProps) => {
     const { width } = useWindowDimensions();
@@ -53,14 +54,19 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                                 <Sidebar.Section>Dashboard - API</Sidebar.Section>
                                 : location.pathname.endsWith('/account/security') ?
                                     <Sidebar.Section>Dashboard - Security</Sidebar.Section>
-                                    :
-                                    <Spinner size={'small'} centered isBlue/>
+                                    : location.pathname.endsWith('/account/notifications') ?
+                                        <Sidebar.Section>Dashboard - Notifications</Sidebar.Section>
+                                        :
+                                        <Spinner size={'small'} centered isBlue/>
                     }
                     <NavLink to={'/'} exact>
                         <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
                     </NavLink>
                     <NavLink to={'/account'} exact>
                         <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                    </NavLink>
+                    <NavLink to={'/account/notifications'} exact>
+                        <FontAwesomeIcon icon={faBell}/><span>Notifications</span>
                     </NavLink>
                     <NavLink to={'/account/api'} exact>
                         <FontAwesomeIcon icon={faSitemap}/><span>API</span>
@@ -103,6 +109,9 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                                 <NavLink to={'/account'}>
                                     <FontAwesomeIcon icon={faUser}/>
                                 </NavLink>
+                                <NavLink to={'/account/notifications'}>
+                                    <FontAwesomeIcon icon={faBell}/>
+                                </NavLink>
                                 <NavLink to={'/account/api'}>
                                     <FontAwesomeIcon icon={faSitemap}/>
                                 </NavLink>
@@ -133,6 +142,9 @@ const DashboardRouter = ({ location }: RouteComponentProps) => {
                         </Route>
                         <Route path={'/account'} exact>
                             <AccountOverviewContainer/>
+                        </Route>
+                        <Route path={'/account/notifications'} exact>
+                            <AccountNotificationsContainer/>
                         </Route>
                         <Route path={'/account/api'} exact>
                             <AccountApiContainer/>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
+use Pterodactyl\Models\Notification;
 use Pterodactyl\Services\Users\UserUpdateService;
 use Pterodactyl\Transformers\Api\Client\AccountTransformer;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdateEmailRequest;
@@ -27,7 +28,10 @@ class AccountController extends ClientApiController
     /**
      * AccountController constructor.
      */
-    public function __construct(AuthManager $sessionGuard, UserUpdateService $updateService)
+    public function __construct(
+        AuthManager $sessionGuard,
+        UserUpdateService $updateService,
+    )
     {
         parent::__construct();
 
@@ -50,6 +54,11 @@ class AccountController extends ClientApiController
      */
     public function updateEmail(UpdateEmailRequest $request): JsonResponse
     {
+        Notification::create([
+            'user_id' => $request->user()->id,
+            'action' => Notification::ACCOUNT__EMAIL_UPDATE,
+        ]);
+
         $this->updateService->handle($request->user(), $request->validated());
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);

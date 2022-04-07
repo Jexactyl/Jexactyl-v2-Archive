@@ -5,6 +5,7 @@ namespace Pterodactyl\Models;
 use Pterodactyl\Rules\Username;
 use Illuminate\Support\Collection;
 use Illuminate\Validation\Rules\In;
+use Pterodactyl\Models\Notification;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
@@ -234,6 +235,16 @@ class User extends Model implements
     public function servers()
     {
         return $this->hasMany(Server::class, 'owner_id');
+    }
+
+    /**
+     * Returns all notifications that a user had.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id');
     }
 
     /**
