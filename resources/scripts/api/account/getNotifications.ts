@@ -5,7 +5,7 @@ export interface Notification {
     userId: number;
     serverId: number | null;
     action: string;
-    createdAt: Date | null;
+    created: string | null;
 }
 
 export const rawDataToNotification = (data: any): Notification => ({
@@ -13,7 +13,7 @@ export const rawDataToNotification = (data: any): Notification => ({
     userId: data.user_id,
     serverId: data.server_id ?? null,
     action: data.action,
-    createdAt: data.created_at ? new Date(data.created_at) : null,
+    created: data.created,
 });
 
 export default (): Promise<Notification[]> => {

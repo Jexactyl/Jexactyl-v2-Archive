@@ -30,7 +30,7 @@ export default () => {
 
     return (
         <PageContentBlock title={'Notifications'}>
-            <FlashMessageRender byKey={'account:notifications'}/>
+            <FlashMessageRender byKey={'account:notifications'} css={tw`mb-2`}/>
             <TitledGreyBox title={'Notifications'}>
                 {
                     notifications.length === 0 ?
@@ -41,20 +41,20 @@ export default () => {
                         notifications.map((n, index) => (
                             <GreyRowBox
                                 key={n.id}
-                                css={[ tw`bg-neutral-600 flex items-center`, index > 0 && tw`mt-2` ]}
+                                css={[ tw`bg-neutral-850 flex items-center`, index > 0 && tw`mt-2` ]}
                             >
                                 <p css={tw`text-sm ml-4 hidden md:block`}>
-                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded mr-2`}>
                                         ID: {n.id}
                                     </code>
-                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded mr-2`}>
                                         Action: {n.action}
                                     </code>
-                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded mr-2`}>
                                         User: {n.userId}
                                     </code>
-                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
-                                        Created At: {n.createdAt}
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded mr-2`}>
+                                        Timestamp: {n.created ?? 'Unavailable'}
                                     </code>
                                 </p>
                             </GreyRowBox>

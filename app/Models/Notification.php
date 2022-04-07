@@ -37,7 +37,22 @@ class Notification extends Model
         'device.ip_address' => 'ip',
         'device.user_agent' => 'string',
         'metadata' => 'array',
+        'created' => 'string',
     ];
+
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['user_id', 'server_id', 'action', 'created'];
 
     /**
      * @var string
@@ -52,13 +67,6 @@ class Notification extends Model
         'metadata' => 'array',
     ];
 
-    /**
-     * @var string[]
-     */
-    protected $guarded = [
-        'id',
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -71,7 +79,7 @@ class Notification extends Model
      *
      * @return $this
      */
-    public static function instance(string $action)
+    public static function instance(string $action, string $created)
     {
         /** @var Request $request */
         $request = Container::getInstance()->make('request');
@@ -88,6 +96,7 @@ class Notification extends Model
                 'ip_address' => $request->getClientIp() ?? '127.0.0.1',
                 'user_agent' => $request->userAgent() ?? '',
             ] : [],
+            'created' => $created ?? date('d.m.Y H:i:s'),
         ]);
     }
 }

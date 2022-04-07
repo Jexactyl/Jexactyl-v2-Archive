@@ -57,6 +57,7 @@ class AccountController extends ClientApiController
         Notification::create([
             'user_id' => $request->user()->id,
             'action' => Notification::ACCOUNT__EMAIL_UPDATE,
+            'created' => date('d.m.Y H:i:s'),
         ]);
 
         $this->updateService->handle($request->user(), $request->validated());
