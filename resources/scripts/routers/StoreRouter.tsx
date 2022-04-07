@@ -109,7 +109,7 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                                 <NavLink to={'/account/security'}>
                                     <FontAwesomeIcon icon={faLock}/>
                                 </NavLink>
-                                {storeEnabled &&
+                                {storeEnabled === '1' &&
                                   <NavLink to={'/store'}>
                                       <FontAwesomeIcon icon={faStore}/>
                                   </NavLink>
