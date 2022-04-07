@@ -24,15 +24,15 @@ class Notification extends Model
 {
     public const RESOURCE_NAME = 'notification';
 
-    public const ACCOUNT__EMAIL_UPDATE = 'account:email.update';
+    public const ACCOUNT__EMAIL_UPDATE = 'Email has been updated.';
 
     /**
      * @var string[]
      */
     public static $validationRules = [
-        'user_id' => 'nullable|integer',
+        'user_id' => 'integer',
         'server_id' => 'nullable|integer',
-        'action' => 'nullable|string|max:191',
+        'action' => 'string|max:191',
         'device' => 'array',
         'device.ip_address' => 'ip',
         'device.user_agent' => 'string',
@@ -57,7 +57,6 @@ class Notification extends Model
      */
     protected $guarded = [
         'id',
-        'created_at',
     ];
 
     public function user(): BelongsTo

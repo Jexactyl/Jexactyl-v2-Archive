@@ -55,6 +55,7 @@ class AccountController extends ClientApiController
     public function updateEmail(UpdateEmailRequest $request): JsonResponse
     {
         Notification::create([
+            'user_id' => $request->user()->id,
             'action' => Notification::ACCOUNT__EMAIL_UPDATE,
         ]);
 

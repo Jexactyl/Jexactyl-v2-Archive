@@ -2,14 +2,18 @@ import http from '@/api/http';
 
 export interface Notification {
     id: number;
+    userId: number;
+    serverId: number | null;
+    action: string;
     createdAt: Date | null;
-    updatedAt: Date | null;
 }
 
 export const rawDataToNotification = (data: any): Notification => ({
     id: data.id,
+    userId: data.user_id,
+    serverId: data.server_id ?? null,
+    action: data.action,
     createdAt: data.created_at ? new Date(data.created_at) : null,
-    updatedAt: data.updated_at ? new Date(data.updated_at) : null,
 });
 
 export default (): Promise<Notification[]> => {

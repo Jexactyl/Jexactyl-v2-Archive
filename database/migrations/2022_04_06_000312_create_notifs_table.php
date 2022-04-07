@@ -20,7 +20,8 @@ class CreateNotifsTable extends Migration
             $table->string('action');
             $table->json('device');
             $table->json('metadata');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
         });
     }
 

@@ -38,14 +38,23 @@ export default () => {
                             {loading ? <Spinner size={'large'} centered/> : 'You do not have any notifications.'}
                         </p>
                         :
-                        notifications.map((notification, index) => (
+                        notifications.map((n, index) => (
                             <GreyRowBox
-                                key={notification.id}
+                                key={n.id}
                                 css={[ tw`bg-neutral-600 flex items-center`, index > 0 && tw`mt-2` ]}
                             >
                                 <p css={tw`text-sm ml-4 hidden md:block`}>
                                     <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
-                                        {notification.id}
+                                        ID: {n.id}
+                                    </code>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                        Action: {n.action}
+                                    </code>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                        User: {n.userId}
+                                    </code>
+                                    <code css={tw`font-mono py-1 px-2 bg-neutral-900 rounded`}>
+                                        Created At: {n.createdAt}
                                     </code>
                                 </p>
                             </GreyRowBox>
