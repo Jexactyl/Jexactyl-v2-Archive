@@ -25,6 +25,18 @@ class Notification extends Model
     public const RESOURCE_NAME = 'notification';
 
     public const ACCOUNT__EMAIL_UPDATE = 'Email has been updated.';
+    public const ACCOUNT__PASSWORD_UPDATE = 'Password has been updated.';
+    public const ACCOUNT__USERNAME_UPDATE = 'Username has been updated.';
+
+    public const ACCOUNT__APIKEY_CREATE = 'API Key has been created.';
+    public const ACCOUNT__APIKEY_DELETE = 'API Key has been deleted.';
+
+    public const ACCOUNT__2FA_ENABLE = '2FA has been enabled.';
+    public const ACCOUNT__2FA_DISABLE = '2FA has been disabled.';
+
+    public const ACCOUNT__SECURITYKEY_CREATE = 'A security key has been created.';
+    public const ACCOUNT__SECURITYKEY_DELETE = 'A security key has been deleted.';
+
 
     /**
      * @var string[]
@@ -96,7 +108,7 @@ class Notification extends Model
                 'ip_address' => $request->getClientIp() ?? '127.0.0.1',
                 'user_agent' => $request->userAgent() ?? '',
             ] : [],
-            'created' => $created ?? date('d.m.Y H:i:s'),
+            'created' => $created,
         ]);
     }
 }

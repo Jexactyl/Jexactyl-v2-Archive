@@ -5,6 +5,7 @@ namespace Pterodactyl\Http\Controllers\Api\Client;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Pterodactyl\Models\Notification;
 use LaravelWebauthn\Facades\Webauthn;
 use LaravelWebauthn\Models\WebauthnKey;
 use Webauthn\PublicKeyCredentialCreationOptions;
@@ -87,9 +88,16 @@ class WebauthnController extends ClientApiController
                 $request->input('name'),
             );
 
+            Notification::create([
+                'user_id' => $request->user()->id,
+                'action' => Notification::ACCOUNT__SECURITYKEY_CREATE,
+                'created' => date('d.m.Y H:i:s'),
+            ]);
+
             return $this->fractal->item($webauthnKey)
                 ->transformWith($this->getTransformer(WebauthnKeyTransformer::class))
                 ->toArray();
+
         } catch (Exception $e) {
             return new JsonResponse([
                 'error' => [
@@ -110,10 +118,17 @@ class WebauthnController extends ClientApiController
                 ->findOrFail($webauthnKeyId)
                 ->delete();
 
+            Notification::create([
+                'user_id' => $request->user()->id,
+                'action' => Notification::ACCOUNT__SECURITYKEY_DELETE,
+                'created' => date('d.m.Y H:i:s'),
+            ]);
+
             return new JsonResponse([
                 'deleted' => true,
                 'id' => $webauthnKeyId,
             ]);
+
         } catch (ModelNotFoundException $e) {
             return new JsonResponse([
                 'error' => [

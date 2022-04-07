@@ -73,6 +73,12 @@ class AccountController extends ClientApiController
      */
     public function updatePassword(UpdatePasswordRequest $request): JsonResponse
     {
+        Notification::create([
+            'user_id' => $request->user()->id,
+            'action' => Notification::ACCOUNT__PASSWORD_UPDATE,
+            'created' => date('d.m.Y H:i:s'),
+        ]);
+
         $user = $this->updateService->handle($request->user(), $request->validated());
 
         // If you do not update the user in the session you'll end up working with a
@@ -94,6 +100,12 @@ class AccountController extends ClientApiController
      */
     public function updateUsername(UpdateUsernameRequest $request): JsonResponse
     {
+        Notification::create([
+            'user_id' => $request->user()->id,
+            'action' => Notification::ACCOUNT__USERNAME_UPDATE,
+            'created' => date('d.m.Y H:i:s'),
+        ]);
+
         $this->updateService->handle($request->user(), $request->validated());
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);

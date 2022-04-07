@@ -4,6 +4,7 @@ namespace Pterodactyl\Http\Controllers\Api\Client;
 
 use Pterodactyl\Models\ApiKey;
 use Illuminate\Http\JsonResponse;
+use Pterodactyl\Models\Notification;
 use Pterodactyl\Exceptions\DisplayException;
 use Illuminate\Contracts\Encryption\Encrypter;
 use Pterodactyl\Services\Api\KeyCreationService;
@@ -77,6 +78,12 @@ class ApiKeyController extends ClientApiController
             'allowed_ips' => $request->input('allowed_ips') ?? [],
         ]);
 
+        Notification::create([
+            'user_id' => $request->user()->id,
+            'action' => Notification::ACCOUNT__APIKEY_CREATE,
+            'created' => date('d.m.Y H:i:s'),
+        ]);
+
         return $this->fractal->item($key)
             ->transformWith($this->getTransformer(ApiKeyTransformer::class))
             ->addMeta([
@@ -101,6 +108,12 @@ class ApiKeyController extends ClientApiController
         if (!$response) {
             throw new NotFoundHttpException();
         }
+
+        Notification::create([
+            'user_id' => $request->user()->id,
+            'action' => Notification::ACCOUNT__APIKEY_DELETE,
+            'created' => date('d.m.Y H:i:s'),
+        ]);
 
         return JsonResponse::create([], JsonResponse::HTTP_NO_CONTENT);
     }
