@@ -24,6 +24,8 @@ class Notification extends Model
 {
     public const RESOURCE_NAME = 'notification';
 
+    public const ACCOUNT__EMAIL_UPDATE = 'account:email.update';
+
     /**
      * @var string[]
      */
@@ -70,7 +72,7 @@ class Notification extends Model
      *
      * @return $this
      */
-    public static function instance(string $action, array $metadata, bool $isSystem = false)
+    public static function instance(string $action)
     {
         /** @var Request $request */
         $request = Container::getInstance()->make('request');
@@ -87,7 +89,6 @@ class Notification extends Model
                 'ip_address' => $request->getClientIp() ?? '127.0.0.1',
                 'user_agent' => $request->userAgent() ?? '',
             ] : [],
-            'metadata' => $metadata,
         ]);
     }
 }
