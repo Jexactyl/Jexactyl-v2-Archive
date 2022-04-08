@@ -44,6 +44,7 @@ import {
     faUser,
     faStore,
     faHome,
+    faBell,
 } from '@fortawesome/free-solid-svg-icons';
 import RequireServerPermission from '@/hoc/RequireServerPermission';
 import ServerInstallSvg from '@/assets/images/server_installing.svg';
@@ -161,6 +162,9 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                         </NavLink>
                         <NavLink to={'/account'} exact>
                             <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                        </NavLink>
+                        <NavLink to={'/account/notifications'} exact>
+                            <FontAwesomeIcon icon={faBell}/><span>Notifications</span>
                         </NavLink>
                         <NavLink to={'/account/api'} exact>
                             <FontAwesomeIcon icon={faSitemap}/><span>API</span>

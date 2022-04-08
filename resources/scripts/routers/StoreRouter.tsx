@@ -9,7 +9,7 @@ import { State } from 'easy-peasy';
 import { ApplicationStore } from '@/state';
 import Sidebar from '@/components/elements/Sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faLock, faSignOutAlt, faSitemap, faUser, faCog, faStore, faBell } from '@fortawesome/free-solid-svg-icons';
 import http from '@/api/http';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
 import StaticSubNavigation from '@/components/elements/StaticSubNavigation';
@@ -61,6 +61,9 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                     </NavLink>
                     <NavLink to={'/account'} exact>
                         <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                    </NavLink>
+                    <NavLink to={'/account/notifications'} exact>
+                        <FontAwesomeIcon icon={faBell}/><span>Notifications</span>
                     </NavLink>
                     <NavLink to={'/account/api'} exact>
                         <FontAwesomeIcon icon={faSitemap}/><span>API</span>
