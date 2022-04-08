@@ -45,10 +45,6 @@ class Notification extends Model
         'user_id' => 'integer',
         'server_id' => 'nullable|integer',
         'action' => 'string|max:191',
-        'device' => 'array',
-        'device.ip_address' => 'ip',
-        'device.user_agent' => 'string',
-        'metadata' => 'array',
         'created' => 'string',
     ];
 
@@ -70,14 +66,6 @@ class Notification extends Model
      * @var string
      */
     protected $table = 'notification';
-
-    /**
-     * @var string[]
-     */
-    protected $casts = [
-        'device' => 'array',
-        'metadata' => 'array',
-    ];
 
     public function user(): BelongsTo
     {
@@ -104,10 +92,6 @@ class Notification extends Model
             'user_id' => ($request && $request->user()) ? $request->user()->id : null,
             'server_id' => null,
             'action' => $action,
-            'device' => $request ? [
-                'ip_address' => $request->getClientIp() ?? '127.0.0.1',
-                'user_agent' => $request->userAgent() ?? '',
-            ] : [],
             'created' => $created,
         ]);
     }

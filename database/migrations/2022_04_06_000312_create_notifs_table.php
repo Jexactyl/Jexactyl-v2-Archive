@@ -18,8 +18,6 @@ class CreateNotifsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('server_id')->nullable();
             $table->string('action');
-            $table->json('device');
-            $table->json('metadata');
             $table->string('created');
         });
     }

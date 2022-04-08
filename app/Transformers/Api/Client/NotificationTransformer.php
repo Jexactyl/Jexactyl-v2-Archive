@@ -26,8 +26,6 @@ class NotificationTransformer extends BaseClientTransformer
             'user_id' => $model->user_id,
             'server_id' => $model->server_id,
             'action' => $model->action,
-            'device' => $model->device,
-            'metadata' => $model->metadata,
             'created' => $model->created,
         ];
     }
