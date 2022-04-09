@@ -14,9 +14,11 @@ import Button from '../elements/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import deleteNotifications from '@/api/account/deleteNotifications';
+import SpinnerOverlay from '@/components/elements/SpinnerOverlay';
 
 export default () => {
-    const [ loading, setLoading ] = useState(true);
+    const [ loading, setLoading ] = useState(false);
+    const [ isSubmitting, setIsSubmitting ] = useState(false);
     const [ notifications, setNotifications ] = useState<Notification[]>([]);
 
     const { addError, clearFlashes } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
@@ -33,12 +35,18 @@ export default () => {
     }, []);
 
     const submit = () => {
-        deleteNotifications().catch(error => addError({ key: 'account:notifications', message: httpErrorToHuman(error) }));
+        setIsSubmitting(true);
+        deleteNotifications()
+            .then(() => setIsSubmitting(false))
+            .catch(error => {
+                addError({ key: 'account:notifications', message: httpErrorToHuman(error) });
+            });
     };
 
     return (
         <PageContentBlock title={'Notifications'}>
             <FlashMessageRender byKey={'account:notifications'} css={tw`mb-2`}/>
+            <SpinnerOverlay visible={isSubmitting}/>
             <TitledGreyBox title={'Notifications'}>
                 {
                     notifications.length === 0 ?
