@@ -70,11 +70,14 @@ export default () => {
                 }
             </TitledGreyBox>
             <TitledGreyBox title={'Delete Notifications?'} css={tw`mt-4`}>
-                Deleting your notifications will erase all of your history on this panel.
+                <p css={tw`text-sm`}>Deleting your notifications will erase all of your history on this panel.
                 Are you sure you want to continue?
-                <Button onClick={submit} css={tw`mt-6 text-right`} type={'submit'}>
-                    <FontAwesomeIcon icon={faTrash}/> Delete
-                </Button>
+                </p>
+                <div css={tw`text-right`}>
+                    <Button onClick={submit} type={'submit'}>
+                        <FontAwesomeIcon icon={faTrash}/> Delete
+                    </Button>
+                </div>
             </TitledGreyBox>
         </PageContentBlock>
     );
