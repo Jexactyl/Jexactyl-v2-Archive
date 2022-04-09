@@ -106,6 +106,9 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                                 <NavLink to={'/account'}>
                                     <FontAwesomeIcon icon={faUser}/>
                                 </NavLink>
+                                <NavLink to={'/account/notifications'}>
+                                    <FontAwesomeIcon icon={faBell}/>
+                                </NavLink>
                                 <NavLink to={'/account/api'}>
                                     <FontAwesomeIcon icon={faSitemap}/>
                                 </NavLink>
