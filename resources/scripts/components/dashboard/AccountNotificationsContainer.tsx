@@ -21,7 +21,7 @@ export default () => {
     const [ isSubmitting, setIsSubmitting ] = useState(false);
     const [ notifications, setNotifications ] = useState<Notification[]>([]);
 
-    const { addError, clearFlashes } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
+    const { addError, addFlash, clearFlashes } = useStoreActions((actions: Actions<ApplicationStore>) => actions.flashes);
 
     useEffect(() => {
         clearFlashes('account');
@@ -38,6 +38,11 @@ export default () => {
         setIsSubmitting(true);
         deleteNotifications()
             .then(() => setIsSubmitting(false))
+            .then(() => addFlash({
+                type: 'success',
+                key: 'account:notifications',
+                message: 'Notifications have been cleared, please refresh the page.',
+            }))
             .catch(error => {
                 addError({ key: 'account:notifications', message: httpErrorToHuman(error) });
             });
