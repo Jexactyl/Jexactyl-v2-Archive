@@ -10,6 +10,10 @@ import { ApplicationStore } from '@/state';
 import tw from 'twin.macro';
 import GreyRowBox from '@/components/elements/GreyRowBox';
 import Spinner from '@/components/elements/Spinner';
+import Button from '../elements/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import deleteNotifications from '@/api/account/deleteNotifications';
 
 export default () => {
     const [ loading, setLoading ] = useState(true);
@@ -27,6 +31,10 @@ export default () => {
                 addError({ key: 'account:notifications', message: httpErrorToHuman(error) });
             });
     }, []);
+
+    const submit = () => {
+        deleteNotifications().catch(error => addError({ key: 'account:notifications', message: httpErrorToHuman(error) }));
+    };
 
     return (
         <PageContentBlock title={'Notifications'}>
@@ -60,6 +68,13 @@ export default () => {
                             </GreyRowBox>
                         ))
                 }
+            </TitledGreyBox>
+            <TitledGreyBox title={'Delete Notifications?'}>
+                Deleting your notifications will erase all of your history on this panel.
+                Are you sure you want to continue?
+                <Button onSubmit={submit}>
+                    <FontAwesomeIcon icon={faTrash}/> Delete
+                </Button>
             </TitledGreyBox>
         </PageContentBlock>
     );
