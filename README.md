@@ -10,8 +10,6 @@ Jexactyl is an all-in-one server management panel
 built with [Pterodactyl](https://pterodactyl.io) and includes
 better security, advanced features and blazing fast performance.
 
-Stop settling for less. Make game servers a first class citizen on your platform.
-
 ## Links
 * [Site](https://jexactyl.com)
 * [Documentation](https://jexactyl.com)
