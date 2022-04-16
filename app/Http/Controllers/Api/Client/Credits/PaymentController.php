@@ -44,7 +44,7 @@ class PaymentController extends ClientApiController
         if ($this->credits->get('payments:enabled') === '0' || $this->credits->get('store:enabled') === '0' || $this->credits->get('credits:enabled') === '0') throw new NotFoundHttpException();
         $client = $this->getPayPalClient();
         $amount = number_format($request->json('value'));
-        $cost = number_format($this->credits->get('store:credits_cost')) / 100 * $amount;
+        $cost = number_format($this->credits->get('store:credits_cost'), 2) / 100 * $amount;
         $req = new OrdersCreateRequest();
         $req->prefer('return=representation');
         $req->body = [
