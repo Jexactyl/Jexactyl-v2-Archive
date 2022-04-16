@@ -28,22 +28,27 @@ const UserInformationRow = () => {
     };
 
     return (
-        <div css={tw`grid gap-8 md:grid-cols-2`}>
+        <div css={tw`grid gap-8 md:grid-cols-2 mb-8`}>
             <TitledGreyBox
                 title={'User Information'}
                 icon={faInfoCircle}
             >
-                <div>Nice to see you, {user!.username}!</div>
-                <div>You have {user!.crBalance} credits available.</div>
-                <br/>
+                <>
+                    You have <strong>{user!.crBalance}</strong> credits available.
+                    Want to buy some more?
+                </>
                 <Select
+                    css={tw`mt-4`}
                     onChange={e => submitCredits(e.target.value)}
                     name={'Purchase Credits'}
                     disabled={isSubmit}
                 >
+                    <option key={'credits:placeholder'}>Choose an amount...</option>
                     <option key={'credits:buy:100'} value={100}>Purchase 100 credits</option>
                     <option key={'credits:buy:200'} value={200}>Purchase 200 credits</option>
                     <option key={'credits:buy:500'} value={500}>Purchase 500 credits</option>
+                    <option key={'credits:buy:1000'} value={1000}>Purchase 1000 credits</option>
+
                 </Select>
             </TitledGreyBox>
             <TitledGreyBox
@@ -52,10 +57,10 @@ const UserInformationRow = () => {
             >
                 Create a server with a specific amount of RAM, CPU and storage
                 allocated to it.
-                <div css={tw`mt-8 flex justify-end`}>
+                <div css={tw`flex justify-end`}>
                     <NavLink to={'/store/servers/new'}>
                         <Button type={'button'}>
-                            Create server <FontAwesomeIcon icon={faArrowCircleRight}/>
+                            Create server <FontAwesomeIcon icon={faArrowCircleRight} color={'green'}/>
                         </Button>
                     </NavLink>
                 </div>

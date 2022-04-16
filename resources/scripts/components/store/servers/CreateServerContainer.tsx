@@ -15,7 +15,8 @@ import InputSpinner from '@/components/elements/InputSpinner';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
 import FlashMessageRender from '@/components/FlashMessageRender';
 import PageContentBlock from '@/components/elements/PageContentBlock';
-import { faHdd, faLayerGroup, faMicrochip, faMemory } from '@fortawesome/free-solid-svg-icons';
+import { faHdd, faLayerGroup, faMicrochip, faMemory, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export interface ConfigResponse {
     user: any[];
@@ -76,17 +77,19 @@ export default () => {
     });
 
     return (
-        <PageContentBlock title={'Create a Server'} css={tw`flex flex-wrap`}>
+        <PageContentBlock title={'Create a Server'}>
             <div css={tw`w-full`}>
                 <FlashMessageRender byKey={'account:store'} css={tw`mb-4`} />
             </div>
+            <h3 css={tw`flex justify-center items-center p-8 text-4xl`}>
+                Create a server
+            </h3>
             {!data ?
                 <div css={tw`w-full`}>
                     <Spinner size={'large'} centered />
                 </div>
                 :
                 <>
-                    <h3 css={tw`mt-8 mb-2 text-2xl`}>New Server</h3>
                     <div css={tw`w-full`}>
                         <Formik
                             onSubmit={submit}
@@ -146,7 +149,9 @@ export default () => {
                                 <br></br>
                                 <div css={tw`flex justify-end text-right`}>
                                     <InputSpinner visible={loading}>
-                                        <Button type={'submit'} disabled={isSubmit}>Create Servers</Button>
+                                        <Button type={'submit'} disabled={isSubmit}>
+                                            Create <FontAwesomeIcon icon={faPlusCircle} color={'green'}/>
+                                        </Button>
                                     </InputSpinner>
                                 </div>
                             </Form>

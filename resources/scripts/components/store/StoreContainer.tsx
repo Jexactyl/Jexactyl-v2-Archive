@@ -12,18 +12,12 @@ const StoreContainer = () => {
             <div css={tw`w-full`}>
                 <FlashMessageRender byKey={'resources'} css={tw`mb-4`} />
             </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl`}>Information</h3>
-            <div>
-                <UserInformationRow/>
-            </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl px-10`}>Resources</h3>
-            <div css={tw`md:flex`}>
-                <ResourceRow/>
-            </div>
-            <h3 css={tw`mt-8 mb-2 text-2xl px-10`}>Actions</h3>
-            <div css={tw`md:flex`}>
-                <ActionsRow/>
-            </div>
+            <h3 css={tw`mb-4 flex justify-center items-center text-3xl`}>Information</h3>
+            <UserInformationRow/>
+            <h3 css={tw`mt-8 flex justify-center items-center text-3xl`}>Resources</h3>
+            <ResourceRow/>
+            <h3 css={tw`mt-8 flex justify-center items-center text-3xl`}>Actions</h3>
+            <ActionsRow/>
         </PageContentBlock>
     );
 };

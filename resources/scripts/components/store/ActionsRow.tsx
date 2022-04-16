@@ -84,42 +84,50 @@ const ActionsRow = () => {
     };
 
     return (
-        <div css={tw`md:flex`}>
+        <div css={tw`flex justify-center items-center p-8`}>
             <TitledGreyBox
                 title={'Purchase Server Slots'}
                 icon={faLayerGroup}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4`}
             >
-                <Button onClick={() => submitSlots()} disabled={isSubmit}>
-                    1 Slot
-                </Button>
+                <div css={tw`flex justify-center items-center`}>
+                    <Button onClick={() => submitSlots()} disabled={isSubmit}>
+                        1 Slot
+                    </Button>
+                </div>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Purchase CPU'}
                 icon={faMicrochip}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 ml-4`}
             >
-                <Button onClick={() => submitCPU()} disabled={isSubmit}>
-                    50% CPU
-                </Button>
+                <div css={tw`flex justify-center items-center`}>
+                    <Button onClick={() => submitCPU()} disabled={isSubmit}>
+                        50% CPU
+                    </Button>
+                </div>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Purchase RAM'}
                 icon={faMemory}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 ml-4`}
             >
-                <Button onClick={() => submitRAM()} disabled={isSubmit}>
-                    1GB RAM
-                </Button>
+                <div css={tw`flex justify-center items-center`}>
+                    <Button onClick={() => submitRAM()} disabled={isSubmit}>
+                        1GB RAM
+                    </Button>
+                </div>
             </TitledGreyBox>
             <TitledGreyBox
                 title={'Purchase Storage'}
                 icon={faHdd}
-                css={tw`flex-1 lg:flex-none lg:w-1/4 mt-10 md:mt-0 md:ml-12`}
+                css={tw`flex-1 lg:flex-none lg:w-1/4 ml-4`}
             >
-                <Button onClick={() => submitStorage()} disabled={isSubmit}>
-                    1GB Storage
-                </Button>
+                <div css={tw`flex justify-center items-center`}>
+                    <Button onClick={() => submitStorage()} disabled={isSubmit}>
+                        1GB Storage
+                    </Button>
+                </div>
             </TitledGreyBox>
         </div>
     );
