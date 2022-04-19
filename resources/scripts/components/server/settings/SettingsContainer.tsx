@@ -14,6 +14,7 @@ import ServerContentBlock from '@/components/elements/ServerContentBlock';
 import isEqual from 'react-fast-compare';
 import CopyOnClick from '@/components/elements/CopyOnClick';
 import { formatIp } from '@/helpers';
+import DeleteServerBox from './DeleteServerBox';
 
 export default () => {
     const username = useStoreState(state => state.user.data!.username);
@@ -89,6 +90,7 @@ export default () => {
                     </Can>
                     <Can action={'settings.reinstall'}>
                         <ReinstallServerBox/>
+                        <DeleteServerBox/>
                     </Can>
                 </div>
             </div>

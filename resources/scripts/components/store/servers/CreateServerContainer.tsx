@@ -34,7 +34,7 @@ export default () => {
     const [ isSubmit, setSubmit ] = useState(false);
     const [ loading, setLoading ] = useState(false);
     const user = useStoreState(state => state.user.data);
-    const { data, error, mutate } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
+    const { data, error } = useSWR<ConfigResponse>([ '/store' ], () => getConfig());
 
     const submit = ({ name, cpu, ram, storage }: CreateValues, { setSubmitting }: FormikHelpers<CreateValues>) => {
         setLoading(true);
@@ -42,17 +42,15 @@ export default () => {
         setSubmitting(false);
         setSubmit(true);
 
-        createServer(name, cpu, ram, storage).then(() => {
-            mutate();
-            setSubmit(false);
-        })
-            .then(() => addFlash({
-                type: 'success',
-                key: 'account:store',
-                message: 'Your server has been created!',
-            }))
-            .then(() => setLoading(false))
+        createServer(name, cpu, ram, storage)
+            .catch(error => {
+                setSubmitting(false);
+                setSubmit(false);
+                clearAndAddHttpError({ key: 'account:store', error });
+            })
             .then(() => {
+                setSubmit(false);
+                setLoading(false);
                 // @ts-ignore
                 window.location = '/';
             })
@@ -60,12 +58,7 @@ export default () => {
                 type: 'success',
                 key: 'account:store:deployed',
                 message: 'Your server has been deployed and is now installing.',
-            }))
-            .catch(error => {
-                setSubmitting(false);
-                setSubmit(false);
-                clearAndAddHttpError({ key: 'account:store', error });
-            });
+            }));
     };
 
     useEffect(() => {
