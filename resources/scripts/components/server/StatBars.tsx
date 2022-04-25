@@ -23,10 +23,9 @@ const StatBars = () => {
     const connected = ServerContext.useStoreState(state => state.socket.connected);
     const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
+    const cpuUsed = stats.cpu / (limits.cpu / 100);
     const diskUsed = (stats.disk / 1024 / 1024) / limits.disk * 100;
     const ramUsed = (stats.memory / 1024 / 1024) / limits.memory * 100;
-
-    const cpuLimiter = stats.cpu / (limits.cpu / 100);
 
     const statsListener = (data: string) => {
         let stats: any = {};
@@ -67,19 +66,43 @@ const StatBars = () => {
                 :
                 <>
                     CPU used ({stats.cpu.toFixed(0)}%)
-                    {cpuLimiter > 100 ? // If the CPU limit is over 100%, make the bar red and lock the width to prevent overflow.
+                    {cpuUsed > 100 ? // If the CPU limit is over 100%, make the bar red and lock the width to prevent overflow.
                         <Bar style={{ width: '100%' }} css={tw`mb-2 bg-red-400`}/>
                         :
                         <>
-                            <Bar style={{ width: cpuLimiter === undefined ? '100%' : `${cpuLimiter}%` }} css={tw`mb-2`}/>
+                            <Bar style={{ width: cpuUsed === undefined ? '100%' : `${cpuUsed}%` }} css={tw`mb-2`}/>
                         </>
                     }
                 </>
             }
-            RAM used ({ramUsed.toFixed(0)}%)
-            <Bar style={{ width: ramUsed.toFixed(0) === undefined ? '100%' : `${ramUsed.toFixed(0)}%` }} css={tw`mb-2`}/>
-            Disk used ({diskUsed.toFixed(0)}%)
-            <Bar style={{ width: diskUsed.toFixed(0) === undefined ? '100%' : `${diskUsed.toFixed(0)}%` }}/>
+            {limits.memory === 0 ?
+                <><p css={tw`mb-2`}>RAM used ({ramUsed.toFixed(0)}% of Unlimited)</p></>
+                :
+                <>
+                    RAM used ({ramUsed.toFixed(0)}%)
+                    {ramUsed > 100 ? // If the RAM limit is over 100%, make the bar red and lock the width to prevent overflow.
+                        <Bar style={{ width: '100%' }} css={tw`mb-2 bg-red-400`}/>
+                        :
+                        <>
+                            <Bar style={{ width: ramUsed === undefined ? '100%' : `${ramUsed}%` }} css={tw`mb-2`}/>
+                        </>
+                    }
+                </>
+            }
+            {limits.memory === 0 ?
+                <><p css={tw`mb-2`}>Disk used ({diskUsed.toFixed(0)}% of Unlimited)</p></>
+                :
+                <>
+                    Disk used ({diskUsed.toFixed(0)}%)
+                    {diskUsed > 100 ? // If the Disk limit is over 100%, make the bar red and lock the width to prevent overflow.
+                        <Bar style={{ width: '100%' }} css={tw`mb-2 bg-red-400`}/>
+                        :
+                        <>
+                            <Bar style={{ width: diskUsed === undefined ? '100%' : `${diskUsed}%` }} css={tw`mb-2`}/>
+                        </>
+                    }
+                </>
+            }
         </TitledGreyBox>
     );
 };
