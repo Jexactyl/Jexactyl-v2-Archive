@@ -158,33 +158,33 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
 
                         }
                         <NavLink to={'/'} exact>
-                            <FontAwesomeIcon icon={faLayerGroup}/><span>Servers</span>
+                            <FontAwesomeIcon fixedWidth icon={faLayerGroup}/><span>Servers</span>
                         </NavLink>
                         <NavLink to={'/account'} exact>
-                            <FontAwesomeIcon icon={faUser}/><span>Account</span>
+                            <FontAwesomeIcon fixedWidth icon={faUser}/><span>Account</span>
                         </NavLink>
                         <NavLink to={'/account/notifications'} exact>
-                            <FontAwesomeIcon icon={faBell}/><span>Notifications</span>
+                            <FontAwesomeIcon fixedWidth icon={faBell}/><span>Notifications</span>
                         </NavLink>
                         <NavLink to={'/account/api'} exact>
-                            <FontAwesomeIcon icon={faSitemap}/><span>API</span>
+                            <FontAwesomeIcon fixedWidth icon={faSitemap}/><span>API</span>
                         </NavLink>
                         <NavLink to={'/account/security'} exact>
-                            <FontAwesomeIcon icon={faLock}/><span>Security</span>
+                            <FontAwesomeIcon fixedWidth icon={faLock}/><span>Security</span>
                         </NavLink>
                         {storeEnabled === '1' &&
                           <NavLink to={'/store'} exact>
-                              <FontAwesomeIcon icon={faStore}/><span>Store</span>
+                              <FontAwesomeIcon fixedWidth icon={faStore}/><span>Store</span>
                           </NavLink>
                         }
                         {rootAdmin &&
                           <a href={'/admin'}>
-                              <FontAwesomeIcon icon={faCog}/> <span>Admin</span>
+                              <FontAwesomeIcon fixedWidth icon={faCog}/> <span>Admin</span>
                           </a>
                         }
                     </Sidebar.Wrapper>
                     <NavLink to={'/'} onClick={onTriggerLogout} css={tw`mt-auto mb-3`}>
-                        <FontAwesomeIcon icon={faSignOutAlt}/> <span>Logout</span>
+                        <FontAwesomeIcon fixedWidth icon={faSignOutAlt}/> <span>Logout</span>
                     </NavLink>
                     <Sidebar.User>
                         {avatarURL &&
