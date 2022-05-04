@@ -101,32 +101,32 @@ const StoreRouter = ({ location, match }: RouteComponentProps) => {
                         <StaticSubNavigation>
                             <div>
                                 <NavLink to={'/'}>
-                                    <FontAwesomeIcon icon={faLayerGroup}/>
+                                    <FontAwesomeIcon fixedWidth icon={faLayerGroup}/>
                                 </NavLink>
                                 <NavLink to={'/account'}>
-                                    <FontAwesomeIcon icon={faUser}/>
+                                    <FontAwesomeIcon fixedWidth icon={faUser}/>
                                 </NavLink>
                                 <NavLink to={'/account/notifications'}>
-                                    <FontAwesomeIcon icon={faBell}/>
+                                    <FontAwesomeIcon fixedWidth icon={faBell}/>
                                 </NavLink>
                                 <NavLink to={'/account/api'}>
-                                    <FontAwesomeIcon icon={faSitemap}/>
+                                    <FontAwesomeIcon fixedWidth icon={faSitemap}/>
                                 </NavLink>
                                 <NavLink to={'/account/security'}>
-                                    <FontAwesomeIcon icon={faLock}/>
+                                    <FontAwesomeIcon fixedWidth icon={faLock}/>
                                 </NavLink>
                                 {storeEnabled === '1' &&
                                   <NavLink to={'/store'}>
-                                      <FontAwesomeIcon icon={faStore}/>
+                                      <FontAwesomeIcon fixedWidth icon={faStore}/>
                                   </NavLink>
                                 }
                                 {rootAdmin &&
                                 <a href={'/admin'}>
-                                    <FontAwesomeIcon icon={faCog}/>
+                                    <FontAwesomeIcon fixedWidth icon={faCog}/>
                                 </a>
                                 }
                                 <NavLink to={'/'} onClick={onTriggerLogout}>
-                                    <FontAwesomeIcon icon={faSignOutAlt}/>
+                                    <FontAwesomeIcon fixedWidth icon={faSignOutAlt}/>
                                 </NavLink>
                             </div>
                         </StaticSubNavigation>
