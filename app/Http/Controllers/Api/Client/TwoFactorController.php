@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\JsonResponse;
 use Pterodactyl\Models\Notification;
+use Pterodactyl\Facades\Activity;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Validation\ValidationException;
 use Pterodactyl\Services\Users\TwoFactorSetupService;
@@ -96,6 +97,8 @@ class TwoFactorController extends ClientApiController
             'created' => date('d.m.Y H:i:s'),
         ]);
 
+        Activity::event('user:two-factor.create')->log();
+
         return new JsonResponse([
             'object' => 'recovery_tokens',
             'attributes' => [
@@ -129,6 +132,8 @@ class TwoFactorController extends ClientApiController
             'action' => Notification::ACCOUNT__2FA_DISABLE,
             'created' => date('d.m.Y H:i:s'),
         ]);
+
+        Activity::event('user:two-factor.delete')->log();
 
         return new JsonResponse([], Response::HTTP_NO_CONTENT);
     }

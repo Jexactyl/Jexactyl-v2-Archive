@@ -13,7 +13,7 @@ import Button from '@/components/elements/Button';
 import ModalContext from '@/context/ModalContext';
 import asModal from '@/hoc/asModal';
 import Switch from '@/components/elements/Switch';
-import ScheduleCheatsheetCards from '@/components/server/schedules/ScheduleCheetsheetCards';
+import ScheduleCheatsheetCards from '@/components/server/schedules/ScheduleCheatsheetCards';
 
 interface Props {
     schedule?: Schedule;

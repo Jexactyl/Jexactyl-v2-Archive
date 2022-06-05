@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Pterodactyl\Models\User;
 use Illuminate\Http\JsonResponse;
+use Pterodactyl\Facades\Activity;
 use Illuminate\Contracts\View\View;
 use LaravelWebauthn\Facades\Webauthn;
 use Illuminate\Contracts\View\Factory as ViewFactory;
@@ -112,6 +113,8 @@ class LoginController extends AbstractLoginController
                 'public_key' => $publicKey,
             ];
         }
+
+        Activity::event('auth:checkpoint')->withRequestMetadata()->subject($user)->log();
 
         return new JsonResponse($response);
     }

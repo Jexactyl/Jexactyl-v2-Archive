@@ -1,6 +1,6 @@
 import TransferListener from '@/components/server/TransferListener';
 import React, { useEffect, useState } from 'react';
-import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch, useRouteMatch } from 'react-router-dom';
 import ServerConsole from '@/components/server/ServerConsole';
 import TransitionRouter from '@/TransitionRouter';
 import WebsocketHandler from '@/components/server/WebsocketHandler';
@@ -54,6 +54,7 @@ import tw from 'twin.macro';
 import { ApplicationStore } from '@/state';
 import useWindowDimensions from '@/plugins/useWindowDimensions';
 import ProgressBar from '@/components/elements/ProgressBar';
+import { useLocation } from 'react-router';
 
 const ConflictStateRenderer = () => {
     const status = ServerContext.useStoreState(state => state.server.data?.status || null);
@@ -82,7 +83,10 @@ const ConflictStateRenderer = () => {
     );
 };
 
-const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) => {
+export default () => {
+    const match = useRouteMatch<{ id: string }>();
+    const location = useLocation();
+
     const [ error, setError ] = useState('');
     const { width } = useWindowDimensions();
 
@@ -188,7 +192,7 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
                     </NavLink>
                     <Sidebar.User>
                         {avatarURL &&
-                    <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
+                            <img src={`${avatarURL}?s=64`} alt="Profile Picture" css={tw`h-10 w-10 rounded-full select-none`}/>
                         }
                         <div css={tw`flex flex-col ml-3`}>
                             <span css={tw`font-sans font-normal text-sm text-neutral-50 whitespace-nowrap leading-tight select-none`}>{email}</span>
@@ -335,9 +339,3 @@ const ServerRouter = ({ match, location }: RouteComponentProps<{ id: string }>) 
         </React.Fragment>
     );
 };
-
-export default (props: RouteComponentProps<any>) => (
-    <ServerContext.Provider>
-        <ServerRouter {...props}/>
-    </ServerContext.Provider>
-);

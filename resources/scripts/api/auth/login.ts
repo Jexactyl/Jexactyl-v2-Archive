@@ -1,11 +1,10 @@
 import http from '@/api/http';
 
 export interface LoginResponse {
-    methods?: string[];
     complete: boolean;
     intended?: string;
     confirmationToken?: string;
-    publicKey?: any;
+    publicKey?: string;
 }
 
 export interface LoginData {
@@ -16,23 +15,23 @@ export interface LoginData {
 
 export default ({ username, password, recaptchaData }: LoginData): Promise<LoginResponse> => {
     return new Promise((resolve, reject) => {
-        http.post('/auth/login', {
-            user: username,
-            password,
-            'g-recaptcha-response': recaptchaData,
-        })
-            .then(({ data }) => {
-                if (!(data instanceof Object)) {
+        http.get('/sanctum/csrf-cookie')
+            .then(() => http.post('/auth/login', {
+                user: username,
+                password,
+                'g-recaptcha-response': recaptchaData,
+            }))
+            .then(response => {
+                if (!(response.data instanceof Object)) {
                     return reject(new Error('An error occurred while processing the login request.'));
                 }
 
                 return resolve({
-                    methods: data.methods,
-                    complete: data.complete,
-                    intended: data.intended || undefined,
-                    confirmationToken: data.confirmation_token || undefined,
+                    complete: response.data.data.complete,
+                    intended: response.data.data.intended || undefined,
+                    confirmationToken: response.data.data.confirmation_token || undefined,
                     // eslint-disable-next-line camelcase
-                    publicKey: data.webauthn?.public_key || undefined,
+                    publicKey: response.data.data.webauthn?.public_key || undefined,
                 });
             })
             .catch(reject);

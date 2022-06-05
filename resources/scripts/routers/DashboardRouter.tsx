@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch, useLocation } from 'react-router-dom';
 import AccountOverviewContainer from '@/components/dashboard/AccountOverviewContainer';
 import DashboardContainer from '@/components/dashboard/DashboardContainer';
 import AccountApiContainer from '@/components/dashboard/AccountApiContainer';
@@ -21,8 +21,9 @@ import Spinner from '@/components/elements/Spinner';
 import ProgressBar from '@/components/elements/ProgressBar';
 import AccountNotificationsContainer from '@/components/dashboard/AccountNotificationsContainer';
 
-const DashboardRouter = ({ location }: RouteComponentProps) => {
+const DashboardRouter = () => {
     const { width } = useWindowDimensions();
+    const location = useLocation();
 
     const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);

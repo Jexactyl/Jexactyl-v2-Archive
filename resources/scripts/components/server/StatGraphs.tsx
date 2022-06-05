@@ -1,15 +1,14 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import Chart, { ChartConfiguration } from 'chart.js';
 import { ServerContext } from '@/state/server';
-import { bpsToHuman, bytesToBps } from '@/helpers';
 import merge from 'deepmerge';
 import TitledGreyBox from '@/components/elements/TitledGreyBox';
-import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faEthernet, faMemory, faMicrochip } from '@fortawesome/free-solid-svg-icons';
 import tw from 'twin.macro';
 import { SocketEvent } from '@/components/server/events';
 import useWebsocketEvent from '@/plugins/useWebsocketEvent';
 
-const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguration => ({
+const chartDefaults = (ticks?: Chart.TickOptions): ChartConfiguration => ({
     type: 'line',
     options: {
         legend: {
@@ -69,21 +68,43 @@ const chartDefaults = (ticks?: Chart.TickOptions | undefined): ChartConfiguratio
     },
 });
 
+type ChartState = [ (node: HTMLCanvasElement | null) => void, Chart | undefined ];
+
+/**
+ * Creates an element ref and a chart instance.
+ */
+const useChart = (options?: Chart.TickOptions): ChartState => {
+    const [ chart, setChart ] = useState<Chart>();
+
+    const ref = useCallback<(node: HTMLCanvasElement | null) => void>(node => {
+        if (!node) return;
+
+        const chart = new Chart(node.getContext('2d')!, chartDefaults(options));
+
+        setChart(chart);
+    }, []);
+
+    return [ ref, chart ];
+};
+
+const updateChartDataset = (chart: Chart | null | undefined, value: Chart.ChartPoint & number): void => {
+    if (!chart || !chart.data?.datasets) return;
+
+    const data = chart.data.datasets[0].data!;
+    data.push(value);
+    data.shift();
+    chart.update({ lazy: true });
+};
+
 export default () => {
     const status = ServerContext.useStoreState(state => state.status.value);
-    const [ network, setNetwork ] = useState<Chart>();
+    const limits = ServerContext.useStoreState(state => state.server.data!.limits);
 
-    const networkRef = useCallback<(node: HTMLCanvasElement | null) => void>(node => {
-        if (!node) {
-            return;
-        }
-
-        setNetwork(
-            new Chart(node.getContext('2d')!, chartDefaults({
-                callback: (value) => `${bpsToHuman(value)}  `,
-            })),
-        );
-    }, []);
+    const previous = useRef<Record<'tx' | 'rx', number>>({ tx: -1, rx: -1 });
+    const [ cpuRef, cpu ] = useChart({ callback: (value) => `${value}%  `, suggestedMax: limits.cpu });
+    const [ memoryRef, memory ] = useChart({ callback: (value) => `${value}Mb  `, suggestedMax: limits.memory });
+    const [ txRef, tx ] = useChart({ callback: (value) => `${value}Kb/s  ` });
+    const [ rxRef, rx ] = useChart({ callback: (value) => `${value}Kb/s  ` });
 
     useWebsocketEvent(SocketEvent.STATS, (data: string) => {
         let stats: any = {};
@@ -93,34 +114,57 @@ export default () => {
             return;
         }
 
-        if (network && network.data.datasets) {
-            const data = network.data.datasets[0].data!;
+        updateChartDataset(cpu, stats.cpu_absolute);
+        updateChartDataset(memory, Math.floor(stats.memory_bytes / 1024 / 1024));
+        updateChartDataset(tx, previous.current.tx < 0 ? 0 : Math.max(0, stats.network.tx_bytes - previous.current.tx) / 1024);
+        updateChartDataset(rx, previous.current.rx < 0 ? 0 : Math.max(0, stats.network.rx_bytes - previous.current.rx) / 1024);
 
-            data.push(bytesToBps(stats.network.rx_bytes, stats.network.tx_bytes, true));
-            data.shift();
-
-            network.update({ lazy: true });
-        }
+        previous.current = { tx: stats.network.tx_bytes, rx: stats.network.rx_bytes };
     });
 
     return (
-        <div css={tw`mt-4`}>
-            <div css={tw`w-full`}>
-                <TitledGreyBox title={'Network Usage'} icon={faNetworkWired} css={tw`mr-0`}>
-                    {status !== 'offline' ?
-                        <canvas
-                            id={'network_chart'}
-                            ref={networkRef}
-                            aria-label={'Server Networking Graph'}
-                            role={'img'}
-                        />
-                        :
-                        <p css={tw`text-xs text-neutral-400 text-center p-3`}>
-                            Server is offline.
-                        </p>
-                    }
-                </TitledGreyBox>
-            </div>
+        <div css={tw`mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4`}>
+            <TitledGreyBox title={'Memory usage'} icon={faMemory}>
+                {status !== 'offline' ?
+                    <canvas
+                        id={'memory_chart'}
+                        ref={memoryRef}
+                        aria-label={'Server Memory Usage Graph'}
+                        role={'img'}
+                    />
+                    :
+                    <p css={tw`text-xs text-neutral-400 text-center p-3`}>
+                        Server is offline.
+                    </p>
+                }
+            </TitledGreyBox>
+            <TitledGreyBox title={'CPU usage'} icon={faMicrochip}>
+                {status !== 'offline' ?
+                    <canvas id={'cpu_chart'} ref={cpuRef} aria-label={'Server CPU Usage Graph'} role={'img'}/>
+                    :
+                    <p css={tw`text-xs text-neutral-400 text-center p-3`}>
+                        Server is offline.
+                    </p>
+                }
+            </TitledGreyBox>
+            <TitledGreyBox title={'Inbound Data'} icon={faEthernet}>
+                {status !== 'offline' ?
+                    <canvas id={'rx_chart'} ref={rxRef} aria-label={'Server Inbound Data'} role={'img'}/>
+                    :
+                    <p css={tw`text-xs text-neutral-400 text-center p-3`}>
+                        Server is offline.
+                    </p>
+                }
+            </TitledGreyBox>
+            <TitledGreyBox title={'Outbound Data'} icon={faEthernet}>
+                {status !== 'offline' ?
+                    <canvas id={'tx_chart'} ref={txRef} aria-label={'Server Outbound Data'} role={'img'}/>
+                    :
+                    <p css={tw`text-xs text-neutral-400 text-center p-3`}>
+                        Server is offline.
+                    </p>
+                }
+            </TitledGreyBox>
         </div>
     );
 };

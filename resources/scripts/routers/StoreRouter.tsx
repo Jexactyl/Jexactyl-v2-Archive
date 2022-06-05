@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch, useRouteMatch, useLocation } from 'react-router-dom';
 import TransitionRouter from '@/TransitionRouter';
 import tw from 'twin.macro';
 import StoreContainer from '@/components/store/StoreContainer';
@@ -20,8 +20,10 @@ import PaymentSuccessContainer from '@/components/store/payments/PaymentSuccessC
 import PaymentCancelContainer from '@/components/store/payments/PaymentCancelContainer';
 import { NotFound } from '@/components/elements/ScreenBlock';
 
-const StoreRouter = ({ location, match }: RouteComponentProps) => {
+const StoreRouter = () => {
     const { width } = useWindowDimensions();
+    const match = useRouteMatch<{ id: string }>();
+    const location = useLocation();
 
     const avatarURL = useStoreState((state: State<ApplicationStore>) => state.user.data!.avatarURL);
     const name = useStoreState((state: State<ApplicationStore>) => state.settings.data!.name);

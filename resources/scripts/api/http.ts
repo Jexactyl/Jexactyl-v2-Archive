@@ -2,6 +2,7 @@ import axios, { AxiosInstance } from 'axios';
 import { store } from '@/state';
 
 const http: AxiosInstance = axios.create({
+    withCredentials: true,
     timeout: 20000,
     headers: {
         'X-Requested-With': 'XMLHttpRequest',
@@ -11,19 +12,7 @@ const http: AxiosInstance = axios.create({
 });
 
 http.interceptors.request.use(req => {
-    const cookies = document.cookie.split(';').reduce((obj, val) => {
-        const [ key, value ] = val.trim().split('=').map(decodeURIComponent);
-
-        return { ...obj, [key]: value };
-    }, {} as Record<string, string>);
-
-    req.headers['X-XSRF-TOKEN'] = cookies['XSRF-TOKEN'] || 'nil';
-
-    return req;
-});
-
-http.interceptors.request.use(req => {
-    if (!req.url?.endsWith('/resources') && (req.url?.indexOf('_debugbar') || -1) < 0) {
+    if (!req.url?.endsWith('/resources')) {
         store.getActions().progress.startContinuous();
     }
 
@@ -31,7 +20,7 @@ http.interceptors.request.use(req => {
 });
 
 http.interceptors.response.use(resp => {
-    if (!resp.request?.url?.endsWith('/resources') && (resp.request?.url?.indexOf('_debugbar') || -1) < 0) {
+    if (!resp.request?.url?.endsWith('/resources')) {
         store.getActions().progress.setComplete();
     }
 
@@ -41,18 +30,6 @@ http.interceptors.response.use(resp => {
 
     throw error;
 });
-
-// If we have a phpdebugbar instance registered at this point in time go
-// ahead and route the response data through to it so things show up.
-// @ts-ignore
-if (typeof window.phpdebugbar !== 'undefined') {
-    http.interceptors.response.use(response => {
-        // @ts-ignore
-        window.phpdebugbar.ajaxHandler.handle(response.request);
-
-        return response;
-    });
-}
 
 export default http;
 
@@ -91,7 +68,7 @@ export interface FractalResponseData {
     object: string;
     attributes: {
         [k: string]: any;
-        relationships?: Record<string, FractalResponseData | FractalResponseList>;
+        relationships?: Record<string, FractalResponseData | FractalResponseList | null | undefined>;
     };
 }
 
