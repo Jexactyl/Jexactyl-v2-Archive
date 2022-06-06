@@ -29,13 +29,12 @@ const PageContentBlock: React.FC<PageContentBlockProps> = ({ title, showFlashKey
                 <ContentContainer css={tw`mb-4`}>
                     <p css={tw`text-center text-neutral-500 text-xs`}>
                         &copy; {(new Date()).getFullYear()}&nbsp;
-                        <a
-                            rel={'noopener nofollow noreferrer'}
-                            href={'https://jexactyl.xyz'}
+                        <p
                             css={tw`no-underline text-neutral-500 hover:text-neutral-300`}
                         >
-                            Jexactyl, built with <a href="https://pterodactyl.io">Pterodactyl</a>.
-                        </a>
+                            <a href={'https://jexactyl.com'}>Jexactyl</a>,
+                            built with <a href={'https://pterodactyl.io'}>Pterodactyl</a>.
+                        </p>
                     </p>
                 </ContentContainer>
             </>
